@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmsguqfkgrjyw"]
+
+[ext_resource type="Script" path="res://addons/gsom_pawns/pawn_rigid/pawn_rigid_impl.gd" id="1_t2yrf"]
+[ext_resource type="PackedScene" uid="uid://c5mko47sicngn" path="res://addons/gsom_pawns/hulls/pawn_rigid_walk.tscn" id="2_fqg3r"]
+[ext_resource type="PackedScene" uid="uid://cco5nuhu7lka8" path="res://addons/gsom_pawns/hulls/pawn_rigid_crouch.tscn" id="3_7ufs8"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mp8rm"]
+friction = 0.0
+absorbent = true
+
+[node name="PawnRigid" type="RigidBody3D"]
+top_level = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 80.0
+physics_material_override = SubResource("PhysicsMaterial_mp8rm")
+gravity_scale = 0.0
+can_sleep = false
+continuous_cd = true
+max_contacts_reported = 4
+contact_monitor = true
+linear_damp_mode = 1
+angular_damp_mode = 1
+script = ExtResource("1_t2yrf")
+
+[node name="Walk" parent="." instance=ExtResource("2_fqg3r")]
+
+[node name="Crouch" parent="." instance=ExtResource("3_7ufs8")]
+
+[node name="Remote" type="RemoteTransform3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.305, 0)
+remote_path = NodePath("../../..")

@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://ca8hjpx4twqcy"]
+
+[ext_resource type="Texture2D" uid="uid://uvn2ssdcgpee" path="res://gdtricks/misc/star_07.png" id="1_5ppu2"]
+
+[sub_resource type="Gradient" id="Gradient_y4ix5"]
+offsets = PackedFloat32Array(0.118919, 0.32973)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_uv2m2"]
+gradient = SubResource("Gradient_y4ix5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1xp87"]
+emission_shape = 2
+emission_sphere_radius = 1.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -2.04
+radial_accel_max = -1.01
+tangential_accel_min = -2.04
+tangential_accel_max = -1.02
+attractor_interaction_enabled = false
+color = Color(0.282353, 1, 0, 1)
+color_ramp = SubResource("GradientTexture1D_uv2m2")
+hue_variation_min = -1.0
+hue_variation_max = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k5nwo"]
+blend_mode = 1
+shading_mode = 0
+specular_mode = 2
+disable_ambient_light = true
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_5ppu2")
+albedo_texture_force_srgb = true
+texture_repeat = false
+disable_receive_shadows = true
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+grow = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_hcw11"]
+material = SubResource("StandardMaterial3D_k5nwo")
+size = Vector2(0.4, 0.4)
+
+[node name="PortalSphere" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+amount = 128
+process_material = SubResource("ParticleProcessMaterial_1xp87")
+draw_pass_1 = SubResource("QuadMesh_hcw11")

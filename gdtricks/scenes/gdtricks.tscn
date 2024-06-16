@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://o047sh8xi1sg"]
+
+[ext_resource type="Script" path="res://gdtricks/scenes/gdtricks.gd" id="1_42tcc"]
+[ext_resource type="PackedScene" uid="uid://bqwd1hj46qyhe" path="res://gdtricks/scenes/gdtricks-hub.tscn" id="1_kyckl"]
+[ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://gdtricks/misc/teleport.tscn" id="17_l0dlr"]
+[ext_resource type="ArrayOccluder3D" uid="uid://cyrxkdgtr0ci5" path="res://gdtricks/scenes/gdtricks.occ" id="18_rj8um"]
+[ext_resource type="PackedScene" uid="uid://b8nvg0k2lpbd1" path="res://gdtricks/misc/map.tscn" id="19_kguvh"]
+[ext_resource type="AudioStream" uid="uid://otpg6bmlfc8l" path="res://gdtricks/misc/the-song-in-the-trees.ogg" id="20_8g14b"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_s7e1a"]
+
+[node name="Gdtricks" type="Node3D"]
+script = ExtResource("1_42tcc")
+
+[node name="TimerLoad" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="GdtricksHub" parent="." instance=ExtResource("1_kyckl")]
+
+[node name="BottomLimit" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BottomLimit"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -26.0528, 0)
+shape = SubResource("WorldBoundaryShape3D_s7e1a")
+
+[node name="Teleport" parent="BottomLimit" instance=ExtResource("17_l0dlr")]
+
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="."]
+occluder = ExtResource("18_rj8um")
+
+[node name="Map" parent="." instance=ExtResource("19_kguvh")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_8g14b")
+volume_db = -4.0
+pitch_scale = 0.9
+autoplay = true

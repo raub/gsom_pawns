@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwqqonf4os107"]
+
+[ext_resource type="Script" path="res://addons/gsom_pawns/pawn_rigid/pawn_rigid.gd" id="1_24pfl"]
+[ext_resource type="Script" path="res://pawns/pawn_human.gd" id="1_ae7v3"]
+
+[node name="PawnHuman" type="Node3D"]
+script = ExtResource("1_ae7v3")
+
+[node name="GsomPawnRigid" type="Node" parent="."]
+script = ExtResource("1_24pfl")

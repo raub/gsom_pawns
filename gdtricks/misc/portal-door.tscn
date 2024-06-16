@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://bdysrm0iv0lw2"]
+
+[ext_resource type="Material" uid="uid://c4ht2ams53tmn" path="res://gdtricks/misc/hologram.material" id="1_pm5su"]
+[ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://gdtricks/misc/teleport.tscn" id="2_77y6a"]
+[ext_resource type="Script" path="res://gdtricks/misc/portal-door.gd" id="2_ggqe5"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_eg6s6"]
+material = ExtResource("1_pm5su")
+flip_faces = true
+size = Vector2(6, 6)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hsrcs"]
+size = Vector3(6, 6, 0.5)
+
+[node name="PortalDoor" type="MeshInstance3D"]
+mesh = SubResource("QuadMesh_eg6s6")
+skeleton = NodePath("")
+script = ExtResource("2_ggqe5")
+
+[node name="Area" type="Area3D" parent="."]
+
+[node name="Shape" type="CollisionShape3D" parent="Area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.25)
+shape = SubResource("BoxShape3D_hsrcs")
+
+[node name="Teleport" parent="Area" instance=ExtResource("2_77y6a")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Area/Teleport"]
+volume_db = -2.0
+pitch_scale = 2.0
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+light_color = Color(0.278431, 1, 0.14902, 1)
+light_energy = 2.0
+spot_range = 6.0
+spot_angle = 65.0
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+volume_db = -1.0
+unit_size = 1.5
+pitch_scale = 0.9
+autoplay = true

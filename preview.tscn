@@ -1,0 +1,38 @@
+[gd_scene load_steps=8 format=3 uid="uid://c4yrinewpl4iu"]
+
+[ext_resource type="Script" path="res://preview.gd" id="1_8h8be"]
+[ext_resource type="PackedScene" uid="uid://o047sh8xi1sg" path="res://gdtricks/scenes/gdtricks.tscn" id="2_on0h7"]
+[ext_resource type="PackedScene" uid="uid://c7yc5jrok4ca" path="res://controller.tscn" id="3_xwtk2"]
+[ext_resource type="PackedScene" uid="uid://dwqqonf4os107" path="res://pawns/pawn_human.tscn" id="4_njopq"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_id2jt"]
+sky_top_color = Color(0.560784, 0.733333, 0.8, 1)
+
+[sub_resource type="Sky" id="Sky_4v4sr"]
+sky_material = SubResource("ProceduralSkyMaterial_id2jt")
+
+[sub_resource type="Environment" id="Environment_86j2b"]
+background_mode = 2
+sky = SubResource("Sky_4v4sr")
+ambient_light_source = 3
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Preview" type="Node3D"]
+script = ExtResource("1_8h8be")
+
+[node name="Gdtricks" parent="." instance=ExtResource("2_on0h7")]
+
+[node name="Controller" parent="." instance=ExtResource("3_xwtk2")]
+transform = Transform3D(-0.795061, 0, -0.60653, 0, 1, 0, 0.60653, 0, -0.795061, -9.63241, 8.59591, -9.76809)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_86j2b")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.630324, -0.709044, 0.316147, 0, 0.407231, 0.913325, -0.776333, -0.57569, 0.256687, 0, 38, 0)
+light_color = Color(0.635294, 0.635294, 0.635294, 1)
+shadow_enabled = true
+
+[node name="PawnHuman" parent="." instance=ExtResource("4_njopq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 23.3144, 0)
