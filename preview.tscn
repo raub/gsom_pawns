@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://preview.gd" id="1_8h8be"]
 [ext_resource type="PackedScene" uid="uid://o047sh8xi1sg" path="res://gdtricks/scenes/gdtricks.tscn" id="2_on0h7"]
-[ext_resource type="PackedScene" uid="uid://c7yc5jrok4ca" path="res://controller.tscn" id="3_xwtk2"]
-[ext_resource type="PackedScene" uid="uid://dwqqonf4os107" path="res://pawns/pawn_human.tscn" id="4_njopq"]
+[ext_resource type="PackedScene" uid="uid://c7yc5jrok4ca" path="res://controller/controller.tscn" id="3_xwtk2"]
+[ext_resource type="PackedScene" uid="uid://dwqqonf4os107" path="res://characters/char_human.tscn" id="4_njopq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_id2jt"]
 sky_top_color = Color(0.560784, 0.733333, 0.8, 1)

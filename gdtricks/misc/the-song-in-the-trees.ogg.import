@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/the-song-in-the-trees.ogg-dae0f4fcf84295f5ef8
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

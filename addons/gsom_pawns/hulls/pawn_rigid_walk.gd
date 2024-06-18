@@ -50,7 +50,7 @@ var _is_debug_mesh := true
 		return _is_debug_mesh
 	set(v):
 		_is_debug_mesh = v
-		_assign_is_debug_mesh();
+		_assign_is_debug_mesh()
 
 var _normal := Vector3.UP
 
@@ -61,18 +61,19 @@ var _normal := Vector3.UP
 
 
 func _ready() -> void:
-	_assign_is_debug_mesh();
+	_assign_is_debug_mesh()
 
 	var rigid := get_parent() as RigidBody3D
 	if rigid:
+		_cast_up.add_exception(rigid)
 		_cast.add_exception(rigid)
 		_ray.add_exception(rigid)
 	
-	_exit_hull();
+	_exit_hull()
 
 
 func _check_enter() -> bool:
-	return true
+	return !_cast_up.is_colliding()
 
 
 func _check_exit() -> bool:
@@ -104,7 +105,7 @@ func _do_process(dt: float) -> void:
 
 
 func _do_integrate(pawn: GsomPawnRigid, state: PhysicsDirectBodyState3D) -> void:
-	var rigid: RigidBody3D = pawn.body;
+	var rigid: RigidBody3D = pawn.body
 	
 	var dt: float = state.step
 	var direction := Vector3.ZERO
@@ -146,7 +147,7 @@ func _do_integrate(pawn: GsomPawnRigid, state: PhysicsDirectBodyState3D) -> void
 
 
 func _do_physics(pawn: GsomPawnRigid, _delta: float) -> void:
-	var rigid: RigidBody3D = pawn.body;
+	var rigid: RigidBody3D = pawn.body
 	
 	var result = _cast.collision_result
 	var wasGround = pawn._isGround

@@ -1,42 +1,42 @@
 extends Node3D
 
-signal onSend(what, where);
-signal onReceive(what);
+signal onSend(what, where)
+signal onReceive(what)
 
-@onready var _teleport: Node = $Area/Teleport;
+@onready var _teleport: Node = $Area/Teleport
 
 
-var _tag: String = "";
+var _tag: String = ""
 @export var tag: String = "":
 	get:
-		return _tag;
+		return _tag
 	set(v):
-		_tag = v;
-		_assignTag();
+		_tag = v
+		_assignTag()
 
 
-var _dest: String = "";
+var _dest: String = ""
 @export var dest: String = "":
 	get:
-		return _dest;
+		return _dest
 	set(v):
-		_dest = v;
-		_assignDest();
+		_dest = v
+		_assignDest()
 
 
 func _ready() -> void:
-	_assignTag();
-	_assignDest();
+	_assignTag()
+	_assignDest()
 	
-	_teleport.onSend.connect(func (what, where) -> void: onSend.emit(what, where));
-	_teleport.onReceive.connect(func (what) -> void: onReceive.emit(what));
+	_teleport.onSend.connect(func (what, where) -> void: onSend.emit(what, where))
+	_teleport.onReceive.connect(func (what) -> void: onReceive.emit(what))
 
 
 func _assignTag() -> void:
 	if _teleport:
-		_teleport.tag = _tag;
+		_teleport.tag = _tag
 
 
 func _assignDest() -> void:
 	if _teleport:
-		_teleport.dest = _dest;
+		_teleport.dest = _dest

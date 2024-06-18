@@ -27,7 +27,3 @@ script = ExtResource("1_t2yrf")
 [node name="Walk" parent="." instance=ExtResource("2_fqg3r")]
 
 [node name="Crouch" parent="." instance=ExtResource("3_7ufs8")]
-
-[node name="Remote" type="RemoteTransform3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.305, 0)
-remote_path = NodePath("../../..")

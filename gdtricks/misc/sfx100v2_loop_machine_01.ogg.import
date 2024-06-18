@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/sfx100v2_loop_machine_01.ogg-3426e01d63811719
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

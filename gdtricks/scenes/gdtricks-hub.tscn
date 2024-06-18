@@ -141,7 +141,7 @@ autoplay = true
 [node name="AudioAmbience" type="AudioStreamPlayer3D" parent="AgtricksHub" index="11"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.36842, 0)
 stream = ExtResource("9_v4wi1")
-volume_db = -3.0
+volume_db = -5.0
 unit_size = 50.35
 pitch_scale = 0.87
 autoplay = true

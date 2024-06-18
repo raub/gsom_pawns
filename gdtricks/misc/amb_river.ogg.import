@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/amb_river.ogg-165ef9697a934e70ce166f2fd9e09d8
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

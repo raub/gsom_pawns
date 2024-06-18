@@ -24,6 +24,10 @@ class_name GsomPawnRigid
 const _SceneRigid: PackedScene = preload("./pawn_rigid_impl.tscn")
 
 
+## The body has finished the '_physics_process' logic. This is the right time
+## to fetch the position.
+signal moved(pos: Vector3, head_y: float)
+
 ## The body has just hit the ground with the specified vertical speed.
 ## You can use it to apply fall damage or play sounds.
 signal hit_ground(speedY: float)
@@ -120,10 +124,10 @@ var _vell := Vector3.ZERO
 var _pendingTossVel := Vector3.ZERO
 var _hasPendingTp := false
 var _pendingTpPos := Vector3.ZERO
+var _parent: Node3D = null
 
 # The nodes below are populated after `_SceneRigid` is instantiated in `_ready`
 var _body: RigidBody3D = null
-var _remote: RemoteTransform3D = null
 
 
 func _ready() -> void:
@@ -131,26 +135,36 @@ func _ready() -> void:
 	_body.mass = mass
 	add_child(_body)
 	
-	var parent: Node = get_parent()
-	if parent is Node3D:
-		_body.global_position = parent.global_position
+	_parent = get_parent() as Node3D
+	if !_parent:
+		push_error("Parent must be a Node3D.")
 	
-	_remote = _body.get_node("Remote")
-	_remote.update_position = !Engine.is_editor_hint()
-	_remote.update_rotation = !Engine.is_editor_hint()
-	_remote.force_update_cache()
+	_body.global_position = _parent.global_position
+	
+	
+	if Engine.is_editor_hint():
+		return
 	
 	_hull_next = _hull
 	_hull = ""
 	_assign_hull()
 
 
+func teleport(pos: Vector3) -> void:
+	_hasPendingTp = true;
+	_pendingTpPos = pos;
+
+
+func toss(velocity: Vector3) -> void:
+	_pendingTossVel += velocity;
+
+
 func _assign_hull() -> void:
-	if !_body or !_hull_next or _hull == _hull_next:
+	if _hull == _hull_next or !_hull_next or !_body:
 		return
 	
 	var node := _body.get_node(_hull_next) as GsomPawnHull
-	if !node:
+	if !node or !(node is GsomPawnHull):
 		push_error("Hull '%s' not found in pawn." % _hull_next)
 		return
 	
@@ -166,19 +180,16 @@ func _assign_hull() -> void:
 
 
 func _process(_dt: float) -> void:
-	var parent: Node = get_parent()
-	
-	if !(parent is Node3D):
-		return
-	
 	if !Engine.is_editor_hint():
-		parent.global_position = _body.global_position
+		_parent.global_position = _body.global_position
 		return
 	
-	_body.global_position = parent.global_position
+	_body.global_position = _parent.global_position
 
 
 func _do_process(dt: float) -> void:
+	_assign_hull()
+	
 	if !_hull:
 		_head_y = 0.0
 		return
@@ -191,7 +202,6 @@ func _do_process(dt: float) -> void:
 		_head_y = max(_head_y - head_speed * dt, target_y)
 	
 	node._do_process(dt)
-	pass
 
 
 func _do_integrate(state: PhysicsDirectBodyState3D) -> void:
@@ -221,3 +231,6 @@ func _do_physics(dt: float) -> void:
 	node._do_physics(self, dt)
 	
 	_vell = _body.linear_velocity
+	_parent.global_position = _body.global_position
+	
+	moved.emit(_body.global_position, _head_y)

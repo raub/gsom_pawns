@@ -2,7 +2,7 @@ extends GsomPawnHull
 
 const PawnWalk = preload("./pawn_rigid_walk.gd")
 
-var _walk := PawnWalk.new();
+var _walk := PawnWalk.new()
 
 
 @onready var _mesh: MeshInstance3D = $Mesh
@@ -12,6 +12,7 @@ var _walk := PawnWalk.new();
 
 
 func _ready() -> void:
+	_walk.max_speed_run *= 0.3333
 	_walk._mesh = _mesh
 	_walk._cast = _cast
 	_walk._cast_up = _cast_up
@@ -24,8 +25,8 @@ func _ready() -> void:
 		_cast.add_exception(rigid)
 		_ray.add_exception(rigid)
 	
-	_exit_hull();
-	_walk._assign_is_debug_mesh();
+	_exit_hull()
+	_walk._assign_is_debug_mesh()
 
 
 func _check_enter() -> bool:

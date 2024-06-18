@@ -1,6 +1,10 @@
 extends Node3D
 
 
+## The body has finished the '_physics_process' logic. This is the right time
+## to fetch the position.
+signal moved(pos: Vector3, head_y: float)
+
 var head_y: float = 0.0:
 	get:
 		return _gsom_pawn_rigid.head_y
@@ -30,6 +34,7 @@ var head_basis: Basis = Basis.IDENTITY:
 @onready var _gsom_pawn_rigid: GsomPawnRigid = $GsomPawnRigid
 
 
-func _process(_dt: float) -> void:
-	#prints("pos", global_position.y)
-	pass
+func _ready() -> void:
+	_gsom_pawn_rigid.moved.connect(
+		func (pos: Vector3, y: float) -> void: moved.emit(pos, y),
+	)
