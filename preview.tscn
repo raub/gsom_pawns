@@ -35,4 +35,4 @@ light_color = Color(0.635294, 0.635294, 0.635294, 1)
 shadow_enabled = true
 
 [node name="PawnHuman" parent="." instance=ExtResource("4_njopq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 23.3144, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3144, 0)

@@ -146,23 +146,32 @@ func _do_integrate(pawn: GsomPawnRigid, state: PhysicsDirectBodyState3D) -> void
 			rigid.linear_velocity += direction * addspeed
 
 
+# Detect the isGround state from collision results from shape and ray casts
+# If was in air and hit ground - emits `pawn.hit_ground`
 func _do_physics(pawn: GsomPawnRigid, _delta: float) -> void:
 	var rigid: RigidBody3D = pawn.body
 	
-	var result = _cast.collision_result
-	var wasGround = pawn._isGround
+	var result: Array = _cast.collision_result
+	var wasGround: bool = pawn._isGround
 	pawn._isGround = false
 	_normal = Vector3.UP
 	
-	if result.size() > 0:
-		_normal = result[0].normal
-		if _normal.y > slope_normal_y:
-			pawn._isGround = true
-			if !wasGround:
-				var dvell: Vector3 = (pawn._vell - rigid.linear_velocity)
-				pawn.hit_ground.emit(dvell.y)
-			if _ray.is_colliding():
-				_normal = _ray.get_collision_normal()
+	if !result.size():
+		return
+	
+	var max_y: float = 0.0
+	for item: Dictionary in result:
+		max_y = max(item.normal.y, max_y)
+	if max_y < slope_normal_y:
+		return
+	
+	_normal.y = max_y
+	pawn._isGround = true
+	if !wasGround:
+		var dvell: Vector3 = (pawn._vell - rigid.linear_velocity)
+		pawn.hit_ground.emit(dvell.y)
+	if _ray.is_colliding():
+		_normal = _ray.get_collision_normal()
 
 
 func _assign_is_debug_mesh() -> void:

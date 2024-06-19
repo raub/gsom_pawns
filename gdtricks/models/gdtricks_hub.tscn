@@ -1,0 +1,267 @@
+[gd_scene load_steps=19 format=3 uid="uid://d0433hy1nduia"]
+
+[ext_resource type="PackedScene" uid="uid://d4goj8xeirngj" path="res://gdtricks/models/gdtricks_hub.blend" id="1_v1iyn"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kkwq6"]
+size = Vector3(5.20169, 5.78967, 2.28564)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qwvs3"]
+size = Vector3(12.9575, 3.52539, 5.32404)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nf0hr"]
+size = Vector3(13.1127, 1, 16.5848)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_30evj"]
+size = Vector3(1, 10.4612, 16.6443)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bvlyo"]
+size = Vector3(0.4, 6.9, 0.4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rvcs8"]
+size = Vector3(3.21834, 3.2016, 0.960449)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_utpcq"]
+size = Vector3(0.387573, 4.69507, 0.385681)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bl8x0"]
+size = Vector3(0.388062, 0.397827, 2.98645)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pe1ok"]
+size = Vector3(0.38974, 3.19992, 0.40712)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xubjb"]
+size = Vector3(9.67969, 0.645264, 9.79739)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1vggd"]
+data = PackedVector3Array(-21.4045, 5.2733, 3.2718, -20.6845, 5.8541, 3.2718, -22.2943, 5.8541, 3.2718, -21.4045, 5.2733, 3.2718, -20.6845, 5.7533, 3.2718, -20.6845, 5.8541, 3.2718, -20.9208, 1.0826, 3.2718, -20.9208, 3.8332, 3.2718, -22.1245, 3.8332, 3.2718, -20.6845, 5.7533, 4.6757, -20.6845, 5.8541, 3.2718, -20.6845, 5.7533, 3.2718, -20.6845, 5.7533, 4.6757, -20.6845, 5.8541, 4.6757, -20.6845, 5.8541, 3.2718, -20.6845, 5.8541, 4.6757, -22.2943, 5.8541, 3.2718, -20.6845, 5.8541, 3.2718, -20.6845, 5.8541, 4.6757, -22.2943, 5.8541, 4.6757, -22.2943, 5.8541, 3.2718, -20.9208, 1.0826, 3.2718, -22.2943, 3.7271, 3.2718, -22.2943, 1.0826, 3.2718, -20.9208, 1.0826, 3.2718, -22.1245, 3.8332, 3.2718, -22.2943, 3.7271, 3.2718, -20.9208, 3.8332, 4.6757, -20.9208, 1.0826, 3.2718, -20.9208, -0.2467, 4.6757, -20.9208, 3.8332, 4.6757, -20.9208, 3.8332, 3.2718, -20.9208, 1.0826, 3.2718, -20.6845, 5.7533, 3.2718, -21.4045, 5.2733, 4.6757, -20.6845, 5.7533, 4.6757, -20.6845, 5.7533, 3.2718, -21.4045, 5.2733, 3.2718, -21.4045, 5.2733, 4.6757, -20.9208, 1.0826, -5.3081, -22.1245, 0.9626, -5.3081, -21.0408, 0.9626, -5.3081, -20.9208, 1.0826, -5.3081, -22.2943, 1.0826, -5.3081, -22.1245, 0.9626, -5.3081, -22.1245, 3.8332, 3.3919, -21.0408, 0.9626, 3.3919, -22.1245, 0.9626, 3.3919, -22.1245, 3.8332, 3.3919, -21.0408, 3.8332, 3.3919, -21.0408, 0.9626, 3.3919, -22.1245, 3.8332, 4.6757, -21.0408, 3.8332, 4.5558, -20.9208, 3.8332, 4.6757, -22.1245, 3.8332, 4.6757, -22.1245, 3.8332, 4.5558, -21.0408, 3.8332, 4.5558, -21.0408, 0.9626, -5.3081, -22.1245, 0.9626, 3.3919, -21.0408, 0.9626, 3.3919, -21.0408, 0.9626, -5.3081, -22.1245, 0.9626, -5.3081, -22.1245, 0.9626, 3.3919, -21.0408, 0.9626, -5.3081, -20.9208, -0.2467, -5.3081, -20.9208, 1.0826, -5.3081, -21.0408, 0.9626, -5.3081, -21.0408, -0.1268, -5.3081, -20.9208, -0.2467, -5.3081, -20.9208, 1.0826, -5.3081, -22.2943, 1.0826, 3.2718, -22.2943, 1.0826, -5.3081, -20.9208, 1.0826, -5.3081, -20.9208, 1.0826, 3.2718, -22.2943, 1.0826, 3.2718, -21.4045, 5.2733, 3.2718, -21.8845, 4.5533, 4.6757, -21.4045, 5.2733, 4.6757, -21.4045, 5.2733, 3.2718, -21.8845, 4.5533, 3.2718, -21.8845, 4.5533, 4.6757, -22.2943, 5.3105, 4.6757, -22.1245, 3.8332, 4.6757, -22.2943, 3.7364, 4.6757, -22.2943, 5.3105, 4.6757, -21.8845, 4.5533, 4.6757, -22.1245, 3.8332, 4.6757, -22.1245, 3.8332, 4.5558, -21.8845, 4.5533, 3.2718, -22.1245, 3.8332, 3.3919, -22.1245, 3.8332, 4.5558, -21.8845, 4.5533, 4.6757, -21.8845, 4.5533, 3.2718, -20.6845, 5.7533, 4.6757, -22.2943, 5.8541, 4.6757, -20.6845, 5.8541, 4.6757, -20.6845, 5.7533, 4.6757, -21.4045, 5.2733, 4.6757, -22.2943, 5.8541, 4.6757, -20.9208, -0.2467, -5.3081, -22.1245, -0.1268, -5.3081, -22.2943, -0.2467, -5.3081, -20.9208, -0.2467, -5.3081, -21.0408, -0.1268, -5.3081, -22.1245, -0.1268, -5.3081, -22.1245, 0.9626, -5.3081, -22.2943, -0.2467, -5.3081, -22.1245, -0.1268, -5.3081, -22.1245, 0.9626, -5.3081, -22.2943, 1.0826, -5.3081, -22.2943, -0.2467, -5.3081, -22.1245, 3.8332, 4.6757, -22.2943, -0.2467, 4.6757, -22.2943, 3.7364, 4.6757, -22.1245, 3.8332, 4.6757, -20.9208, -0.2467, 4.6757, -22.2943, -0.2467, 4.6757, -22.1245, 3.8332, 3.2718, -22.2943, 5.3105, 3.2718, -22.2943, 3.7271, 3.2718, -22.1245, 3.8332, 3.2718, -21.8845, 4.5533, 3.2718, -22.2943, 5.3105, 3.2718, -21.8845, 4.5533, 4.6757, -22.1245, 3.8332, 4.5558, -22.1245, 3.8332, 4.6757, -21.8845, 4.5533, 3.2718, -22.1245, 3.8332, 3.2718, -22.1245, 3.8332, 3.3919, -22.2943, 5.3105, 3.2718, -21.4045, 5.2733, 3.2718, -22.2943, 5.8541, 3.2718, -22.2943, 5.3105, 3.2718, -21.8845, 4.5533, 3.2718, -21.4045, 5.2733, 3.2718, -20.9208, -0.2467, 4.6757, -22.1245, 3.8332, 4.6757, -20.9208, 3.8332, 4.6757, -21.4045, 5.2733, 4.6757, -22.2943, 5.3105, 4.6757, -22.2943, 5.8541, 4.6757, -21.4045, 5.2733, 4.6757, -21.8845, 4.5533, 4.6757, -22.2943, 5.3105, 4.6757, -21.0408, 3.8332, 4.5558, -20.9208, 3.8332, 3.2718, -20.9208, 3.8332, 4.6757, -21.0408, 3.8332, 4.5558, -21.0408, 3.8332, 3.3919, -20.9208, 3.8332, 3.2718, -21.0408, 3.8332, 3.3919, -22.1245, 3.8332, 3.2718, -20.9208, 3.8332, 3.2718, -21.0408, 3.8332, 3.3919, -22.1245, 3.8332, 3.3919, -22.1245, 3.8332, 3.2718, -20.9208, 1.0826, 3.2718, -20.9208, -0.2467, -5.3081, -20.9208, -0.2467, 4.6757, -20.9208, 1.0826, 3.2718, -20.9208, 1.0826, -5.3081, -20.9208, -0.2467, -5.3081, -22.1245, 0.9626, 3.3919, -22.1245, -0.1268, -5.3081, -22.1645, -0.1268, 3.1158, -22.1245, 0.9626, 3.3919, -22.1245, 0.9626, -5.3081, -22.1245, -0.1268, -5.3081, -22.1645, 1.7933, 4.5558, -21.0008, 0.8487, 4.4281, -21.0008, 1.7933, 4.5558, -22.1645, 1.7933, 4.5558, -22.1645, 0.8487, 4.4281, -21.0008, 0.8487, 4.4281, -21.0408, -0.1268, -5.3081, -21.0408, 0.9626, 3.3919, -21.0008, -0.1268, 3.1158, -21.0408, -0.1268, -5.3081, -21.0408, 0.9626, -5.3081, -21.0408, 0.9626, 3.3919, -22.1245, 3.8332, 4.5558, -21.0008, 1.7933, 4.5558, -21.0408, 3.8332, 4.5558, -22.1245, 3.8332, 4.5558, -22.1645, 1.7933, 4.5558, -21.0008, 1.7933, 4.5558, -22.1245, -0.1268, -5.3081, -21.0008, -0.1268, 3.1158, -22.1645, -0.1268, 3.1158, -22.1245, -0.1268, -5.3081, -21.0408, -0.1268, -5.3081, -21.0008, -0.1268, 3.1158, -22.1645, 0.8487, 4.4281, -22.1245, 0.9626, 3.3919, -22.1645, 0.1287, 3.9481, -22.1645, 0.8487, 4.4281, -22.1645, 1.7933, 4.5558, -22.1245, 0.9626, 3.3919, -22.1245, 0.9626, 3.3919, -22.1245, 3.8332, 4.5558, -22.1245, 3.8332, 3.3919, -22.1245, 0.9626, 3.3919, -22.1645, 1.7933, 4.5558, -22.1245, 3.8332, 4.5558, -21.0408, 3.8332, 4.5558, -21.0408, 0.9626, 3.3919, -21.0408, 3.8332, 3.3919, -21.0408, 3.8332, 4.5558, -21.0008, 1.7933, 4.5558, -21.0408, 0.9626, 3.3919, -21.0008, 1.7933, 4.5558, -21.0008, 0.1287, 3.9481, -21.0408, 0.9626, 3.3919, -21.0008, 1.7933, 4.5558, -21.0008, 0.8487, 4.4281, -21.0008, 0.1287, 3.9481, -22.1645, -0.1268, 3.1158, -22.1645, 0.1287, 3.9481, -22.1245, 0.9626, 3.3919, -21.0408, 0.9626, 3.3919, -21.0008, 0.1287, 3.9481, -21.0008, -0.1268, 3.1158, -22.1645, 0.1287, 3.9481, -21.0008, -0.1268, 3.1158, -21.0008, 0.1287, 3.9481, -22.1645, 0.1287, 3.9481, -22.1645, -0.1268, 3.1158, -21.0008, -0.1268, 3.1158, -21.0008, 0.1287, 3.9481, -22.1645, 0.8487, 4.4281, -22.1645, 0.1287, 3.9481, -21.0008, 0.1287, 3.9481, -21.0008, 0.8487, 4.4281, -22.1645, 0.8487, 4.4281)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_frjfj"]
+size = Vector3(10.4703, 9.87299, 42.8641)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3nl3r"]
+size = Vector3(0.402191, 15.2065, 7.10305)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_inc52"]
+size = Vector3(0.402191, 7.86773, 7.10305)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kqoaa"]
+size = Vector3(17.4138, 9.68816, 10.4504)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q15ll"]
+size = Vector3(45.4012, 1, 45.3752)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_dqfyn"]
+data = PackedVector3Array(-7.9745, 1.5531, -22.9966, -9.6745, 1.5531, -21.577, -9.6745, 1.5531, -22.9966, -7.9745, 1.5531, -22.9966, -7.9745, 1.5531, -21.577, -9.6745, 1.5531, -21.577, -9.5498, 1.436, -21.7028, -8.3991, 1.436, -22.9442, -9.5498, 1.436, -23.3832, -9.5498, 1.436, -21.7028, -8.3991, 1.436, -22.8185, -8.3991, 1.436, -22.9442, -7.9745, 1.5531, -21.577, -9.6745, 0.3463, -21.577, -9.6745, 1.5531, -21.577, -7.9745, 1.5531, -21.577, -7.9745, 0.3463, -21.577, -9.6745, 0.3463, -21.577, -8.3991, 0.3463, -22.9442, -8.3991, 1.436, -23.3832, -8.3991, 1.436, -22.9442, -8.3991, 0.3463, -22.9442, -8.3991, 0.1532, -23.3832, -8.3991, 1.436, -23.3832, -7.9745, 1.5531, -22.9966, -7.9745, 1.436, -21.7028, -7.9745, 1.5531, -21.577, -7.9745, 1.5531, -22.9966, -7.9745, 1.436, -22.8185, -7.9745, 1.436, -21.7028, -8.3991, 1.436, -22.9442, -8.3991, 1.436, -23.3832, -9.5498, 1.436, -23.3832, -7.7744, 0.3534, -22.9966, -7.7744, 0.1532, -21.377, -7.7744, 0.3534, -21.377, -7.7744, 0.3534, -22.9966, -7.7744, 0.1532, -22.9966, -7.7744, 0.1532, -21.377, -9.6745, 1.5534, -23.3832, -9.6745, 0.1532, -23.1918, -9.6745, 0.1532, -23.3832, -9.6745, 1.5534, -23.3832, -9.6745, 1.5534, -23.1918, -9.6745, 0.1532, -23.1918, -9.5498, 1.436, -21.7028, -7.9745, 0.3463, -21.7028, -7.9745, 1.436, -21.7028, -9.5498, 1.436, -21.7028, -9.5498, 0.3463, -21.7028, -7.9745, 0.3463, -21.7028, -7.2745, -0.3328, -20.977, -10.3744, -0.047, -20.977, -7.2745, -0.047, -20.977, -7.2745, -0.3328, -20.977, -10.3744, -0.3328, -20.977, -10.3744, -0.047, -20.977, -9.5498, 1.436, -21.7028, -9.5498, 0.1532, -23.3832, -9.5498, 0.3463, -21.7028, -9.5498, 1.436, -21.7028, -9.5498, 1.436, -23.3832, -9.5498, 0.1532, -23.3832, -9.6745, 1.5531, -22.9966, -9.6745, 0.3463, -21.577, -9.6745, 0.1532, -22.9966, -9.6745, 1.5531, -22.9966, -9.6745, 1.5531, -21.577, -9.6745, 0.3463, -21.577, -8.3991, 1.436, -23.3832, -9.6745, 1.5534, -23.3832, -9.5498, 1.436, -23.3832, -8.3991, 1.436, -23.3832, -8.2745, 1.5534, -23.3832, -9.6745, 1.5534, -23.3832, -8.3991, 0.1532, -23.3832, -8.2745, 1.5534, -23.3832, -8.3991, 1.436, -23.3832, -8.3991, 0.1532, -23.3832, -8.2745, 0.1533, -23.3832, -8.2745, 1.5534, -23.3832, -10.3744, -0.047, -20.977, -10.3744, -0.3328, -22.9966, -10.3744, -0.047, -22.9966, -10.3744, -0.047, -20.977, -10.3744, -0.3328, -20.977, -10.3744, -0.3328, -22.9966, -7.4745, 0.1532, -22.9966, -7.4745, -0.047, -21.177, -7.4745, 0.1532, -21.177, -7.4745, 0.1532, -22.9966, -7.4745, -0.047, -22.9966, -7.4745, -0.047, -21.177, -7.9745, 1.436, -21.7028, -7.9745, 0.3463, -21.577, -7.9745, 1.5531, -21.577, -7.9745, 1.436, -21.7028, -7.9745, 0.3463, -21.7028, -7.9745, 0.3463, -21.577, -9.6745, 0.1532, -23.3832, -9.5498, 1.436, -23.3832, -9.6745, 1.5534, -23.3832, -9.6745, 0.1532, -23.3832, -9.5498, 0.1532, -23.3832, -9.5498, 1.436, -23.3832, -9.8744, 0.3534, -21.377, -7.7744, 0.1532, -21.377, -9.8744, 0.1532, -21.377, -9.8744, 0.3534, -21.377, -7.7744, 0.3534, -21.377, -7.7744, 0.1532, -21.377, -9.5498, 1.436, -21.7028, -7.9745, 1.436, -22.8185, -8.3991, 1.436, -22.8185, -9.5498, 1.436, -21.7028, -7.9745, 1.436, -21.7028, -7.9745, 1.436, -22.8185, -8.3991, 0.3463, -22.8185, -7.9745, 1.436, -22.8185, -7.9745, 0.3463, -22.8185, -8.3991, 0.3463, -22.8185, -8.3991, 1.436, -22.8185, -7.9745, 1.436, -22.8185, -7.9745, 0.1532, -22.9966, -7.9745, 1.436, -22.8185, -7.9745, 1.5531, -22.9966, -7.9745, 0.1532, -22.9966, -7.9745, 0.3463, -22.8185, -7.9745, 1.436, -22.8185, -8.3991, 1.436, -22.9442, -8.3991, 0.3463, -22.8185, -8.3991, 0.3463, -22.9442, -8.3991, 1.436, -22.9442, -8.3991, 1.436, -22.8185, -8.3991, 0.3463, -22.8185, -9.8744, 0.3534, -21.377, -9.8744, 0.1532, -22.9966, -9.8744, 0.3534, -22.9966, -9.8744, 0.3534, -21.377, -9.8744, 0.1532, -21.377, -9.8744, 0.1532, -22.9966, -7.7744, 0.1532, -21.377, -10.1745, 0.1532, -21.177, -9.8744, 0.1532, -21.377, -7.7744, 0.1532, -21.377, -7.4745, 0.1532, -21.177, -10.1745, 0.1532, -21.177, -10.1745, 0.1532, -21.177, -7.4745, -0.047, -21.177, -10.1745, -0.047, -21.177, -10.1745, 0.1532, -21.177, -7.4745, 0.1532, -21.177, -7.4745, -0.047, -21.177, -10.1745, 0.1532, -21.177, -10.1745, -0.047, -22.9966, -10.1745, 0.1532, -22.9966, -10.1745, 0.1532, -21.177, -10.1745, -0.047, -21.177, -10.1745, -0.047, -22.9966, -7.2745, -0.047, -22.9966, -7.2745, -0.3328, -20.977, -7.2745, -0.047, -20.977, -7.2745, -0.047, -22.9966, -7.2745, -0.3328, -22.9966, -7.2745, -0.3328, -20.977, -10.3744, -0.047, -22.9966, -10.1745, -0.047, -21.177, -10.3744, -0.047, -20.977, -10.3744, -0.047, -22.9966, -10.1745, -0.047, -22.9966, -10.1745, -0.047, -21.177, -9.5846, 0.3534, -23.329, -8.3991, 0.1532, -23.329, -8.3991, 0.3534, -23.329, -9.5846, 0.3534, -23.329, -9.5846, 0.1532, -23.329, -8.3991, 0.1532, -23.329, -10.1745, 0.1532, -21.177, -9.8744, 0.1532, -22.9966, -9.8744, 0.1532, -21.377, -10.1745, 0.1532, -21.177, -10.1745, 0.1532, -22.9966, -9.8744, 0.1532, -22.9966, -10.1745, -0.047, -21.177, -7.2745, -0.047, -20.977, -10.3744, -0.047, -20.977, -10.1745, -0.047, -21.177, -7.4745, -0.047, -21.177, -7.2745, -0.047, -20.977, -7.7744, 0.3534, -21.377, -9.8744, 0.3534, -22.9966, -7.7744, 0.3534, -22.9966, -7.7744, 0.3534, -21.377, -9.8744, 0.3534, -21.377, -9.8744, 0.3534, -22.9966, -7.4745, 0.1532, -21.177, -7.7744, 0.1532, -22.9966, -7.4745, 0.1532, -22.9966, -7.4745, 0.1532, -21.177, -7.7744, 0.1532, -21.377, -7.7744, 0.1532, -22.9966, -7.4745, -0.047, -21.177, -7.2745, -0.047, -22.9966, -7.2745, -0.047, -20.977, -7.4745, -0.047, -21.177, -7.4745, -0.047, -22.9966, -7.2745, -0.047, -22.9966, -8.2745, 0.1533, -23.3832, -8.2745, 1.5534, -23.1918, -8.2745, 1.5534, -23.3832, -8.2745, 0.1533, -23.3832, -8.2745, 0.1533, -23.1918, -8.2745, 1.5534, -23.1918, -9.5846, 0.3534, -23.329, -7.7744, 0.3534, -22.9966, -9.8744, 0.3534, -22.9966, -9.5846, 0.3534, -23.329, -8.3991, 0.3534, -23.329, -7.7744, 0.3534, -22.9966, -8.2745, 1.5534, -23.3832, -9.6745, 1.5534, -23.1918, -9.6745, 1.5534, -23.3832, -8.2745, 1.5534, -23.3832, -8.2745, 1.5534, -23.1918, -9.6745, 1.5534, -23.1918)
+
+[node name="gdtricks_hub" instance=ExtResource("1_v1iyn")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mdl_destructo" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mdl_destructo/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.04107, -3.563, -0.112)
+shape = SubResource("BoxShape3D_kkwq6")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="mdl_destructo/StaticBody3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.00513, -2.4276, -12.917)
+shape = SubResource("BoxShape3D_qwvs3")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="mdl_destructo/StaticBody3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.03595, -4.21496, -7.21307)
+shape = SubResource("BoxShape3D_nf0hr")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="mdl_destructo/StaticBody3D" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.11847, 6.42825, -7.21307)
+shape = SubResource("BoxShape3D_nf0hr")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="mdl_destructo/StaticBody3D" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.83779, 1.08826, -7.2926)
+shape = SubResource("BoxShape3D_30evj")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="mdl_destructo/StaticBody3D" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.94445, 1.08826, -7.27085)
+shape = SubResource("BoxShape3D_30evj")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="mdl_destructo/StaticBody3D" index="6"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -1.11006, 1.08826, -15.9866)
+shape = SubResource("BoxShape3D_30evj")
+
+[node name="asset_steps" parent="." index="1"]
+visible = false
+
+[node name="asset_ring" parent="." index="2"]
+visible = false
+
+[node name="asset_pole" parent="." index="3"]
+visible = false
+
+[node name="asset_target" parent="." index="4"]
+visible = false
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mdl_pole_1" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mdl_pole_1/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.45, 0)
+shape = SubResource("BoxShape3D_bvlyo")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="mdl_pole_2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="mdl_pole_2/StaticBody3D2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.45, -2)
+shape = SubResource("BoxShape3D_bvlyo")
+
+[node name="StaticBody3D3" type="StaticBody3D" parent="mdl_pole_3" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="mdl_pole_3/StaticBody3D3" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.45, -4)
+shape = SubResource("BoxShape3D_bvlyo")
+
+[node name="StaticBody3D4" type="StaticBody3D" parent="mdl_pole_4" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6)
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="mdl_pole_4/StaticBody3D4" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.45, -6)
+shape = SubResource("BoxShape3D_bvlyo")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="mdl_target_2" index="0"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mdl_target_2/StaticBody3D2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0249767, -0.00228882, 0.0197601)
+shape = SubResource("BoxShape3D_rvcs8")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="mdl_ring_2" index="0"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mdl_ring_2/StaticBody3D2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00140572, 2.34436, -0.00112724)
+shape = SubResource("BoxShape3D_utpcq")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="mdl_ring_2/StaticBody3D2" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000303268, 4.77807, -0.0248413)
+shape = SubResource("BoxShape3D_bl8x0")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="mdl_ring_2/StaticBody3D2" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000303268, 7.57439, -0.0248413)
+shape = SubResource("BoxShape3D_bl8x0")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="mdl_ring_2/StaticBody3D2" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00162697, 6.17615, -1.40474)
+shape = SubResource("BoxShape3D_pe1ok")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="mdl_ring_2/StaticBody3D2" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.002, 6.176, 1.405)
+shape = SubResource("BoxShape3D_pe1ok")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mdl_ring_1" index="0"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mdl_ring_1/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00140572, 2.34436, -0.00112724)
+shape = SubResource("BoxShape3D_utpcq")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="mdl_ring_1/StaticBody3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000303268, 4.77807, -0.0248413)
+shape = SubResource("BoxShape3D_bl8x0")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="mdl_ring_1/StaticBody3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000303268, 7.57439, -0.0248413)
+shape = SubResource("BoxShape3D_bl8x0")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="mdl_ring_1/StaticBody3D" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00162697, 6.17615, -1.40474)
+shape = SubResource("BoxShape3D_pe1ok")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="mdl_ring_1/StaticBody3D" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.002, 6.176, 1.405)
+shape = SubResource("BoxShape3D_pe1ok")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mdl_steps_1" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mdl_steps_1/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04, 0.078, -0.099)
+shape = SubResource("BoxShape3D_xubjb")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="mdl_steps_1/StaticBody3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.84, 0.478, -0.899)
+shape = SubResource("BoxShape3D_xubjb")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="mdl_steps_1/StaticBody3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.641, 0.878, -1.7)
+shape = SubResource("BoxShape3D_xubjb")
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="mdl_steps_2" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mdl_steps_2/StaticBody3D2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04, 0.078, -0.099)
+shape = SubResource("BoxShape3D_xubjb")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="mdl_steps_2/StaticBody3D2" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.84, 0.478, -0.899)
+shape = SubResource("BoxShape3D_xubjb")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="mdl_steps_2/StaticBody3D2" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.641, 0.878, -1.7)
+shape = SubResource("BoxShape3D_xubjb")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mdl_pipe" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mdl_pipe/StaticBody3D" index="0"]
+shape = SubResource("ConcavePolygonShape3D_1vggd")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mdl_walls" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mdl_walls/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.7876, 4.43649, -3.59052)
+shape = SubResource("BoxShape3D_frjfj")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="mdl_walls/StaticBody3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -27.4633, 4.43649, 2.10897)
+shape = SubResource("BoxShape3D_frjfj")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="mdl_walls/StaticBody3D" index="2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 19.1725, 4.43649, -28.1826)
+shape = SubResource("BoxShape3D_frjfj")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="mdl_walls/StaticBody3D" index="3"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.126, 1.771, -23.149)
+shape = SubResource("BoxShape3D_3nl3r")
+
+[node name="CollisionShape3D9" type="CollisionShape3D" parent="mdl_walls/StaticBody3D" index="4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -8.56303, 5.44283, -23.149)
+shape = SubResource("BoxShape3D_inc52")
+
+[node name="CollisionShape3D8" type="CollisionShape3D" parent="mdl_walls/StaticBody3D" index="5"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -4.78336, 1.76973, -23.1485)
+shape = SubResource("BoxShape3D_3nl3r")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="mdl_walls/StaticBody3D" index="6"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.73307, 4.436, 27.085)
+shape = SubResource("BoxShape3D_frjfj")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="mdl_walls/StaticBody3D" index="7"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 23.2943, 4.52761, 22.1041)
+shape = SubResource("BoxShape3D_kqoaa")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="mdl_walls/StaticBody3D" index="8"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -25.4486, 4.52761, -20.7239)
+shape = SubResource("BoxShape3D_kqoaa")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mdl_floor" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mdl_floor/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.351, -0.747, -0.634)
+shape = SubResource("BoxShape3D_q15ll")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mdl_target_1" index="0"]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mdl_target_1/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0249767, -0.00228882, 0.0197601)
+shape = SubResource("BoxShape3D_rvcs8")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mdl_burrow" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mdl_burrow/StaticBody3D" index="0"]
+shape = SubResource("ConcavePolygonShape3D_dqfyn")
