@@ -1,0 +1,116 @@
+[gd_scene load_steps=16 format=3 uid="uid://b3ih0yxwtok1q"]
+
+[ext_resource type="PackedScene" uid="uid://6dqup6xam0dg" path="res://gdtricks/models/destructo_3.blend" id="1_32n5e"]
+[ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://gdtricks/misc/teleport.tscn" id="2_jcrjn"]
+[ext_resource type="FontFile" uid="uid://cn5tj07kqaeyy" path="res://gdtricks/misc/Kenney Future Narrow.ttf" id="3_iujao"]
+[ext_resource type="PackedScene" uid="uid://cio84xpb7o4oc" path="res://gdtricks/models/door_frame.tscn" id="4_ay070"]
+[ext_resource type="ArrayOccluder3D" uid="uid://bk2rvyjrxgsef" path="res://gdtricks/scenes/destructo_3.occ" id="5_41nv8"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_n3hwk"]
+size = Vector3(65.9201, 28.0164, 2.76337)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1wjm1"]
+size = Vector3(8.94477, 28.0164, 9.2969)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lulrp"]
+size = Vector3(8.94477, 11.1819, 6.33957)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vs8y1"]
+size = Vector3(2.43011, 28.0164, 24.7274)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_78u32"]
+size = Vector3(21.3084, 1, 19.8861)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_75fi6"]
+size = Vector3(19.713, 3.306, 19.886)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wgt21"]
+size = Vector3(3.381, 3.305, 19.886)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_glyi0"]
+size = Vector3(2.14928, 1, 1.19971)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hopdf"]
+size = Vector3(1.5, 1, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_djcxp"]
+size = Vector3(1, 1, 0.1)
+
+[node name="Destructo3" instance=ExtResource("1_32n5e")]
+
+[node name="Content" type="Node3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -71.525, 0, 52.59)
+
+[node name="Start" type="Marker3D" parent="Content" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -26.2077, -3.12162, -1.66272)
+
+[node name="Teleport" parent="Content/Start" index="0" instance=ExtResource("2_jcrjn")]
+tag = "gdtricks-destructo-3"
+
+[node name="Collider" type="StaticBody3D" parent="Content" index="1"]
+
+[node name="WallPlusZ" type="CollisionShape3D" parent="Content/Collider" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.0777, 9.27719, 10.3886)
+shape = SubResource("BoxShape3D_n3hwk")
+
+[node name="WallMinusZ" type="CollisionShape3D" parent="Content/Collider" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.078, 9.277, -11.575)
+shape = SubResource("BoxShape3D_n3hwk")
+
+[node name="WallPlusX1" type="CollisionShape3D" parent="Content/Collider" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.4097, 9.277, -8.3159)
+shape = SubResource("BoxShape3D_1wjm1")
+
+[node name="WallPlusX2" type="CollisionShape3D" parent="Content/Collider" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.4097, 17.6978, -0.596893)
+shape = SubResource("BoxShape3D_lulrp")
+
+[node name="WallPlusX3" type="CollisionShape3D" parent="Content/Collider" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 36.4097, 9.277, 7.04854)
+shape = SubResource("BoxShape3D_1wjm1")
+
+[node name="WallMinusX" type="CollisionShape3D" parent="Content/Collider" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.0636, 9.277, -0.622749)
+shape = SubResource("BoxShape3D_vs8y1")
+
+[node name="Floor1" type="CollisionShape3D" parent="Content/Collider" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.853, -3.623, -0.62)
+shape = SubResource("BoxShape3D_78u32")
+
+[node name="Floor2" type="CollisionShape3D" parent="Content/Collider" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.192, -1.576, -0.62)
+shape = SubResource("BoxShape3D_75fi6")
+
+[node name="Floor3" type="CollisionShape3D" parent="Content/Collider" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.392, 1.624, -0.62)
+shape = SubResource("BoxShape3D_75fi6")
+
+[node name="Floor4" type="CollisionShape3D" parent="Content/Collider" index="9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.426, 4.824, -0.62)
+shape = SubResource("BoxShape3D_wgt21")
+
+[node name="Ramp1" type="CollisionShape3D" parent="Content/Collider" index="10"]
+transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, -10.0134, -2.97958, -8.39473)
+shape = SubResource("BoxShape3D_glyi0")
+
+[node name="Ramp2" type="CollisionShape3D" parent="Content/Collider" index="11"]
+transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 9.40149, 0.0349772, 7.40564)
+shape = SubResource("BoxShape3D_hopdf")
+
+[node name="Ramp3" type="CollisionShape3D" parent="Content/Collider" index="12"]
+transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 28.774, 3.20721, -8.54519)
+shape = SubResource("BoxShape3D_djcxp")
+
+[node name="LabelRoom" type="Label3D" parent="Content" index="2"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.289597, 10.303, 8.98905)
+pixel_size = 0.03
+text = "DH #3"
+font = ExtResource("3_iujao")
+font_size = 110
+
+[node name="DoorFrame" parent="Content" index="3" instance=ExtResource("4_ay070")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.526, 9.304, -0.696)
+dest = "gdtricks-destructo-4"
+
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="." index="11"]
+occluder = ExtResource("5_41nv8")

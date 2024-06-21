@@ -69,7 +69,7 @@ func _ready() -> void:
 		_cast.add_exception(rigid)
 		_ray.add_exception(rigid)
 	
-	_exit_hull()
+	_exit_hull(null)
 
 
 func _check_enter() -> bool:
@@ -80,7 +80,7 @@ func _check_exit() -> bool:
 	return true
 
 
-func _enter_hull() -> void:
+func _enter_hull(_pawn: GsomPawnRigid) -> void:
 	visible = true
 	disabled = false
 	_cast.enabled = true
@@ -88,7 +88,7 @@ func _enter_hull() -> void:
 	_ray.enabled = true
 
 
-func _exit_hull() -> void:
+func _exit_hull(_pawn: GsomPawnRigid) -> void:
 	visible = false
 	disabled = true
 	_cast.enabled = false

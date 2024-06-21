@@ -10,11 +10,11 @@ func _check_exit() -> bool:
 	return true
 
 
-func _enter_hull() -> void:
+func _enter_hull(_pawn: GsomPawnRigid) -> void:
 	pass
 
 
-func _exit_hull() -> void:
+func _exit_hull(_pawn: GsomPawnRigid) -> void:
 	pass
 
 

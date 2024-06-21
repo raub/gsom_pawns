@@ -25,7 +25,7 @@ func _ready() -> void:
 		_cast.add_exception(rigid)
 		_ray.add_exception(rigid)
 	
-	_exit_hull()
+	_exit_hull(null)
 	_walk._assign_is_debug_mesh()
 
 
@@ -37,18 +37,22 @@ func _check_exit() -> bool:
 	return true
 
 
-func _enter_hull() -> void:
+func _enter_hull(_pawn: GsomPawnRigid) -> void:
 	visible = true
 	disabled = false
 	_cast.enabled = true
 	_ray.enabled = true
 
 
-func _exit_hull() -> void:
+func _exit_hull(pawn: GsomPawnRigid) -> void:
 	visible = false
 	disabled = true
 	_cast.enabled = false
 	_ray.enabled = false
+	
+	if pawn and pawn._isGround:
+		var rigid := get_parent() as RigidBody3D
+		rigid.global_position.y += position.y - 0.45
 
 
 func _get_head_y() -> float:

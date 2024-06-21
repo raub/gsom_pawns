@@ -151,12 +151,12 @@ func _ready() -> void:
 
 
 func teleport(pos: Vector3) -> void:
-	_hasPendingTp = true;
-	_pendingTpPos = pos;
+	_hasPendingTp = true
+	_pendingTpPos = pos
 
 
 func toss(velocity: Vector3) -> void:
-	_pendingTossVel += velocity;
+	_pendingTossVel += velocity
 
 
 func _assign_hull() -> void:
@@ -173,10 +173,12 @@ func _assign_hull() -> void:
 	
 	if _hull:
 		var node_prev := _body.get_node(_hull) as GsomPawnHull
-		node_prev._exit_hull()
+		node_prev._exit_hull(self)
+	else:
+		_head_y = node._get_head_y()
 	
 	_hull = _hull_next
-	node._enter_hull()
+	node._enter_hull(self)
 
 
 func _process(_dt: float) -> void:
@@ -207,7 +209,6 @@ func _do_process(dt: float) -> void:
 func _do_integrate(state: PhysicsDirectBodyState3D) -> void:
 	_body.linear_velocity += _pendingTossVel
 	_pendingTossVel = Vector3.ZERO
-	
 	
 	if !_hull:
 		return

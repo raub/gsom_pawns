@@ -9,14 +9,17 @@ var _pawn: Node3D = null
 
 @onready var _camera_3d: Camera3D = $Head/Camera3D
 @onready var _head: Node3D = $Head
-@onready var _control = $Control
-@onready var _fullscreen: Button = $Control/CenterContainer/HBoxContainer/Fullscreen
-@onready var _windowed: Button = $Control/CenterContainer/HBoxContainer/Windowed
-@onready var _quit: Button = $Control/CenterContainer/HBoxContainer/Quit
+@onready var _escOverlay: Control = $EscOverlay
+@onready var _hud: Control = $Hud
+@onready var _fullscreen: Button = $EscOverlay/CenterContainer/HBoxContainer/Fullscreen
+@onready var _windowed: Button = $EscOverlay/CenterContainer/HBoxContainer/Windowed
+@onready var _quit: Button = $EscOverlay/CenterContainer/HBoxContainer/Quit
 
 
 func _ready() -> void:
-	_control.visible = false
+	_escOverlay.visible = false
+	_hud.visible = true
+	
 	var is_full: bool = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_MAXIMIZED
 	_fullscreen.visible = !is_full
 	_windowed.visible = is_full
@@ -55,7 +58,8 @@ func _process(_dt: float) -> void:
 	if Input.is_action_just_pressed("Esc"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if is_captured else Input.MOUSE_MODE_CAPTURED
 		is_captured = !is_captured
-		_control.visible = !is_captured
+		_escOverlay.visible = !is_captured
+		_hud.visible = is_captured
 	
 	if !_pawn:
 		return
