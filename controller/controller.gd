@@ -4,20 +4,34 @@ const _PITCH_MAX: float = PI * 0.49
 const _MOUSE_SENS_X: float = 0.002
 const _MOUSE_SENS_Y: float = 0.002
 const _UNZOOM_MAX: float = 4.0
+var _TP_LIST: PackedStringArray = [
+	"gdtricks-hub",
+	"gdtricks-agtricks-1", "gdtricks-agtricks-2", "gdtricks-agtricks-3",
+	"gdtricks-agtricks-4", "gdtricks-agtricks-5",
+	"gdtricks-destructo-1", "gdtricks-destructo-2", "gdtricks-destructo-3",
+	"gdtricks-destructo-4", "gdtricks-destructo-5", "gdtricks-destructo-6",
+	"gdtricks-destructo-7", "gdtricks-destructo-8", "gdtricks-destructo-9",
+	"gdtricks-destructo-10",
+]
 
 var _pawn: Node3D = null
+var _current_tp_index: int = 0
 
 @onready var _camera_3d: Camera3D = $Head/Camera3D
 @onready var _head: Node3D = $Head
-@onready var _escOverlay: Control = $EscOverlay
+@onready var _esc_overlay: Control = $EscOverlay
 @onready var _hud: Control = $Hud
-@onready var _fullscreen: Button = $EscOverlay/CenterContainer/HBoxContainer/Fullscreen
-@onready var _windowed: Button = $EscOverlay/CenterContainer/HBoxContainer/Windowed
-@onready var _quit: Button = $EscOverlay/CenterContainer/HBoxContainer/Quit
+@onready var _fullscreen: Button = $EscOverlay/CenterContainer/Column/Row/Fullscreen
+@onready var _windowed: Button = $EscOverlay/CenterContainer/Column/Row/Windowed
+@onready var _quit: Button = $EscOverlay/CenterContainer/Column/Row/Quit
+@onready var _bar_speed: ProgressBar = $Hud/CenterContainer/TextureRect/BarSpeed
+@onready var _button_next: Button = $EscOverlay/CenterContainer/Column/ButtonNext
+@onready var _button_prev: Button = $EscOverlay/CenterContainer/Column/ButtonPrev
+@onready var _audio_teleport: AudioStreamPlayer = $AudioTeleport
 
 
 func _ready() -> void:
-	_escOverlay.visible = false
+	_esc_overlay.visible = false
 	_hud.visible = true
 	
 	var is_full: bool = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_MAXIMIZED
@@ -26,6 +40,34 @@ func _ready() -> void:
 	_fullscreen.pressed.connect(func () -> void: _set_fullscreen(true))
 	_windowed.pressed.connect(func () -> void: _set_fullscreen(false))
 	_quit.pressed.connect(func () -> void: get_tree().quit())
+	
+	_button_next.pressed.connect(_tp_to_next)
+	_button_prev.pressed.connect(_tp_to_prev)
+
+
+func _tp_delta(plus_minus_one: int) -> void:
+	if !_pawn:
+		return
+	
+	var next: int = _current_tp_index + plus_minus_one;
+	_current_tp_index = (next + _TP_LIST.size()) % _TP_LIST.size();
+	var teleports: Array[Node] = get_tree().get_nodes_in_group("Teleport")
+	var wanted_tag: String = _TP_LIST[_current_tp_index]
+	for teleport: Node in teleports:
+		if teleport.tag != wanted_tag:
+			continue
+		var tp_parent := teleport.get_parent() as Node3D;
+		if tp_parent:
+			_pawn.teleport(tp_parent.global_position)
+			_audio_teleport.play()
+
+
+func _tp_to_next() -> void:
+	_tp_delta(1)
+
+
+func _tp_to_prev() -> void:
+	_tp_delta(-1)
 
 
 func possess(pawn: Node3D) -> void:
@@ -37,7 +79,9 @@ func possess(pawn: Node3D) -> void:
 	
 	_pawn = pawn
 	_pawn.moved.connect(_handle_move)
+	
 	global_position = _pawn.global_position + Vector3.UP * _pawn.head_y
+	_pawn.head_basis = _head.global_transform.basis
 
 
 func _set_fullscreen(is_full: bool) -> void:
@@ -58,11 +102,13 @@ func _process(_dt: float) -> void:
 	if Input.is_action_just_pressed("Esc"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE if is_captured else Input.MOUSE_MODE_CAPTURED
 		is_captured = !is_captured
-		_escOverlay.visible = !is_captured
+		_esc_overlay.visible = !is_captured
 		_hud.visible = is_captured
 	
 	if !_pawn:
 		return
+	
+	_bar_speed.value = min(1.0, _pawn.speed * 0.04)
 	
 	if !is_captured:
 		_pawn.wish_axis = Vector3.ZERO

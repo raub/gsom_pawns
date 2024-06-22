@@ -3,9 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://u714s2fw7wnp" path="res://gdtricks/models/agtricks.blend" id="1_wbeud"]
 [ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://gdtricks/misc/teleport.tscn" id="2_v8joy"]
 [ext_resource type="Material" uid="uid://cnopbqd4dn44t" path="res://gdtricks/misc/water.material" id="3_hkm3g"]
-[ext_resource type="AudioStream" uid="uid://csnw3as5h30sn" path="res://gdtricks/misc/pepSound1.ogg" id="4_re35p"]
+[ext_resource type="AudioStream" uid="uid://csnw3as5h30sn" path="res://gdtricks/misc/audio/pepSound1.ogg" id="4_re35p"]
 [ext_resource type="FontFile" uid="uid://cn5tj07kqaeyy" path="res://gdtricks/misc/Kenney Future Narrow.ttf" id="6_umx2r"]
-[ext_resource type="AudioStream" uid="uid://ckiyfclt754r" path="res://gdtricks/misc/amb_river.ogg" id="7_lqpjd"]
+[ext_resource type="AudioStream" uid="uid://ckiyfclt754r" path="res://gdtricks/misc/audio/amb_river.ogg" id="7_lqpjd"]
 [ext_resource type="ArrayOccluder3D" uid="uid://bn52gyqwkgbj6" path="res://gdtricks/scenes/agtricks_2.occ" id="8_5hlve"]
 [ext_resource type="PackedScene" uid="uid://cio84xpb7o4oc" path="res://gdtricks/models/door_frame.tscn" id="8_y07dy"]
 

@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://ca8hjpx4twqcy" path="res://gdtricks/misc/portal-sphere/portal-sphere.tscn" id="1_ehd6t"]
 [ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://gdtricks/misc/teleport.tscn" id="2_j4nvg"]
-[ext_resource type="AudioStream" uid="uid://cgbnixghsnlfr" path="res://gdtricks/misc/sfx100v2_loop_machine_01.ogg" id="3_3nsi4"]
-[ext_resource type="AudioStream" uid="uid://80lx0vwk1w2s" path="res://gdtricks/misc/teleport.ogg" id="3_xq0qr"]
+[ext_resource type="AudioStream" uid="uid://cgbnixghsnlfr" path="res://gdtricks/misc/audio/sfx100v2_loop_machine_01.ogg" id="3_3nsi4"]
+[ext_resource type="AudioStream" uid="uid://80lx0vwk1w2s" path="res://gdtricks/misc/audio/teleport.ogg" id="3_xq0qr"]
 
 [sub_resource type="GDScript" id="GDScript_iwlv6"]
 script/source = "extends Node3D

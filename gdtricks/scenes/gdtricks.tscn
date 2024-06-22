@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://ckmq3r7djtf2c" path="res://gdtricks/scenes/gdtricks_hub.tscn" id="5_3k2gw"]
 [ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://gdtricks/misc/teleport.tscn" id="17_l0dlr"]
 [ext_resource type="PackedScene" uid="uid://b8nvg0k2lpbd1" path="res://gdtricks/misc/map.tscn" id="19_kguvh"]
-[ext_resource type="AudioStream" uid="uid://otpg6bmlfc8l" path="res://gdtricks/misc/the-song-in-the-trees.ogg" id="20_8g14b"]
+[ext_resource type="AudioStream" uid="uid://otpg6bmlfc8l" path="res://gdtricks/misc/audio/the-song-in-the-trees.ogg" id="20_8g14b"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_s7e1a"]
 

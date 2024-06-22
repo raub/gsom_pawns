@@ -3,8 +3,8 @@
 [ext_resource type="Material" uid="uid://c4ht2ams53tmn" path="res://gdtricks/misc/hologram.material" id="1_pm5su"]
 [ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://gdtricks/misc/teleport.tscn" id="2_77y6a"]
 [ext_resource type="Script" path="res://gdtricks/misc/portal-door.gd" id="2_ggqe5"]
-[ext_resource type="AudioStream" uid="uid://80lx0vwk1w2s" path="res://gdtricks/misc/teleport.ogg" id="4_g61y8"]
-[ext_resource type="AudioStream" uid="uid://cgbnixghsnlfr" path="res://gdtricks/misc/sfx100v2_loop_machine_01.ogg" id="5_v3xib"]
+[ext_resource type="AudioStream" uid="uid://80lx0vwk1w2s" path="res://gdtricks/misc/audio/teleport.ogg" id="4_n3u6l"]
+[ext_resource type="AudioStream" uid="uid://cgbnixghsnlfr" path="res://gdtricks/misc/audio/sfx100v2_loop_machine_01.ogg" id="5_qljjk"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_eg6s6"]
 material = ExtResource("1_pm5su")
@@ -28,7 +28,7 @@ shape = SubResource("BoxShape3D_hsrcs")
 [node name="Teleport" parent="Area" instance=ExtResource("2_77y6a")]
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Area/Teleport"]
-stream = ExtResource("4_g61y8")
+stream = ExtResource("4_n3u6l")
 volume_db = -2.0
 pitch_scale = 2.0
 
@@ -40,7 +40,7 @@ spot_range = 6.0
 spot_angle = 65.0
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
-stream = ExtResource("5_v3xib")
+stream = ExtResource("5_qljjk")
 volume_db = -1.0
 unit_size = 1.5
 pitch_scale = 0.9

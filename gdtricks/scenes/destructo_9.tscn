@@ -3,10 +3,10 @@
 [ext_resource type="PackedScene" uid="uid://br46uw7i5r1qb" path="res://gdtricks/models/destructo_9.blend" id="1_wj2hd"]
 [ext_resource type="Material" uid="uid://cnopbqd4dn44t" path="res://gdtricks/misc/water.material" id="2_0xltr"]
 [ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://gdtricks/misc/teleport.tscn" id="3_7x46r"]
-[ext_resource type="AudioStream" uid="uid://csnw3as5h30sn" path="res://gdtricks/misc/pepSound1.ogg" id="4_o7gav"]
+[ext_resource type="AudioStream" uid="uid://csnw3as5h30sn" path="res://gdtricks/misc/audio/pepSound1.ogg" id="4_o7gav"]
 [ext_resource type="PackedScene" uid="uid://dermqn0q1v305" path="res://gdtricks/misc/portal-sphere.tscn" id="5_hq36t"]
 [ext_resource type="FontFile" uid="uid://cn5tj07kqaeyy" path="res://gdtricks/misc/Kenney Future Narrow.ttf" id="6_ngl53"]
-[ext_resource type="AudioStream" uid="uid://ckiyfclt754r" path="res://gdtricks/misc/amb_river.ogg" id="7_ca2qo"]
+[ext_resource type="AudioStream" uid="uid://ckiyfclt754r" path="res://gdtricks/misc/audio/amb_river.ogg" id="7_ca2qo"]
 [ext_resource type="ArrayOccluder3D" uid="uid://fere56wtq8sa" path="res://gdtricks/scenes/destructo_9.occ" id="8_ah1ao"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_jk6aa"]

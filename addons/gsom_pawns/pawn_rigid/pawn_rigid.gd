@@ -48,7 +48,8 @@ signal changed_hull(hull: String)
 ## Get current speed from the latest recorded velocity value.
 var speed: float = 0.0:
 	get:
-		return _vell.length()
+		var hor := Vector2(_vell.x, _vell.z)
+		return hor.length()
 
 
 var _hull_next: String = ""
@@ -223,6 +224,7 @@ func _do_physics(dt: float) -> void:
 		_body.global_position = _pendingTpPos
 		_hasPendingTp = false
 		_pendingTpPos = Vector3.ZERO
+		moved.emit(_body.global_position, _head_y)
 		return
 	
 	if !_hull:

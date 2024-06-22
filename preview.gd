@@ -11,11 +11,6 @@ func _ready() -> void:
 	controller.possess(pawn_human)
 
 
-#func _process(_dt: float) -> void:
-	#if Input.is_action_just_pressed("Esc"):
-		#get_tree().quit()
-
-
 func _register_actions() -> void:
 	InputMap.add_action("Duck")
 	var keyCtrl := InputEventKey.new()
