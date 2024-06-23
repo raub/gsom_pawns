@@ -192,6 +192,9 @@ dest = "gdtricks-agtricks-3"
 [node name="mdl_at1_walls" parent="." index="1"]
 visible = false
 
+[node name="mdl_at2_walls" parent="." index="2"]
+layers = 524289
+
 [node name="mdl_at3_walls" parent="." index="3"]
 visible = false
 
@@ -237,6 +240,18 @@ visible = false
 [node name="mdl_at1_section_1" parent="." index="17"]
 visible = false
 
+[node name="mdl_at2_wall_2" parent="." index="21"]
+layers = 524289
+
+[node name="mdl_at2_wall_3" parent="." index="22"]
+layers = 524289
+
+[node name="mdl_at2_wall_1" parent="." index="25"]
+layers = 524289
+
+[node name="mdl_at2_floor" parent="." index="26"]
+layers = 524289
+
 [node name="mdl_at3_floor" parent="." index="29"]
 visible = false
 
@@ -281,3 +296,4 @@ visible = false
 
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="." index="43"]
 occluder = ExtResource("8_5hlve")
+bake_mask = 4294443008

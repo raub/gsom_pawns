@@ -210,6 +210,9 @@ shape = SubResource("BoxShape3D_xubjb")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="mdl_pipe/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_1vggd")
 
+[node name="mdl_walls" parent="." index="15"]
+layers = 524289
+
 [node name="StaticBody3D" type="StaticBody3D" parent="mdl_walls" index="0"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="mdl_walls/StaticBody3D" index="0"]
@@ -247,6 +250,9 @@ shape = SubResource("BoxShape3D_kqoaa")
 [node name="CollisionShape3D6" type="CollisionShape3D" parent="mdl_walls/StaticBody3D" index="8"]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -25.4486, 4.52761, -20.7239)
 shape = SubResource("BoxShape3D_kqoaa")
+
+[node name="mdl_floor" parent="." index="16"]
+layers = 524289
 
 [node name="StaticBody3D" type="StaticBody3D" parent="mdl_floor" index="0"]
 

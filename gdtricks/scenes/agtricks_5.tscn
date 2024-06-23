@@ -191,6 +191,9 @@ visible = false
 [node name="mdl_at4_walls" parent="." index="4"]
 visible = false
 
+[node name="mdl_at5_walls" parent="." index="5"]
+layers = 524289
+
 [node name="mdl_at1_board" parent="." index="6"]
 visible = false
 
@@ -278,5 +281,9 @@ visible = false
 [node name="mdl_at4_section_2" parent="." index="34"]
 visible = false
 
+[node name="mdl_at5_floor" parent="." index="35"]
+layers = 524289
+
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="." index="43"]
 occluder = ExtResource("8_7eukv")
+bake_mask = 4294443008

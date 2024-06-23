@@ -153,5 +153,12 @@ volume_db = -4.0
 unit_size = 2.0
 autoplay = true
 
+[node name="mdl_dh5_walls" parent="." index="1"]
+layers = 524289
+
+[node name="mdl_dh5_floor" parent="." index="2"]
+layers = 524289
+
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="." index="10"]
 occluder = ExtResource("8_baqc7")
+bake_mask = 4294443008

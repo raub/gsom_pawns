@@ -207,5 +207,15 @@ autoplay = true
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 8.63, 2.87, 46.861)
 dest = "gdtricks-destructo-5"
 
+[node name="mdl_dh4_walls" parent="." index="1"]
+layers = 524289
+
+[node name="mdl_dh4_center" parent="." index="7"]
+layers = 524289
+
+[node name="mdl_dh4_floor" parent="." index="8"]
+layers = 524289
+
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="." index="9"]
 occluder = ExtResource("8_p7dl3")
+bake_mask = 4294443008

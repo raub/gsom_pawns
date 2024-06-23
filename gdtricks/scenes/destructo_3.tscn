@@ -112,5 +112,21 @@ font_size = 110
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.526, 9.304, -0.696)
 dest = "gdtricks-destructo-4"
 
+[node name="mdl_dh3_walls" parent="." index="1"]
+layers = 524289
+
+[node name="mdl_dh3_section_2" parent="." index="2"]
+layers = 524289
+
+[node name="mdl_dh3_floor" parent="." index="3"]
+layers = 524289
+
+[node name="mdl_dh3_section_1" parent="." index="4"]
+layers = 524289
+
+[node name="mdl_dh3_section_3" parent="." index="5"]
+layers = 524289
+
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="." index="11"]
 occluder = ExtResource("5_41nv8")
+bake_mask = 4294443008

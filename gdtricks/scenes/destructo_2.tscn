@@ -122,5 +122,12 @@ autoplay = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.039, 2.874, -0.057)
 dest = "gdtricks-destructo-3"
 
+[node name="mdl_dh2_walls" parent="." index="1"]
+layers = 524289
+
+[node name="mdl_dh2_floor" parent="." index="2"]
+layers = 524289
+
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="." index="5"]
 occluder = ExtResource("8_rayro")
+bake_mask = 4294443008

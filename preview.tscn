@@ -15,7 +15,7 @@ sky_material = SubResource("ProceduralSkyMaterial_id2jt")
 background_mode = 2
 sky = SubResource("Sky_4v4sr")
 ambient_light_source = 3
-tonemap_mode = 2
+tonemap_mode = 3
 glow_enabled = true
 
 [node name="Preview" type="Node3D"]

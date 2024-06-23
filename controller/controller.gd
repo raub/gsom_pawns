@@ -49,14 +49,14 @@ func _tp_delta(plus_minus_one: int) -> void:
 	if !_pawn:
 		return
 	
-	var next: int = _current_tp_index + plus_minus_one;
-	_current_tp_index = (next + _TP_LIST.size()) % _TP_LIST.size();
+	var next: int = _current_tp_index + plus_minus_one
+	_current_tp_index = (next + _TP_LIST.size()) % _TP_LIST.size()
 	var teleports: Array[Node] = get_tree().get_nodes_in_group("Teleport")
 	var wanted_tag: String = _TP_LIST[_current_tp_index]
 	for teleport: Node in teleports:
 		if teleport.tag != wanted_tag:
 			continue
-		var tp_parent := teleport.get_parent() as Node3D;
+		var tp_parent := teleport.get_parent() as Node3D
 		if tp_parent:
 			_pawn.teleport(tp_parent.global_position)
 			_audio_teleport.play()
@@ -131,25 +131,25 @@ func _process(_dt: float) -> void:
 			_pawn.hull = "Walk"
 	
 	if Input.is_action_just_released("Zoom"):
-		_zoom();
+		_zoom()
 	elif Input.is_action_just_released("Unzoom"):
-		_unzoom();
+		_unzoom()
 
 
 func _zoom() -> void:
-	_camera_3d.position.z *= 0.9;
+	_camera_3d.position.z *= 0.9
 	if _camera_3d.position.z < 1.0:
-		_camera_3d.position.z = 0.0;
+		_camera_3d.position.z = 0.0
 
 
 func _unzoom() -> void:
 	if _camera_3d.position.z< 2.0:
-		_camera_3d.position.z = 2.0;
+		_camera_3d.position.z = 2.0
 	else:
 		_camera_3d.position.z = min(
 			_camera_3d.position.z * 1.1,
 			_UNZOOM_MAX,
-		);
+		)
 
 
 func _rotate_look(dx: float, dy: float) -> void:

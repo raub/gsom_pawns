@@ -36,6 +36,14 @@ signal hit_ground(speedY: float)
 signal changed_hull(hull: String)
 
 
+## Global coefficient for [code]delta[/code] time
+static var time_k_global: float = 1.0
+
+
+## Local coefficient for [code]delta[/code] time of this pawn
+@export var time_k: float = 1.0
+
+
 ## Limits what slopes are still considered ground.
 ## Higher values will cause even small slopes to be considered steep.
 @export_range(0.2, 0.9) var slope_normal_y: float = 0.75

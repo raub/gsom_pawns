@@ -147,6 +147,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.34058e-05)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Content/StaticBody3D" index="0"]
 shape = SubResource("ConcavePolygonShape3D_dd1ff")
 
+[node name="mdl_dh1_walls" parent="." index="1"]
+layers = 524289
+
 [node name="mdl_dh1_rotor" parent="." index="2"]
 transform = Transform3D(1, 0, 4.46638e-06, 0, 1, 0, -4.46638e-06, 0, 1, -67.574, 0, -31.5689)
 
@@ -175,5 +178,12 @@ libraries = {
 }
 speed_scale = 0.5
 
+[node name="asset_dh1_pilar" parent="." index="3"]
+visible = false
+
+[node name="mdl_dh1_floor" parent="." index="10"]
+layers = 524289
+
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="." index="13"]
 occluder = ExtResource("8_iqepc")
+bake_mask = 4294443008

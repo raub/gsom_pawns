@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b8nvg0k2lpbd1"]
-
-[ext_resource type="Script" path="res://gdtricks/misc/map.gd" id="1_ysywu"]
-
-[node name="Map" type="Node"]
-script = ExtResource("1_ysywu")
-
-[node name="TimerDay" type="Timer" parent="."]
-wait_time = 0.1

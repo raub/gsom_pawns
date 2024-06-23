@@ -82,7 +82,7 @@ dest = "gdtricks-hub-destructo"
 stream = ExtResource("6_quogd")
 
 [node name="ValidateJump110" type="MeshInstance3D" parent="gdtricks_hub"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.303485, 21.2574)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.6207, 21.2574)
 mesh = SubResource("BoxMesh_6dg14")
 
 [node name="Body" type="StaticBody3D" parent="gdtricks_hub/ValidateJump110"]
@@ -96,7 +96,7 @@ shape = SubResource("BoxShape3D_devxo")
 target_position = Vector3(0, 0, 0)
 
 [node name="ValidateJump150" type="MeshInstance3D" parent="gdtricks_hub"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55488, 0.505388, 21.2569)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55488, -5.41879, 21.2569)
 mesh = SubResource("BoxMesh_tseh8")
 
 [node name="Body" type="StaticBody3D" parent="gdtricks_hub/ValidateJump150"]
@@ -148,3 +148,4 @@ panning_strength = 0.15
 
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="."]
 occluder = ExtResource("10_co8tn")
+bake_mask = 4294443008

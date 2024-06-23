@@ -207,6 +207,9 @@ autoplay = true
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 2.833, -59.497)
 dest = "gdtricks-agtricks-2"
 
+[node name="mdl_at1_walls" parent="." index="1"]
+layers = 524289
+
 [node name="mdl_at2_walls" parent="." index="2"]
 visible = false
 
@@ -218,6 +221,12 @@ visible = false
 
 [node name="mdl_at5_walls" parent="." index="5"]
 visible = false
+
+[node name="mdl_at1_section_2" parent="." index="7"]
+layers = 524289
+
+[node name="mdl_at1_floor" parent="." index="8"]
+layers = 524289
 
 [node name="asset_at_pole" parent="." index="9"]
 visible = false
@@ -233,6 +242,12 @@ visible = false
 
 [node name="mdl_at4_pole_4" parent="." index="15"]
 visible = false
+
+[node name="mdl_at1_section_3" parent="." index="16"]
+layers = 524289
+
+[node name="mdl_at1_section_1" parent="." index="17"]
+layers = 524289
 
 [node name="mdl_at2_section_1" parent="." index="18"]
 visible = false
@@ -311,3 +326,4 @@ visible = false
 
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="." index="43"]
 occluder = ExtResource("8_wmjtg")
+bake_mask = 4294443008

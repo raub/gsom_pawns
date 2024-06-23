@@ -16,6 +16,7 @@ script = ExtResource("1_ol4na")
 
 [node name="GsomPawnRigid" type="Node" parent="."]
 script = ExtResource("2_vam0y")
+time_k = null
 
 [node name="Steps" type="Node3D" parent="."]
 
