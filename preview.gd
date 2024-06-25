@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var pawn_human = $PawnHuman
+@onready var pawn_human = $CharHuman
 @onready var controller = $Controller
 
 
