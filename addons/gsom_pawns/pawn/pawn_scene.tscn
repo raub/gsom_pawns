@@ -1,0 +1,283 @@
+[gd_scene load_steps=12 format=3 uid="uid://cwkm6pyeuhi3t"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mp8rm"]
+friction = 0.0
+absorbent = true
+
+[sub_resource type="GDScript" id="GDScript_2ne73"]
+script/source = "extends RigidBody3D
+
+
+## Show the debug mesh (default to true so you can see the pawn when added)
+@export var is_debug_mesh := true
+
+## Limits what slopes are still considered ground.
+## Higher values will cause even small slopes to be considered steep.
+@export_range(0.2, 0.9) var slope_normal_y: float = 0.75
+
+
+var _cast: ShapeCast3D = null;
+var _ray: RayCast3D = null;
+
+var _vell := Vector3.ZERO
+var _pendingTossVel := Vector3.ZERO
+var _hasPendingTp := false
+var _pendingTpPos := Vector3.ZERO
+
+var _is_ground := false
+## Get the latest recorded state of touching the ground.
+var is_ground: bool = _is_ground:
+	get:
+		return _is_ground
+
+var _normal := Vector3.UP
+## Get the current body-to-ground normal
+var normal: Vector3 = _normal:
+	get:
+		return _normal
+
+
+var _head_y: float = 1.55
+## Get the animated head/eye/camera position Y.
+##
+## When switching between hulls, the head position may change. E.g. from walking
+## to crouching, to crawling, to swimming, etc. So the current Y is animated from
+## one position to another with the speed of [code]head_speed[/code].
+var head_y: float = _head_y:
+	get:
+		return _head_y
+
+
+## Get current speed from the latest recorded velocity value.
+var speed: float = 0.0:
+	get:
+		var hor := Vector2(_vell.x, _vell.z)
+		return hor.length()
+
+
+@onready var _shape_walk: CollisionShape3D = $ShapeWalk
+@onready var _shape_duck: CollisionShape3D = $ShapeDuck
+@onready var _mesh_walk: MeshInstance3D = $ShapeWalk/Mesh
+@onready var _mesh_duck: MeshInstance3D = $ShapeDuck/Mesh
+@onready var _cast_duck: ShapeCast3D = $CastDuck
+@onready var _cast_walk: ShapeCast3D = $CastWalk
+@onready var _cast_up: ShapeCast3D = $CastUp
+@onready var _ray_duck: RayCast3D = $RayDuck
+@onready var _ray_walk: RayCast3D = $RayWalk
+
+
+func _ready() -> void:
+	_cast_up.add_exception(self)
+	_cast_duck.add_exception(self)
+	_cast_walk.add_exception(self)
+	_ray_duck.add_exception(self)
+	_ray_walk.add_exception(self)
+	
+	_unduck()
+
+
+func teleport(pos: Vector3) -> void:
+	_hasPendingTp = true
+	_pendingTpPos = pos
+
+
+func toss(velocity: Vector3) -> void:
+	_pendingTossVel += velocity
+
+
+func _duck() -> void:
+	_shape_walk.disabled = true
+	_shape_duck.disabled = false
+	
+	_mesh_walk.visible = false
+	_mesh_duck.visible = is_debug_mesh
+	
+	_cast_duck.enabled = true
+	_cast_up.enabled = false
+	_ray_duck.enabled = true
+	
+	_cast_walk.enabled = false
+	_ray_walk.enabled = false
+	
+	_cast = _cast_duck
+	_ray = _ray_duck
+	
+	_head_y = 1.2
+
+
+func _unduck() -> void:
+	# HACK: don't let the full shape pierce into floor
+	if _is_ground:
+		global_position.y += _shape_duck.position.y - 0.45
+	
+	_shape_walk.disabled = false
+	_shape_duck.disabled = true
+	
+	_mesh_walk.visible = is_debug_mesh
+	_mesh_duck.visible = false
+	
+	_cast_duck.enabled = false
+	_cast_up.enabled = true
+	_ray_duck.enabled = false
+	
+	_cast_walk.enabled = true
+	_ray_walk.enabled = true
+	
+	_cast = _cast_walk
+	_ray = _ray_walk
+	
+	_head_y = 1.55
+
+
+# Detect the isGround state from collision results from shape and ray casts
+# If was in air and hit ground - emits `pawn.hit_ground`
+func _update_ground_state() -> void:
+	var result: Array = _cast.collision_result
+	var wasGround: bool = _is_ground
+	_is_ground = false
+	_normal = Vector3.UP
+	
+	if !result.size():
+		return
+	
+	var max_y := Vector3.ZERO
+	for item: Dictionary in result:
+		if item.normal.y > max_y.y:
+			max_y = item.normal
+	
+	if max_y.y < slope_normal_y:
+		return
+	
+	_normal = max_y
+	_is_ground = true
+	
+	var dvell: Vector3 = (_vell - linear_velocity)
+	get_parent().accelerated.emit(dvell)
+	if !wasGround:
+		get_parent().hit_ground.emit(dvell.y)
+		
+	if _ray.is_colliding():
+		_normal = _ray.get_collision_normal()
+
+
+func _process(dt) -> void:
+	get_parent().do_process(dt)
+
+
+func _physics_process(dt) -> void:
+	if _hasPendingTp:
+		linear_velocity = Vector3.ZERO
+		global_position = _pendingTpPos
+		_hasPendingTp = false
+		_pendingTpPos = Vector3.ZERO
+		get_parent().moved.emit(global_position)
+		return
+	
+	_update_ground_state()
+	_vell = linear_velocity
+	
+	get_parent().do_physics(dt)
+	
+	get_parent().moved.emit(global_position)
+
+
+func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	get_parent().do_integrate(state)
+"
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qcngx"]
+radius = 0.45
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5wkfk"]
+albedo_color = Color(0.258824, 0.631373, 0.231373, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_c1k11"]
+material = SubResource("StandardMaterial3D_5wkfk")
+radius = 0.45
+height = 1.8
+radial_segments = 24
+rings = 6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_eisk1"]
+radius = 0.45
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_csb0b"]
+albedo_color = Color(0.258824, 0.631373, 0.231373, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_5hpne"]
+material = SubResource("StandardMaterial3D_csb0b")
+radius = 0.45
+height = 0.9
+radial_segments = 24
+rings = 12
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_l250u"]
+height = 0.3
+radius = 0.3
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wedyi"]
+height = 0.9
+radius = 0.3
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_4biv6"]
+height = 0.3
+radius = 0.3
+
+[node name="PawnRigid" type="RigidBody3D"]
+top_level = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 80.0
+physics_material_override = SubResource("PhysicsMaterial_mp8rm")
+gravity_scale = 0.0
+can_sleep = false
+continuous_cd = true
+max_contacts_reported = 4
+contact_monitor = true
+linear_damp_mode = 1
+angular_damp_mode = 1
+script = SubResource("GDScript_2ne73")
+
+[node name="ShapeWalk" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_qcngx")
+
+[node name="Mesh" type="MeshInstance3D" parent="ShapeWalk"]
+mesh = SubResource("CapsuleMesh_c1k11")
+skeleton = NodePath("../..")
+
+[node name="ShapeDuck" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SphereShape3D_eisk1")
+
+[node name="Mesh" type="MeshInstance3D" parent="ShapeDuck"]
+mesh = SubResource("SphereMesh_5hpne")
+skeleton = NodePath("../..")
+
+[node name="CastDuck" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
+shape = SubResource("CylinderShape3D_l250u")
+target_position = Vector3(0, 0, 0)
+max_results = 4
+
+[node name="CastUp" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
+shape = SubResource("CylinderShape3D_wedyi")
+target_position = Vector3(0, 0, 0)
+max_results = 4
+
+[node name="RayDuck" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
+target_position = Vector3(0, -0.4, 0)
+
+[node name="CastWalk" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("CylinderShape3D_4biv6")
+target_position = Vector3(0, 0, 0)
+max_results = 4
+
+[node name="RayWalk" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+target_position = Vector3(0, -0.4, 0)

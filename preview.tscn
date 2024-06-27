@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://c4yrinewpl4iu"]
+[gd_scene load_steps=9 format=3 uid="uid://c4yrinewpl4iu"]
 
 [ext_resource type="Script" path="res://preview.gd" id="1_8h8be"]
 [ext_resource type="PackedScene" uid="uid://o047sh8xi1sg" path="res://gdtricks/scenes/gdtricks.tscn" id="2_on0h7"]
-[ext_resource type="PackedScene" uid="uid://c7yc5jrok4ca" path="res://controller/controller.tscn" id="3_xwtk2"]
+[ext_resource type="PackedScene" uid="uid://byroba8fdub2m" path="res://controller/controller2.tscn" id="4_2qcum"]
 [ext_resource type="PackedScene" uid="uid://dwqqonf4os107" path="res://characters/char_human.tscn" id="4_njopq"]
+[ext_resource type="PackedScene" uid="uid://fdumqv0of5vw" path="res://characters/char_human2.tscn" id="5_jsp8d"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_id2jt"]
 sky_top_color = Color(0.560784, 0.733333, 0.8, 1)
@@ -23,9 +24,6 @@ script = ExtResource("1_8h8be")
 
 [node name="Gdtricks" parent="." instance=ExtResource("2_on0h7")]
 
-[node name="Controller" parent="." instance=ExtResource("3_xwtk2")]
-transform = Transform3D(-0.795061, 0, -0.60653, 0, 1, 0, 0.60653, 0, -0.795061, -9.63241, 8.59591, -9.76809)
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_86j2b")
 
@@ -36,3 +34,8 @@ shadow_enabled = true
 
 [node name="CharHuman" parent="." instance=ExtResource("4_njopq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3144, 0)
+
+[node name="Controller" parent="." instance=ExtResource("4_2qcum")]
+
+[node name="CharHuman2" parent="." instance=ExtResource("5_jsp8d")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.78672)

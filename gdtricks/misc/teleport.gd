@@ -28,7 +28,7 @@ func detachArea(area: Area3D) -> void:
 
 
 func _tryPlaySound() -> void:
-	for child in get_children():
+	for child: Node in get_children():
 		if child.has_method("play"):
 			child.call("play")
 			break

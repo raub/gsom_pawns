@@ -1,6 +1,7 @@
 extends Node3D
 
-@onready var pawn_human = $CharHuman
+@onready var char_human = $CharHuman
+@onready var char_human2 = $CharHuman2
 @onready var controller = $Controller
 
 
@@ -8,7 +9,7 @@ func _ready() -> void:
 	_register_actions()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
-	controller.possess(pawn_human)
+	controller.possess(char_human2.pawn)
 
 
 func _register_actions() -> void:

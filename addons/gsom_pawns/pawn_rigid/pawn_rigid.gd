@@ -32,17 +32,6 @@ signal moved(pos: Vector3, head_y: float)
 ## You can use it to apply fall damage or play sounds.
 signal hit_ground(speedY: float)
 
-## The body has changed its shape.
-signal changed_hull(hull: String)
-
-
-## Global coefficient for [code]delta[/code] time
-static var time_k_global: float = 1.0
-
-
-## Local coefficient for [code]delta[/code] time of this pawn
-@export var time_k: float = 1.0
-
 
 ## Limits what slopes are still considered ground.
 ## Higher values will cause even small slopes to be considered steep.
