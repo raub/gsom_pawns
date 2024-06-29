@@ -39,6 +39,9 @@ extends GsomPawnHandler
 ## How soon whe body will stop with no input - it loses that many m/s from its speed.
 @export var stop_speed: float = 2.45 # ~100 unit/sec
 
+## Move this much slower when crouching
+@export var duck_multiplier: float = 0.333333
+
 
 func _do_integrate(pawn: GsomPawn, state: PhysicsDirectBodyState3D) -> void:
 	var body: RigidBody3D = pawn.body
@@ -47,26 +50,28 @@ func _do_integrate(pawn: GsomPawn, state: PhysicsDirectBodyState3D) -> void:
 	var direction := Vector3.ZERO
 	
 	var wish_axis := Vector3.ZERO
-	if pawn.get_action("forward"):
+	if pawn.get_action("forward", false):
 		wish_axis.z += 1.0
-	if pawn.get_action("back"):
+	if pawn.get_action("back", false):
 		wish_axis.z -= 1.0
-	if pawn.get_action("moveleft"):
+	if pawn.get_action("moveleft", false):
 		wish_axis.x += 1.0
-	if pawn.get_action("moveright"):
+	if pawn.get_action("moveright", false):
 		wish_axis.x -= 1.0
 	
-	var is_jump: bool = true if pawn.get_action("jump") else false
+	var is_jump: bool = pawn.get_action("jump", false)
+	var is_duck: bool = pawn.get_env("crouching", false)
+	var is_ground: bool = pawn.get_env("on_ground", false)
+	var normal: Vector3 = pawn.get_env("normal", Vector3.UP)
 	
 	if abs(wish_axis.z) > 0.1 || abs(wish_axis.x) > 0.1:
-		var basisGlobal: Basis = pawn.head_basis
-		var forward: Vector3 = body.normal.cross(basisGlobal.x)
-		var left: Vector3 = body.normal.cross(-basisGlobal.z)
+		var forward: Vector3 = body.normal.cross(pawn.head_basis.x)
+		var left: Vector3 = body.normal.cross(-pawn.head_basis.z)
 		direction = (forward * wish_axis.z + left * wish_axis.x).normalized()
 	
 	var accel_fly: float = accel_fly_k * max_speed_run
 	
-	if pawn.is_ground:
+	if is_ground:
 		if is_jump:
 			body.linear_velocity.y = speed_jump
 			if direction.length():
@@ -82,6 +87,8 @@ func _do_integrate(pawn: GsomPawn, state: PhysicsDirectBodyState3D) -> void:
 			body.linear_velocity *= fract
 			if direction.length():
 				var wishspeed: float = max_speed_run
+				if is_duck:
+					wishspeed *= duck_multiplier;
 				var curspeed: float = body.linear_velocity.dot(direction)
 				var accel_run: float = accel_run_k * max_speed_run
 				var addspeed: float = clampf(wishspeed - curspeed, 0, accel_run * dt)

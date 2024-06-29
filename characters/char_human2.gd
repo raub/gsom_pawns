@@ -28,7 +28,8 @@ func _step() -> void:
 	if time_now - _prev_step_time < _STEP_INTERVAL:
 		return
 	
-	if !_pawn.is_ground or _pawn.speed < 5.0:
+	var is_ground: bool = true if pawn.get_env("on_ground") else false
+	if !is_ground or _pawn.speed < 5.0:
 		return
 	
 	_prev_step_time = time_now

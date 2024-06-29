@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cwkm6pyeuhi3t"]
+[gd_scene load_steps=11 format=3 uid="uid://cwkm6pyeuhi3t"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mp8rm"]
 friction = 0.0
@@ -16,19 +16,13 @@ script/source = "extends RigidBody3D
 @export_range(0.2, 0.9) var slope_normal_y: float = 0.75
 
 
-var _cast: ShapeCast3D = null;
-var _ray: RayCast3D = null;
-
 var _vell := Vector3.ZERO
-var _pendingTossVel := Vector3.ZERO
-var _hasPendingTp := false
-var _pendingTpPos := Vector3.ZERO
+var _pending_toss_vel := Vector3.ZERO
+var _has_pending_tp := false
+var _pending_tp_pos := Vector3.ZERO
 
+var _parent: GsomPawn = null
 var _is_ground := false
-## Get the latest recorded state of touching the ground.
-var is_ground: bool = _is_ground:
-	get:
-		return _is_ground
 
 var _normal := Vector3.UP
 ## Get the current body-to-ground normal
@@ -59,53 +53,61 @@ var speed: float = 0.0:
 @onready var _shape_duck: CollisionShape3D = $ShapeDuck
 @onready var _mesh_walk: MeshInstance3D = $ShapeWalk/Mesh
 @onready var _mesh_duck: MeshInstance3D = $ShapeDuck/Mesh
-@onready var _cast_duck: ShapeCast3D = $CastDuck
-@onready var _cast_walk: ShapeCast3D = $CastWalk
+@onready var _cast: ShapeCast3D = $Cast
 @onready var _cast_up: ShapeCast3D = $CastUp
-@onready var _ray_duck: RayCast3D = $RayDuck
-@onready var _ray_walk: RayCast3D = $RayWalk
+@onready var _ray: RayCast3D = $Ray
+@onready var _marker_duck: Marker3D = $MarkerDuck
+@onready var _marker_walk: Marker3D = $MarkerWalk
 
 
 func _ready() -> void:
+	_parent = get_parent() as GsomPawn
+	if !_parent:
+		push_error(\"Parent must be a GsomPawn.\")
+		return
+	
 	_cast_up.add_exception(self)
-	_cast_duck.add_exception(self)
-	_cast_walk.add_exception(self)
-	_ray_duck.add_exception(self)
-	_ray_walk.add_exception(self)
+	_cast.add_exception(self)
+	_ray.add_exception(self)
 	
 	_unduck()
 
 
 func teleport(pos: Vector3) -> void:
-	_hasPendingTp = true
-	_pendingTpPos = pos
+	_has_pending_tp = true
+	_pending_tp_pos = pos
 
 
 func toss(velocity: Vector3) -> void:
-	_pendingTossVel += velocity
+	_pending_toss_vel += velocity
 
 
 func _duck() -> void:
+	if _parent.get_env(\"crouching\", false):
+		return
+	
+	_parent.set_env(\"crouching\", true)
+	
 	_shape_walk.disabled = true
 	_shape_duck.disabled = false
 	
 	_mesh_walk.visible = false
 	_mesh_duck.visible = is_debug_mesh
 	
-	_cast_duck.enabled = true
-	_cast_up.enabled = false
-	_ray_duck.enabled = true
+	_cast_up.enabled = true
 	
-	_cast_walk.enabled = false
-	_ray_walk.enabled = false
-	
-	_cast = _cast_duck
-	_ray = _ray_duck
+	_cast.position.y = _marker_duck.position.y
+	_ray.position.y = _marker_duck.position.y
 	
 	_head_y = 1.2
 
 
 func _unduck() -> void:
+	if _cast_up.is_colliding() or !_parent.get_env(\"crouching\", true):
+		return
+	
+	_parent.set_env(\"crouching\", false)
+	
 	# HACK: don't let the full shape pierce into floor
 	if _is_ground:
 		global_position.y += _shape_duck.position.y - 0.45
@@ -116,15 +118,10 @@ func _unduck() -> void:
 	_mesh_walk.visible = is_debug_mesh
 	_mesh_duck.visible = false
 	
-	_cast_duck.enabled = false
-	_cast_up.enabled = true
-	_ray_duck.enabled = false
+	_cast_up.enabled = false
 	
-	_cast_walk.enabled = true
-	_ray_walk.enabled = true
-	
-	_cast = _cast_walk
-	_ray = _ray_walk
+	_cast.position.y = _marker_walk.position.y
+	_ray.position.y = _marker_walk.position.y
 	
 	_head_y = 1.55
 
@@ -138,6 +135,7 @@ func _update_ground_state() -> void:
 	_normal = Vector3.UP
 	
 	if !result.size():
+		_parent.set_env(\"normal\", _normal)
 		return
 	
 	var max_y := Vector3.ZERO
@@ -146,43 +144,56 @@ func _update_ground_state() -> void:
 			max_y = item.normal
 	
 	if max_y.y < slope_normal_y:
+		_parent.set_env(\"normal\", _normal)
 		return
 	
 	_normal = max_y
 	_is_ground = true
 	
 	var dvell: Vector3 = (_vell - linear_velocity)
-	get_parent().accelerated.emit(dvell)
+	_parent.accelerated.emit(dvell)
 	if !wasGround:
-		get_parent().hit_ground.emit(dvell.y)
+		_parent.hit_ground.emit(dvell.y)
 		
 	if _ray.is_colliding():
 		_normal = _ray.get_collision_normal()
+	
+	_parent.set_env(\"normal\", _normal)
 
 
 func _process(dt) -> void:
-	get_parent().do_process(dt)
+	_parent.do_process(dt)
 
 
 func _physics_process(dt) -> void:
-	if _hasPendingTp:
+	if _has_pending_tp:
 		linear_velocity = Vector3.ZERO
-		global_position = _pendingTpPos
-		_hasPendingTp = false
-		_pendingTpPos = Vector3.ZERO
-		get_parent().moved.emit(global_position)
+		global_position = _pending_tp_pos
+		_has_pending_tp = false
+		_pending_tp_pos = Vector3.ZERO
+		_parent.reset_envs()
+		_parent.moved.emit(global_position)
 		return
 	
 	_update_ground_state()
+	
+	_parent.set_env(\"up_blocked\", _cast_up.is_colliding())
+	_parent.set_env(\"on_ground\", _is_ground)
+	
+	if _parent.get_action(\"duck\", false):
+		_duck()
+	else:
+		_unduck()
+	
 	_vell = linear_velocity
 	
-	get_parent().do_physics(dt)
+	_parent.do_physics(dt)
 	
-	get_parent().moved.emit(global_position)
+	_parent.moved.emit(global_position)
 
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
-	get_parent().do_integrate(state)
+	_parent.do_integrate(state)
 "
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qcngx"]
@@ -212,17 +223,13 @@ height = 0.9
 radial_segments = 24
 rings = 12
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_l250u"]
-height = 0.3
-radius = 0.3
-
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_wedyi"]
 height = 0.9
 radius = 0.3
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_4biv6"]
 height = 0.3
-radius = 0.3
+radius = 0.35
 
 [node name="PawnRigid" type="RigidBody3D"]
 top_level = true
@@ -256,28 +263,24 @@ shape = SubResource("SphereShape3D_eisk1")
 mesh = SubResource("SphereMesh_5hpne")
 skeleton = NodePath("../..")
 
-[node name="CastDuck" type="ShapeCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
-shape = SubResource("CylinderShape3D_l250u")
-target_position = Vector3(0, 0, 0)
-max_results = 4
-
 [node name="CastUp" type="ShapeCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
 shape = SubResource("CylinderShape3D_wedyi")
 target_position = Vector3(0, 0, 0)
 max_results = 4
 
-[node name="RayDuck" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
-target_position = Vector3(0, -0.4, 0)
-
-[node name="CastWalk" type="ShapeCast3D" parent="."]
+[node name="Cast" type="ShapeCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 shape = SubResource("CylinderShape3D_4biv6")
 target_position = Vector3(0, 0, 0)
 max_results = 4
 
-[node name="RayWalk" type="RayCast3D" parent="."]
+[node name="Ray" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
 target_position = Vector3(0, -0.4, 0)
+
+[node name="MarkerDuck" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
+
+[node name="MarkerWalk" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
