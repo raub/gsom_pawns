@@ -37,7 +37,7 @@ signal moved_head(head_y: float)
 signal hit_ground(speed_y: float)
 
 
-const _SCENE_DEFAULT: PackedScene = preload("./pawn_scene.tscn")
+const _SCENE_DEFAULT: PackedScene = preload("./pawn_human.tscn")
 
 ## Scene that will be instantiated for this pawn
 @export var scene: PackedScene = _SCENE_DEFAULT
@@ -71,7 +71,7 @@ var position: Vector3 = Vector3.ZERO:
 
 
 # Cache the child physics body after instantiation
-var _body: PhysicsBody3D = null
+var _body: Node3D = null
 ## Get the cached physical body object as instantiated from [code]scene[/code].
 var body: RigidBody3D = null:
 	get:
@@ -97,12 +97,12 @@ var _parent: Node3D = null
 
 func _ready() -> void:
 	_body = scene.instantiate()
-	if _body is PhysicsBody3D:
+	if _body is Node3D:
 		add_child(_body)
 		if !Engine.is_editor_hint():
 			_head_y = body.head_y
 	else:
-		push_error("The `scene` must be a PhysicsBody3D.")
+		push_error("The `scene` must be a Node3D.")
 		_body = _SCENE_DEFAULT.instantiate()
 		add_child(_body)
 	
@@ -195,12 +195,13 @@ func do_physics(dt: float) -> void:
 	for child: Node in get_children():
 		if child is GsomPawnHandler:
 			child._do_physics(self, dt)
+	
+	moved.emit(_body.global_position)
 
 
 func _process(dt: float) -> void:
 	if Engine.is_editor_hint():
 		return
-	
 	
 	var target_y: float = _body.head_y
 	if _head_y == target_y:

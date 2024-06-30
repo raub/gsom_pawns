@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://cihqtmcih8ejv"]
+
+[ext_resource type="Script" path="res://characters/char_vtol.gd" id="1_saf88"]
+[ext_resource type="PackedScene" uid="uid://dhcy3ffvjqwd3" path="res://addons/gsom_pawns/pawn/pawn_vtol.tscn" id="3_avq4x"]
+[ext_resource type="AudioStream" uid="uid://bo1cfertgs5od" path="res://characters/audio/pulsemachine.wav" id="4_mesrm"]
+[ext_resource type="AudioStream" uid="uid://btm3rfapf0vky" path="res://characters/audio/electrical_hum1.wav" id="5_on3yg"]
+[ext_resource type="Script" path="res://addons/gsom_pawns/pawn/pawn.gd" id="10_lbjy1"]
+
+[node name="CharVtol" type="Node3D"]
+script = ExtResource("1_saf88")
+
+[node name="GsomPawn" type="Node" parent="."]
+script = ExtResource("10_lbjy1")
+scene = ExtResource("3_avq4x")
+
+[node name="AudioEngine" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_mesrm")
+volume_db = -35.0
+autoplay = true
+
+[node name="AudioPower" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("5_on3yg")
+volume_db = -35.0

@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://chetyff60w70q"
-path="res://.godot/imported/pl_slosh2.wav-0123401f992b5072e54c4bf932a2e17d.sample"
+path="res://.godot/imported/pl_slosh2.wav-4a849281bec1276fc00639403e230014.sample"
 
 [deps]
 
-source_file="res://gdtricks/misc/audio/pl_slosh2.wav"
-dest_files=["res://.godot/imported/pl_slosh2.wav-0123401f992b5072e54c4bf932a2e17d.sample"]
+source_file="res://characters/audio/pl_slosh2.wav"
+dest_files=["res://.godot/imported/pl_slosh2.wav-4a849281bec1276fc00639403e230014.sample"]
 
 [params]
 

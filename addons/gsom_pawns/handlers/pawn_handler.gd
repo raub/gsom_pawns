@@ -2,6 +2,9 @@ extends Node
 class_name GsomPawnHandler
 
 
+@export var disabled := false
+
+
 func _do_process(_pawn: GsomPawn, _dt: float) -> void:
 	pass
 

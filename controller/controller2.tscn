@@ -69,25 +69,25 @@ layout_mode = 2
 theme_override_constants/separation = 42
 alignment = 1
 
-[node name="Row" type="HBoxContainer" parent="EscOverlay/CenterContainer/Column"]
+[node name="Row1" type="HBoxContainer" parent="EscOverlay/CenterContainer/Column"]
 layout_mode = 2
 theme_override_constants/separation = 42
 
-[node name="Fullscreen" type="Button" parent="EscOverlay/CenterContainer/Column/Row"]
+[node name="Fullscreen" type="Button" parent="EscOverlay/CenterContainer/Column/Row1"]
 custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 icon = ExtResource("3_rednw")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Windowed" type="Button" parent="EscOverlay/CenterContainer/Column/Row"]
+[node name="Windowed" type="Button" parent="EscOverlay/CenterContainer/Column/Row1"]
 custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 icon = ExtResource("4_nkqg1")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Quit" type="Button" parent="EscOverlay/CenterContainer/Column/Row"]
+[node name="Quit" type="Button" parent="EscOverlay/CenterContainer/Column/Row1"]
 custom_minimum_size = Vector2(96, 96)
 layout_mode = 2
 icon = ExtResource("5_d2cf1")
@@ -105,6 +105,21 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_font_sizes/font_size = 32
 text = "Teleport - Prev"
+
+[node name="Row2" type="HBoxContainer" parent="EscOverlay/CenterContainer/Column"]
+layout_mode = 2
+
+[node name="Human" type="Button" parent="EscOverlay/CenterContainer/Column/Row2"]
+layout_mode = 2
+text = "Human"
+
+[node name="Vtol" type="Button" parent="EscOverlay/CenterContainer/Column/Row2"]
+layout_mode = 2
+text = "Vtol"
+
+[node name="Spec" type="Button" parent="EscOverlay/CenterContainer/Column/Row2"]
+layout_mode = 2
+text = "Spec"
 
 [node name="Hud" type="Control" parent="."]
 visible = false

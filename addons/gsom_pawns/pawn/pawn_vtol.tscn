@@ -1,0 +1,150 @@
+[gd_scene load_steps=6 format=3 uid="uid://dhcy3ffvjqwd3"]
+
+[sub_resource type="GDScript" id="GDScript_2ne73"]
+script/source = "extends RigidBody3D
+
+
+var _is_debug_mesh := true
+## Show the debug mesh (default to true so you can see the pawn when added)
+@export var is_debug_mesh := true:
+	get:
+		return _is_debug_mesh
+	set(v):
+		_is_debug_mesh = v
+		_assign_is_debug_mesh()
+
+
+var _vell := Vector3.ZERO
+var _pending_toss_vel := Vector3.ZERO
+var _has_pending_tp := false
+var _pending_tp_pos := Vector3.ZERO
+
+var _parent: GsomPawn = null
+var _is_ground := false
+
+
+## Get the animated head/eye/camera position Y.
+##
+## When switching between hulls, the head position may change. E.g. from walking
+## to crouching, to crawling, to swimming, etc. So the current Y is animated from
+## one position to another with the speed of [code]head_speed[/code].
+var head_y: float = 0.5:
+	get:
+		return 0.5
+
+
+## Get current speed from the latest recorded velocity value.
+var speed: float = 0.0:
+	get:
+		return _vell.length()
+
+
+@onready var _mesh: MeshInstance3D = $Shape/Mesh
+@onready var _cast: ShapeCast3D = $Cast
+
+
+func _ready() -> void:
+	_parent = get_parent() as GsomPawn
+	if !_parent:
+		push_error(\"Parent must be a GsomPawn.\")
+		return
+	
+	_cast.add_exception(self)
+
+
+func teleport(pos: Vector3) -> void:
+	_has_pending_tp = true
+	_pending_tp_pos = pos
+
+
+func toss(velocity: Vector3) -> void:
+	_pending_toss_vel += velocity
+
+
+# Detect the isGround state from collision results from shape and ray casts
+# If was in air and hit ground - emits `pawn.hit_ground`
+func _update_ground_state() -> void:
+	var result: Array = _cast.collision_result
+	var wasGround: bool = _is_ground
+	_is_ground = false
+	
+	if !result.size():
+		return
+	
+	_is_ground = true
+	
+	if !wasGround:
+		_parent.hit_ground.emit(_vell.y - linear_velocity.y)
+
+
+func _process(dt) -> void:
+	_parent.do_process(dt)
+
+
+func _physics_process(dt) -> void:
+	if _has_pending_tp:
+		linear_velocity = Vector3.ZERO
+		global_position = _pending_tp_pos
+		_has_pending_tp = false
+		_pending_tp_pos = Vector3.ZERO
+		_parent.reset_envs()
+		_parent.moved.emit(global_position)
+		return
+	
+	_update_ground_state()
+	
+	_parent.set_env(\"on_ground\", _is_ground)
+	
+	var dvell: Vector3 = (_vell - linear_velocity)
+	_parent.accelerated.emit(dvell)
+	_vell = linear_velocity
+	
+	_parent.do_physics(dt)
+
+
+func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
+	_parent.do_integrate(state)
+
+
+func _assign_is_debug_mesh() -> void:
+	if _mesh:
+		_mesh.visible = _is_debug_mesh
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hbfe0"]
+size = Vector3(0.8, 0.4, 0.8)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tk41k"]
+size = Vector3(1, 0.5, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g11tl"]
+albedo_color = Color(0.34902, 0.858824, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_66jm8"]
+material = SubResource("StandardMaterial3D_g11tl")
+size = Vector3(1, 0.5, 1)
+
+[node name="PawnVtol" type="RigidBody3D"]
+top_level = true
+mass = 80.0
+gravity_scale = 0.0
+can_sleep = false
+continuous_cd = true
+max_contacts_reported = 4
+contact_monitor = true
+linear_damp_mode = 1
+angular_damp_mode = 1
+script = SubResource("GDScript_2ne73")
+
+[node name="Cast" type="ShapeCast3D" parent="."]
+shape = SubResource("BoxShape3D_hbfe0")
+target_position = Vector3(0, 0, 0)
+max_results = 4
+
+[node name="Shape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("BoxShape3D_tk41k")
+disabled = true
+
+[node name="Mesh" type="MeshInstance3D" parent="Shape"]
+mesh = SubResource("BoxMesh_66jm8")

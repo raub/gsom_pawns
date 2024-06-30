@@ -1,0 +1,121 @@
+[gd_scene load_steps=4 format=3 uid="uid://wj42jps0lkfw"]
+
+[sub_resource type="GDScript" id="GDScript_2ne73"]
+script/source = "extends Node3D
+
+
+var _is_debug_mesh := true
+## Show the debug mesh (default to true so you can see the pawn when added)
+@export var is_debug_mesh := true:
+	get:
+		return _is_debug_mesh
+	set(v):
+		_is_debug_mesh = v
+		_assign_is_debug_mesh()
+
+
+var _vell := Vector3.ZERO
+var _has_pending_tp := false
+var _pending_tp_pos := Vector3.ZERO
+var _parent: GsomPawn = null
+
+
+## Get the animated head/eye/camera position Y.
+var head_y: float = 0.0:
+	get:
+		return 0.0
+
+
+## Get current speed from the latest recorded velocity value.
+var speed: float = 0.0:
+	get:
+		var hor := Vector2(_vell.x, _vell.z)
+		return hor.length()
+
+
+@onready var _mesh: MeshInstance3D = $Mesh
+
+
+func _ready() -> void:
+	_parent = get_parent() as GsomPawn
+	if !_parent:
+		push_error(\"Parent must be a GsomPawn.\")
+		return
+
+
+func teleport(pos: Vector3) -> void:
+	_has_pending_tp = true
+	_pending_tp_pos = pos
+
+
+func toss(_velocity: Vector3) -> void:
+	pass
+
+
+func _process(dt) -> void:
+	_parent.do_process(dt)
+
+
+func _physics_process(dt) -> void:
+	if _has_pending_tp:
+		global_position = _pending_tp_pos
+		_has_pending_tp = false
+		_pending_tp_pos = Vector3.ZERO
+		_parent.reset_envs()
+		_parent.moved.emit(global_position)
+		return
+	
+	var wish_axis := Vector3.ZERO
+	
+	if _parent.get_action(\"forward\", false):
+		wish_axis.z -= 1.0
+	if _parent.get_action(\"back\", false):
+		wish_axis.z += 1.0
+	if _parent.get_action(\"moveleft\", false):
+		wish_axis.x -= 1.0
+	if _parent.get_action(\"moveright\", false):
+		wish_axis.x += 1.0
+	if _parent.get_action(\"jump\", false):
+		wish_axis.y += 1.0
+	if _parent.get_action(\"duck\", false):
+		wish_axis.y -= 1.0
+		
+	wish_axis = wish_axis.normalized()
+	
+	var direction: Vector3 = _parent.head_basis.z
+	direction.x *= wish_axis.x
+	direction.y *= wish_axis.y
+	direction.z *= wish_axis.z
+	
+	var max_speed: float = 7.0
+	if _parent.get_action(\"sprint\", false):
+		max_speed = 15.0
+	
+	if direction.length() and _vell.length() < max_speed:
+		_vell += direction * dt * 100.0
+	else:
+		_vell *= 0.95
+	
+	if _vell.length() > 0.01:
+		global_position += _vell * dt
+	
+	_parent.do_physics(dt)
+
+
+func _assign_is_debug_mesh() -> void:
+	if _mesh:
+		_mesh.visible = _is_debug_mesh
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r2jqr"]
+albedo_color = Color(0.568627, 0.494118, 0.890196, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_gwk2h"]
+material = SubResource("StandardMaterial3D_r2jqr")
+
+[node name="PawnSpectator" type="Node3D"]
+top_level = true
+script = SubResource("GDScript_2ne73")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_gwk2h")

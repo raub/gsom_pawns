@@ -8,8 +8,14 @@ absorbent = true
 script/source = "extends RigidBody3D
 
 
+var _is_debug_mesh := true
 ## Show the debug mesh (default to true so you can see the pawn when added)
-@export var is_debug_mesh := true
+@export var is_debug_mesh := true:
+	get:
+		return _is_debug_mesh
+	set(v):
+		_is_debug_mesh = v
+		_assign_is_debug_mesh()
 
 ## Limits what slopes are still considered ground.
 ## Higher values will cause even small slopes to be considered steep.
@@ -71,6 +77,8 @@ func _ready() -> void:
 	_ray.add_exception(self)
 	
 	_unduck()
+	
+	_assign_is_debug_mesh()
 
 
 func teleport(pos: Vector3) -> void:
@@ -150,10 +158,8 @@ func _update_ground_state() -> void:
 	_normal = max_y
 	_is_ground = true
 	
-	var dvell: Vector3 = (_vell - linear_velocity)
-	_parent.accelerated.emit(dvell)
 	if !wasGround:
-		_parent.hit_ground.emit(dvell.y)
+		_parent.hit_ground.emit(_vell.y - linear_velocity.y)
 		
 	if _ray.is_colliding():
 		_normal = _ray.get_collision_normal()
@@ -185,15 +191,23 @@ func _physics_process(dt) -> void:
 	else:
 		_unduck()
 	
+	var dvell: Vector3 = (_vell - linear_velocity)
+	_parent.accelerated.emit(dvell)
 	_vell = linear_velocity
 	
 	_parent.do_physics(dt)
-	
-	_parent.moved.emit(global_position)
 
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	_parent.do_integrate(state)
+
+
+func _assign_is_debug_mesh() -> void:
+	if !_mesh_walk:
+		return
+	
+	_mesh_walk.visible = _is_debug_mesh and _shape_duck.disabled
+	_mesh_duck.visible = _is_debug_mesh and _shape_walk.disabled
 "
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qcngx"]
@@ -231,7 +245,7 @@ radius = 0.3
 height = 0.3
 radius = 0.35
 
-[node name="PawnRigid" type="RigidBody3D"]
+[node name="PawnHuman" type="RigidBody3D"]
 top_level = true
 axis_lock_angular_x = true
 axis_lock_angular_y = true

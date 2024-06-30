@@ -1,5 +1,7 @@
 extends Node3D
 
+signal switched(kind: String)
+
 const _PITCH_MAX: float = PI * 0.49
 const _MOUSE_SENS_X: float = 0.002
 const _MOUSE_SENS_Y: float = 0.002
@@ -21,13 +23,16 @@ var _current_tp_index: int = 0
 @onready var _head: Node3D = $Head
 @onready var _esc_overlay: Control = $EscOverlay
 @onready var _hud: Control = $Hud
-@onready var _fullscreen: Button = $EscOverlay/CenterContainer/Column/Row/Fullscreen
-@onready var _windowed: Button = $EscOverlay/CenterContainer/Column/Row/Windowed
-@onready var _quit: Button = $EscOverlay/CenterContainer/Column/Row/Quit
+@onready var _fullscreen: Button = $EscOverlay/CenterContainer/Column/Row1/Fullscreen
+@onready var _windowed: Button = $EscOverlay/CenterContainer/Column/Row1/Windowed
+@onready var _quit: Button = $EscOverlay/CenterContainer/Column/Row1/Quit
 @onready var _bar_speed: ProgressBar = $Hud/CenterContainer/TextureRect/BarSpeed
 @onready var _button_next: Button = $EscOverlay/CenterContainer/Column/ButtonNext
 @onready var _button_prev: Button = $EscOverlay/CenterContainer/Column/ButtonPrev
 @onready var _audio_teleport: AudioStreamPlayer = $AudioTeleport
+@onready var _button_human: Button = $EscOverlay/CenterContainer/Column/Row2/Human
+@onready var _button_vtol: Button = $EscOverlay/CenterContainer/Column/Row2/Vtol
+@onready var _button_spec: Button = $EscOverlay/CenterContainer/Column/Row2/Spec
 
 
 func _ready() -> void:
@@ -43,6 +48,10 @@ func _ready() -> void:
 	
 	_button_next.pressed.connect(_tp_to_next)
 	_button_prev.pressed.connect(_tp_to_prev)
+	
+	_button_human.pressed.connect(func () -> void: switched.emit("human"))
+	_button_vtol.pressed.connect(func () -> void: switched.emit("vtol"))
+	_button_spec.pressed.connect(func () -> void: switched.emit("spec"))
 
 
 func _tp_delta(plus_minus_one: int) -> void:
@@ -127,6 +136,7 @@ func _process(_dt: float) -> void:
 	_pawn.set_action("moveright", Input.is_action_pressed("Right"))
 	_pawn.set_action("jump", Input.is_action_pressed("Jump"))
 	_pawn.set_action("duck", Input.is_action_pressed("Duck"))
+	_pawn.set_action("sprint", Input.is_action_pressed("Sprint"))
 	
 	if Input.is_action_just_released("Zoom"):
 		_zoom()
