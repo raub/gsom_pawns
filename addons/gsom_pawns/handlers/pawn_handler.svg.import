@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ciup4xa4cbh1f"
-path="res://.godot/imported/pawn_rigid.svg-7bb5b0db756ae0385903daa9050200f1.ctex"
+uid="uid://bc26pvxffa3ki"
+path="res://.godot/imported/pawn_handler.svg-1bc514477cb87afd221082ed3b4c7daa.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/gsom_pawns/pawn_rigid/pawn_rigid.svg"
-dest_files=["res://.godot/imported/pawn_rigid.svg-7bb5b0db756ae0385903daa9050200f1.ctex"]
+source_file="res://addons/gsom_pawns/handlers/pawn_handler.svg"
+dest_files=["res://.godot/imported/pawn_handler.svg-1bc514477cb87afd221082ed3b4c7daa.ctex"]
 
 [params]
 

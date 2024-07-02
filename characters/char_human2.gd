@@ -1,6 +1,8 @@
 extends Node3D
 
 const _STEP_INTERVAL: int = 400
+const _STEP_MINSPEED: float = 5.0
+const _STEP_MINSPEED_SQ: float = _STEP_MINSPEED * _STEP_MINSPEED
 
 
 var pawn: GsomPawn = null:
@@ -29,7 +31,11 @@ func _step() -> void:
 		return
 	
 	var is_ground: bool = pawn.get_env("on_ground", false)
-	if !is_ground or _pawn.speed < 5.0:
+	if !is_ground:
+		return
+	
+	var velocity_xz: Vector2 = Vector2(_pawn.linear_velocity.x, _pawn.linear_velocity.z)
+	if velocity_xz.length_squared() < _STEP_MINSPEED_SQ:
 		return
 	
 	_prev_step_time = time_now

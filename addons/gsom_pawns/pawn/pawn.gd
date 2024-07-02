@@ -26,15 +26,15 @@ class_name GsomPawn
 ## to fetch the position.
 signal moved(pos: Vector3)
 
-## The body changed speed
-signal accelerated(dv: Vector3)
+## The body changed its linear speed - only emits if [code]wish_axis[/code]
+signal accelerated_linear(dv: Vector3)
+signal accelerated_angular(dv: Vector3)
 
 ## The head position changed
 signal moved_head(head_y: float)
 
-## The body has just hit the ground with the specified vertical speed.
-## You can use it to apply fall damage or play sounds.
-signal hit_ground(speed_y: float)
+## The body has received or produced an event with optional data.
+signal triggered(name: String, value: Variant)
 
 
 const _SCENE_DEFAULT: PackedScene = preload("./pawn_human.tscn")
@@ -47,21 +47,20 @@ const _SCENE_DEFAULT: PackedScene = preload("./pawn_human.tscn")
 @export var head_speed: float = 1.0
 
 
-## Change this as the camera rotates.
-##
-## The body will match the rotation with [code]wish_axis[/code]. This is separated
-## for both convenience and ability to adjust for slopes.
-## [br]
-## [codeblock]
-## head_basis = camera.global_transform.basis
-## [/codeblock]
-var head_basis := Basis.IDENTITY
+## If the pawn needs to track its linear acceleration.
+@export var track_accel_linear: bool = false
 
 
-## Get current speed from the latest recorded velocity value.
-var speed: float = 0.0:
-	get:
-		return _body.speed
+## If the pawn needs to track its angular acceleration.
+@export var track_accel_angular: bool = false
+
+
+## If the pawn needs to track its linear acceleration.
+@export var has_velocity_linear: bool = true
+
+
+## If the pawn needs to track its angular acceleration.
+@export var has_velocity_angular: bool = false
 
 
 ## Get position of the body.
@@ -70,10 +69,24 @@ var position: Vector3 = Vector3.ZERO:
 		return _body.position
 
 
+var _cached_vell := Vector3.ZERO
+## Linear velocity vector, only updated if [code]has_velocity_linear[/code].
+var linear_velocity: Vector3 = Vector3.ZERO:
+	get:
+		return _cached_vell
+
+
+var _cached_vela := Vector3.ZERO
+## Angular velocity vector, only updated if [code]has_velocity_angular[/code].
+var angular_velocity: Vector3 = Vector3.ZERO:
+	get:
+		return _cached_vela
+
+
 # Cache the child physics body after instantiation
 var _body: Node3D = null
 ## Get the cached physical body object as instantiated from [code]scene[/code].
-var body: RigidBody3D = null:
+var body: Node3D = null:
 	get:
 		return _body
 
@@ -111,16 +124,6 @@ func _ready() -> void:
 		push_error("Parent must be a Node3D.")
 	
 	_body.global_position = _parent.global_position
-
-
-## Teleport the physical body to specified destination.
-func teleport(pos: Vector3) -> void:
-	_body.teleport(pos)
-
-
-## Add linear velocity to the body, such as from hit or explosion.
-func toss(velocity: Vector3) -> void:
-	_body.toss(velocity)
 
 
 ## Set an arbitrary input status. Such as [code]"jump", true[/code], or [code]"forward", 0.5[/code]
@@ -161,7 +164,7 @@ func set_env(name: String, value: Variant) -> void:
 	_envs[name] = value
 
 
-# Clears all env hints.
+## Clears all env hints.
 func reset_envs() -> void:
 	_envs.clear()
 
@@ -196,6 +199,23 @@ func do_physics(dt: float) -> void:
 		if child is GsomPawnHandler:
 			child._do_physics(self, dt)
 	
+	if track_accel_linear and has_velocity_linear:
+		var dvell: Vector3 = (_cached_vell - _body.linear_velocity)
+		if dvell.length_squared() > 0.0001:
+			accelerated_linear.emit(dvell)
+	
+	if has_velocity_linear:
+		_cached_vell = _body.linear_velocity
+	
+	if track_accel_angular and has_velocity_angular:
+		var dvela: Vector3 = (_cached_vela - _body.angular_velocity)
+		if dvela.length_squared() > 0.0001:
+			accelerated_angular.emit(dvela)
+			_cached_vela = _body.angular_velocity
+	
+	if has_velocity_angular:
+		_cached_vela = _body.angular_velocity
+	
 	moved.emit(_body.global_position)
 
 
@@ -221,4 +241,5 @@ func _physics_process(dt: float) -> void:
 		return
 	
 	_parent.global_position = _body.global_position
-
+	
+	moved.emit(_body.global_position)

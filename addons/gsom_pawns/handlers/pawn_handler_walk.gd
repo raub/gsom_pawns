@@ -48,6 +48,7 @@ func _do_integrate(pawn: GsomPawn, state: PhysicsDirectBodyState3D) -> void:
 	
 	var dt: float = state.step
 	var direction := Vector3.ZERO
+	var basis = pawn.get_action("basis", Basis.IDENTITY)
 	
 	var wish_axis := Vector3.ZERO
 	if pawn.get_action("forward", false):
@@ -65,8 +66,8 @@ func _do_integrate(pawn: GsomPawn, state: PhysicsDirectBodyState3D) -> void:
 	var normal: Vector3 = pawn.get_env("normal", Vector3.UP)
 	
 	if abs(wish_axis.z) > 0.1 || abs(wish_axis.x) > 0.1:
-		var forward: Vector3 = body.normal.cross(pawn.head_basis.x)
-		var left: Vector3 = body.normal.cross(-pawn.head_basis.z)
+		var forward: Vector3 = body.normal.cross(basis.x)
+		var left: Vector3 = body.normal.cross(-basis.z)
 		direction = (forward * wish_axis.z + left * wish_axis.x).normalized()
 	
 	var accel_fly: float = accel_fly_k * max_speed_run
@@ -88,7 +89,7 @@ func _do_integrate(pawn: GsomPawn, state: PhysicsDirectBodyState3D) -> void:
 			if direction.length():
 				var wishspeed: float = max_speed_run
 				if is_duck:
-					wishspeed *= duck_multiplier;
+					wishspeed *= duck_multiplier
 				var curspeed: float = body.linear_velocity.dot(direction)
 				var accel_run: float = accel_run_k * max_speed_run
 				var addspeed: float = clampf(wishspeed - curspeed, 0, accel_run * dt)

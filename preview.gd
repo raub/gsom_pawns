@@ -10,11 +10,13 @@ func _ready() -> void:
 	_register_actions()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
+	_controller.kind = "human"
 	_controller.possess(_char_human.pawn)
 	_controller.switched.connect(_switch_pawn)
 
 
 func _switch_pawn(kind: String) -> void:
+	_controller.kind = kind
 	if kind == "vtol":
 		_controller.possess(_char_vtol.pawn)
 	elif kind == "human":

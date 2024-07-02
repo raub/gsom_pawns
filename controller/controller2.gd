@@ -16,6 +16,8 @@ var _TP_LIST: PackedStringArray = [
 	"gdtricks-destructo-10",
 ]
 
+var kind: String = "unknown"
+
 var _pawn: GsomPawn = null
 var _current_tp_index: int = 0
 
@@ -93,7 +95,7 @@ func possess(pawn: GsomPawn) -> void:
 	
 	global_position = _pawn.position
 	_head.position.y = _pawn.head_y
-	_pawn.head_basis = _head.global_transform.basis
+	_pawn.set_action("basis", _head.global_transform.basis)
 
 
 func _set_fullscreen(is_full: bool) -> void:
@@ -124,7 +126,13 @@ func _process(_dt: float) -> void:
 	if !_pawn:
 		return
 	
-	_bar_speed.value = min(1.0, _pawn.speed * 0.04)
+	if kind == "vtol":
+		_bar_speed.value = min(1.0, _pawn.linear_velocity.length() * 0.04)
+	elif kind == "human":
+		var velocity_xz: Vector2 = Vector2(_pawn.linear_velocity.x, _pawn.linear_velocity.z)
+		_bar_speed.value = min(1.0, velocity_xz.length() * 0.04)
+	else:
+		_bar_speed.value = min(1.0, _pawn.linear_velocity.length() * 0.08)
 	
 	if !is_captured:
 		_pawn.reset_actions()
@@ -167,7 +175,7 @@ func _rotate_look(dx: float, dy: float) -> void:
 	)
 	
 	if _pawn:
-		_pawn.head_basis = _head.global_transform.basis
+		_pawn.set_action("basis", _head.global_transform.basis)
 
 
 func _unhandled_input(event: InputEvent) -> void:
