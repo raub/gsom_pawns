@@ -18,17 +18,9 @@ func _enter_tree() -> void:
 		preload("./handlers/pawn_handler_spec.gd"),
 		preload("./handlers/pawn_handler.svg"),
 	)
-	add_custom_type(
-		"GsomPawnHandlerVtol",
-		"Node",
-		preload("./handlers/pawn_handler_vtol.gd"),
-		preload("./handlers/pawn_handler.svg"),
-	)
 
 
 func _exit_tree() -> void:
-	remove_custom_type("GsomPawnRigid")
 	remove_custom_type("GsomPawn")
 	remove_custom_type("GsomPawnHandlerWalk")
 	remove_custom_type("GsomPawnHandlerSpec")
-	remove_custom_type("GsomPawnHandlerVtol")

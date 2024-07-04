@@ -9,7 +9,6 @@ var pawn: GsomPawn = null:
 	get:
 		return _pawn
 
-
 var _prev_step_time: int = 0
 
 @onready var _pawn: GsomPawn = $GsomPawn

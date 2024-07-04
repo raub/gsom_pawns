@@ -184,24 +184,29 @@ func get_env(name: String, default_value: Variant = null) -> Variant:
 	return _envs[name]
 
 
+## Check if the env hint exists.
+func has_env(name: String) -> bool:
+	return _envs.has(name)
+
+
 ## Framework method, should be called by [code]scene[/code] instance on [code]_integrate_forces[/code].
 func do_integrate(state: PhysicsDirectBodyState3D) -> void:
 	for child: Node in get_children():
-		if child is GsomPawnHandler:
+		if child is GsomPawnHandler and !child.disabled:
 			child._do_integrate(self, state)
 
 
 ## Framework method, should be called by [code]scene[/code] instance on [code]_process[/code].
 func do_process(dt: float) -> void:
 	for child: Node in get_children():
-		if child is GsomPawnHandler:
+		if child is GsomPawnHandler and !child.disabled:
 			child._do_process(self, dt)
 
 
 ## Framework method, should be called by [code]scene[/code] instance on [code]_physics_process[/code].
 func do_physics(dt: float) -> void:
 	for child: Node in get_children():
-		if child is GsomPawnHandler:
+		if child is GsomPawnHandler and !child.disabled:
 			child._do_physics(self, dt)
 	
 	if track_accel_linear and has_velocity_linear:
