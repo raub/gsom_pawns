@@ -34,7 +34,7 @@ size = Vector3(2.14928, 1, 1.19971)
 size = Vector3(1.5, 1, 0.8)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_djcxp"]
-size = Vector3(1, 1, 0.1)
+size = Vector3(1, 1, 0.2)
 
 [node name="Destructo3" instance=ExtResource("1_32n5e")]
 
@@ -90,15 +90,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.426, 4.824, -0.62)
 shape = SubResource("BoxShape3D_wgt21")
 
 [node name="Ramp1" type="CollisionShape3D" parent="Content/Collider" index="10"]
-transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, -10.0134, -2.97958, -8.39473)
+transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, -10.0134, -2.93308, -8.39473)
 shape = SubResource("BoxShape3D_glyi0")
 
 [node name="Ramp2" type="CollisionShape3D" parent="Content/Collider" index="11"]
-transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 9.40149, 0.0349772, 7.40564)
+transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 9.40149, 0.0967493, 7.40564)
 shape = SubResource("BoxShape3D_hopdf")
 
 [node name="Ramp3" type="CollisionShape3D" parent="Content/Collider" index="12"]
-transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 28.774, 3.20721, -8.54519)
+transform = Transform3D(0.707107, -0.707107, 0, 0.707107, 0.707107, 0, 0, 0, 1, 28.774, 3.27026, -8.54519)
 shape = SubResource("BoxShape3D_djcxp")
 
 [node name="LabelRoom" type="Label3D" parent="Content" index="2"]

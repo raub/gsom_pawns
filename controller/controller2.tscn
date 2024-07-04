@@ -1,0 +1,170 @@
+[gd_scene load_steps=10 format=3 uid="uid://byroba8fdub2m"]
+
+[ext_resource type="Script" path="res://controller/controller2.gd" id="1_00mp3"]
+[ext_resource type="Texture2D" uid="uid://djgwr7lhaxpy0" path="res://controller/pattern_56.png" id="2_qasxs"]
+[ext_resource type="Texture2D" uid="uid://ibg6htfu2u0m" path="res://controller/larger.png" id="3_rednw"]
+[ext_resource type="Texture2D" uid="uid://cdvna8pffqhjm" path="res://controller/smaller.png" id="4_nkqg1"]
+[ext_resource type="Texture2D" uid="uid://6v3gak7autbu" path="res://controller/power.png" id="5_d2cf1"]
+[ext_resource type="Texture2D" uid="uid://b3t5fp27ju86p" path="res://controller/crosshair012.png" id="6_6nh86"]
+[ext_resource type="AudioStream" uid="uid://80lx0vwk1w2s" path="res://gdtricks/misc/audio/teleport.ogg" id="7_littk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nssj4"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 1
+border_width_right = 1
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ub8ih"]
+bg_color = Color(0.145098, 0.635294, 0.701961, 1)
+shadow_size = 2
+
+[node name="Controller" type="Node3D"]
+script = ExtResource("1_00mp3")
+
+[node name="Head" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+current = true
+fov = 100.0
+far = 200.0
+
+[node name="EscOverlay" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="EscOverlay"]
+self_modulate = Color(0.0588235, 0.054902, 0.14902, 0.541176)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_qasxs")
+stretch_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="EscOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.411765, 0.309804, 1, 0.423529)
+
+[node name="CenterContainer" type="CenterContainer" parent="EscOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Column" type="VBoxContainer" parent="EscOverlay/CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 42
+alignment = 1
+
+[node name="Row1" type="HBoxContainer" parent="EscOverlay/CenterContainer/Column"]
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="Fullscreen" type="Button" parent="EscOverlay/CenterContainer/Column/Row1"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+icon = ExtResource("3_rednw")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Windowed" type="Button" parent="EscOverlay/CenterContainer/Column/Row1"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+icon = ExtResource("4_nkqg1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Quit" type="Button" parent="EscOverlay/CenterContainer/Column/Row1"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+icon = ExtResource("5_d2cf1")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ButtonNext" type="Button" parent="EscOverlay/CenterContainer/Column"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Teleport - Next"
+
+[node name="ButtonPrev" type="Button" parent="EscOverlay/CenterContainer/Column"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Teleport - Prev"
+
+[node name="Row2" type="HBoxContainer" parent="EscOverlay/CenterContainer/Column"]
+layout_mode = 2
+
+[node name="Human" type="Button" parent="EscOverlay/CenterContainer/Column/Row2"]
+layout_mode = 2
+text = "Human"
+
+[node name="Vtol" type="Button" parent="EscOverlay/CenterContainer/Column/Row2"]
+layout_mode = 2
+text = "Vtol"
+
+[node name="Spec" type="Button" parent="EscOverlay/CenterContainer/Column/Row2"]
+layout_mode = 2
+text = "Spec"
+
+[node name="Hud" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Hud"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="Hud/CenterContainer"]
+self_modulate = Color(0.321569, 1, 0.443137, 1)
+layout_mode = 2
+mouse_filter = 2
+texture = ExtResource("6_6nh86")
+
+[node name="BarSpeed" type="ProgressBar" parent="Hud/CenterContainer/TextureRect"]
+custom_minimum_size = Vector2(100, 12)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 60.0
+offset_bottom = -18.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_nssj4")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ub8ih")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
+[node name="AudioTeleport" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_littk")
+volume_db = -2.0
+pitch_scale = 2.0

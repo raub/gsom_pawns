@@ -1,14 +1,28 @@
 extends Node3D
 
-@onready var pawn_human = $CharHuman
-@onready var controller = $Controller
+@onready var _char_human: Node3D = $CharHuman2
+@onready var _char_vtol: Node3D = $CharVtol
+@onready var _char_spec: Node3D = $CharSpec
+@onready var _controller: Node3D = $Controller
 
 
 func _ready() -> void:
 	_register_actions()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	
-	controller.possess(pawn_human)
+	_controller.kind = "human"
+	_controller.possess(_char_human.pawn)
+	_controller.switched.connect(_switch_pawn)
+
+
+func _switch_pawn(kind: String) -> void:
+	_controller.kind = kind
+	if kind == "vtol":
+		_controller.possess(_char_vtol.pawn)
+	elif kind == "human":
+		_controller.possess(_char_human.pawn)
+	else:
+		_controller.possess(_char_spec.pawn)
 
 
 func _register_actions() -> void:
@@ -46,6 +60,11 @@ func _register_actions() -> void:
 	var keyZoom := InputEventMouseButton.new()
 	keyZoom.button_index = MOUSE_BUTTON_WHEEL_UP
 	InputMap.action_add_event("Zoom", keyZoom)
+	
+	InputMap.add_action("Sprint")
+	var keySprint := InputEventKey.new()
+	keySprint.keycode = KEY_SHIFT
+	InputMap.action_add_event("Sprint", keySprint)
 	
 	InputMap.add_action("Unzoom")
 	var keyUnzoom := InputEventMouseButton.new()

@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://wj42jps0lkfw"]
+
+[ext_resource type="Script" path="res://addons/gsom_pawns/pawn/pawn_spectator.gd" id="1_jonu4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r2jqr"]
+albedo_color = Color(0.568627, 0.494118, 0.890196, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_gwk2h"]
+material = SubResource("StandardMaterial3D_r2jqr")
+
+[node name="PawnSpectator" type="Node3D"]
+top_level = true
+script = ExtResource("1_jonu4")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_gwk2h")
