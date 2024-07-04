@@ -19,7 +19,7 @@ func _do_physics(pawn: GsomPawn, dt: float) -> void:
 	var body: Node3D = pawn.body
 	
 	var wish_axis := Vector3.ZERO
-	var basis = pawn.get_action("basis", Basis.IDENTITY)
+	var basis: Basis = pawn.get_action("basis", Basis.IDENTITY)
 	
 	if pawn.get_action("forward", false):
 		wish_axis.z -= 1.0

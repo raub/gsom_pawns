@@ -30,19 +30,12 @@ var head_y: float = 0.5:
 		return 0.5
 
 
-## Get current speed from the latest recorded velocity value.
-var speed: float = 0.0:
-	get:
-		return _vell.length()
-
-
 @onready var _mesh: MeshInstance3D = $Shape/Mesh
-@onready var _cast: ShapeCast3D = $Cast
+@onready var _engine_1: MeshInstance3D = $Shape/Mesh/Engine1
+@onready var _engine_2: MeshInstance3D = $Shape/Mesh/Engine2
 
 
 func _ready() -> void:
-	_cast.add_exception(self)
-	
 	_pawn = get_parent() as GsomPawn
 	if !_pawn:
 		push_error("Parent must be a GsomPawn.")
@@ -68,22 +61,6 @@ func toss(velocity: Vector3) -> void:
 	_pending_toss_vel += velocity
 
 
-# Detect the isGround state from collision results from shape and ray casts
-# If was in air and hit ground - emits `pawn.hit_ground`
-func _update_ground_state() -> void:
-	var result: Array = _cast.collision_result
-	var wasGround: bool = _is_ground
-	_is_ground = false
-	
-	if !result.size():
-		return
-	
-	_is_ground = true
-	
-	if !wasGround:
-		_pawn.triggered.emit("hit_ground", _vell.y - linear_velocity.y)
-
-
 func _process(dt) -> void:
 	_pawn.do_process(dt)
 
@@ -98,11 +75,16 @@ func _physics_process(dt) -> void:
 		_pawn.moved.emit(global_position)
 		return
 	
-	_update_ground_state()
-	
-	_pawn.set_env("on_ground", _is_ground)
-	
 	_pawn.do_physics(dt)
+	
+	if _is_debug_mesh:
+		if _pawn.get_action("sprint", false) or _pawn.get_action("forward", false):
+			_engine_1.position = Vector3(0.25, 0.0, 0.5)
+			_engine_2.position = Vector3(-0.25, 0.0, 0.5)
+		else:
+			_engine_1.position = Vector3(0.25, -0.25, 0.0)
+			_engine_2.position = Vector3(-0.25, -0.25, 0.0)
+	
 
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:

@@ -48,7 +48,7 @@ func _do_integrate(pawn: GsomPawn, state: PhysicsDirectBodyState3D) -> void:
 	
 	var dt: float = state.step
 	var direction := Vector3.ZERO
-	var basis = pawn.get_action("basis", Basis.IDENTITY)
+	var basis: Basis = pawn.get_action("basis", Basis.IDENTITY)
 	
 	var wish_axis := Vector3.ZERO
 	if pawn.get_action("forward", false):

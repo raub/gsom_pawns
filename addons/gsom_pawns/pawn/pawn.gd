@@ -149,6 +149,11 @@ func get_action(name: String, default_value: Variant = null) -> Variant:
 	return _actions[name]
 
 
+## Check if the input action exists.
+func has_action(name: String) -> bool:
+	return _actions.has(name)
+
+
 ## Store arbitrary environmental hints for the physical model or character.
 ##
 ## The relevant hints may be read by handlers or external character wrappers,
