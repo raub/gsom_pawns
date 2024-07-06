@@ -1,5 +1,25 @@
 extends GsomPawnHandler
 
+## Physics-based RigidBody3D pawn handler.
+##
+## It is based on Half-Life 1 movement, and the defaults reflect that.
+## The unit conversion is inferred from:
+## [url]https://twhl.info/wiki/page/Tutorial%3A_Dimensions[url].
+## Roughly: 1 unit ~ 0.024 m 1 m ~ 41 unit.
+## [br]
+## The acceleration code is similar to Quake 1 which can be found here:
+## [url]https://github.com/id-Software/Quake/blob/master/WinQuake/sv_user.c#L190[url].
+## [br]
+## The Pawn node is designed for Actors that can be controlled by players or AI.
+## A Pawn is the physical representation of a player or AI entity within the world.
+## The Pawn determines how it interacts with the world in terms of collisions
+## and other physical interactions.
+## Some types of games may not have a visible player mesh or avatar within the game.
+## Regardless, the Pawn still represents the physical location, rotation, etc. of
+## a player or entity within the game.
+## You will need a Controller to possess a Pawn and generate input signals for it.
+
+
 
 ## The body will try to reach this speed while running in ONE direction.
 ##
@@ -15,7 +35,7 @@ extends GsomPawnHandler
 ##
 ## However, the air-acceleration will depend on [code]max_speed_run[/code] value.
 ## This is acheived by changing the direction - as per Quake 1 / Half-Life 1
-## physics reference. The most obvious use-case is acceleration during bhop.
+## physics reference. The most obvious use-case is acceleration during BHOP.
 @export var max_speed_fly: float = 0.73 # 30 unit/sec
 
 ## Acceleration multiplier for running. The [code]max_speed_run[/code] is
@@ -28,13 +48,13 @@ extends GsomPawnHandler
 @export var accel_fly_k: float = 12.0
 
 ## This speed is directly assigned to the body when it performs a jump.
-@export var speed_jump: float = 5.9 # validate per 44 (and 62) unit - 1.07 m (and 1.5 m)
+@export var speed_jump: float = 6.2 # validate per 44 (and 62) unit - 1.07 m (and 1.5 m)
 
 ## Decrease the Y component of velocity by this much every second.
 ##
 ## Somehow it's not "9.8", just feels better this way. By default Half-Life 1 has
-## "sv_gravity 800" ~ 19.5 m/s2, so not far off.
-@export var accel_gravity: float = 18.0
+## "sv_gravity 800" ~ 19.5 m/s2.
+@export var accel_gravity: float = 19.5
 
 ## How soon whe body will stop with no input - it loses that many m/s from its speed.
 @export var stop_speed: float = 2.45 # ~100 unit/sec

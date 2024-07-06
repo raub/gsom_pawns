@@ -17,9 +17,7 @@ extends GsomPawnHandler
 
 func _do_integrate(pawn: GsomPawn, state: PhysicsDirectBodyState3D) -> void:
 	var body: RigidBody3D = pawn.body
-	
 	var dt: float = state.step
-	var wish_axis := Vector2.ZERO
 	
 	if pawn.has_action("basis"):
 		var basis: Basis = pawn.get_action("basis", Basis.IDENTITY)

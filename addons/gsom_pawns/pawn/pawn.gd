@@ -2,39 +2,33 @@
 extends Node
 class_name GsomPawn
 
-## Physics-based RigidBody3D pawn.
+## The GsomPawn framework core.
 ##
-## It is based on Half-Life 1 movement, and the defaults reflect that.
-## The unit conversion is inferred from:
-## [url]https://twhl.info/wiki/page/Tutorial%3A_Dimensions[url].
-## Roughly: 1 unit ~ 0.024 m 1 m ~ 41 unit.
-## [br]
-## The acceleration code is similar to Quake 1 which can be found here:
-## [url]https://github.com/id-Software/Quake/blob/master/WinQuake/sv_user.c#L190[url].
-## [br]
-## The Pawn node is designed for Actors that can be controlled by players or AI.
-## A Pawn is the physical representation of a player or AI entity within the world.
-## The Pawn determines how it interacts with the world in terms of collisions
-## and other physical interactions.
+## GsomPawn node is designed for actors that can be controlled by players or AI.
+## A pawn is the physical representation of a player or AI entity within the world.
+## The pawn determines how the entity interacts with the world in terms of
+## collisions and other physical interactions.
 ## Some types of games may not have a visible player mesh or avatar within the game.
 ## Regardless, the Pawn still represents the physical location, rotation, etc. of
 ## a player or entity within the game.
-## You will need a Controller to possess a Pawn and generate input signals for it.
+## You will need a Controller to possess a pawn and generate input signals for it.
 
 
-## The body has finished the '_physics_process' logic. This is the right time
-## to fetch the position.
+## The pawn has finished the '_physics_process' logic. This is the right time
+## to use the position to update cameras or other stuff.
 signal moved(pos: Vector3)
 
-## The body changed its linear speed - only emits if [code]wish_axis[/code]
+## The body changed its linear speed - only emits if [code]track_accel_linear[/code].
 signal accelerated_linear(dv: Vector3)
+
+## The body changed its angular speed - only emits if [code]track_accel_angular[/code].
 signal accelerated_angular(dv: Vector3)
 
-## The head position changed
+## The relative position of the head changed.
 signal moved_head(head_y: float)
 
 ## The body has received or produced an event with optional data.
-signal triggered(name: String, value: Variant)
+signal triggered(trigger_name: String, value: Variant)
 
 
 const _SCENE_DEFAULT: PackedScene = preload("./pawn_human.tscn")
@@ -91,12 +85,16 @@ var body: Node3D = null:
 		return _body
 
 
+## Set this value to define the intended head height of the body.
+## When this value is set from [code]_ready[/code], it will be applied
+## immediately without animation.
+var head_y_target: float = 0.0
+
 var _head_y: float = 0.0
 ## Get the animated head/eye/camera position Y.
 ##
-## When switching between hulls, the head position may change. E.g. from walking
-## to crouching, to crawling, to swimming, etc. So the current Y is animated from
-## one position to another with the speed of [code]head_speed[/code].
+## This value is animated towards [code]head_y_target[/code]
+## with the speed of [code]head_speed[/code].
 var head_y: float = _head_y:
 	get:
 		return _head_y
@@ -112,8 +110,6 @@ func _ready() -> void:
 	_body = scene.instantiate()
 	if _body is Node3D:
 		add_child(_body)
-		if !Engine.is_editor_hint():
-			_head_y = body.head_y
 	else:
 		push_error("The `scene` must be a Node3D.")
 		_body = _SCENE_DEFAULT.instantiate()
@@ -123,7 +119,8 @@ func _ready() -> void:
 	if !_parent:
 		push_error("Parent must be a Node3D.")
 	
-	_body.global_position = _parent.global_position
+	_body.position = _parent.global_position
+	_head_y = head_y_target
 
 
 ## Set an arbitrary input status. Such as [code]"jump", true[/code], or [code]"forward", 0.5[/code]
@@ -226,30 +223,25 @@ func do_physics(dt: float) -> void:
 	if has_velocity_angular:
 		_cached_vela = _body.angular_velocity
 	
-	moved.emit(_body.global_position)
+	_parent.global_position = _body.position
+	moved.emit(_body.position)
 
 
 func _process(dt: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	
-	var target_y: float = _body.head_y
-	if _head_y == target_y:
+	if _head_y == head_y_target:
 		return
 	
-	if target_y > _head_y:
-		_head_y = min(_head_y + head_speed * dt, target_y)
+	if head_y_target > _head_y:
+		_head_y = min(_head_y + head_speed * dt, head_y_target)
 	else:
-		_head_y = max(_head_y - head_speed * dt, target_y)
+		_head_y = max(_head_y - head_speed * dt, head_y_target)
 	
 	moved_head.emit(_head_y)
 
 
 func _physics_process(dt: float) -> void:
 	if Engine.is_editor_hint():
-		_body.global_position = _parent.global_position
-		return
-	
-	_parent.global_position = _body.global_position
-	
-	moved.emit(_body.global_position)
+		_body.position = _parent.global_position

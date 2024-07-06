@@ -20,8 +20,10 @@ script = ExtResource("4_jkpru")
 [node name="AudioEngine" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_mesrm")
 volume_db = -35.0
+unit_size = 20.0
 autoplay = true
 
 [node name="AudioPower" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("5_on3yg")
 volume_db = -20.0
+unit_size = 20.0

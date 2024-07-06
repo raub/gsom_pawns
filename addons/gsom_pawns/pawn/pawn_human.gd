@@ -1,5 +1,8 @@
 extends RigidBody3D
 
+const _HEAD_WALK: float = 1.55
+const _HEAD_DUCK: float = 1.2
+
 
 var _is_debug_mesh := true
 ## Show the debug mesh (default to true so you can see the pawn when added)
@@ -30,17 +33,6 @@ var normal: Vector3 = _normal:
 		return _normal
 
 
-var _head_y: float = 1.55
-## Get the animated head/eye/camera position Y.
-##
-## When switching between hulls, the head position may change. E.g. from walking
-## to crouching, to crawling, to swimming, etc. So the current Y is animated from
-## one position to another with the speed of [code]head_speed[/code].
-var head_y: float = _head_y:
-	get:
-		return _head_y
-
-
 @onready var _shape_walk: CollisionShape3D = $ShapeWalk
 @onready var _shape_duck: CollisionShape3D = $ShapeDuck
 @onready var _mesh_walk: MeshInstance3D = $ShapeWalk/Mesh
@@ -69,11 +61,11 @@ func _ready() -> void:
 	_assign_is_debug_mesh()
 
 
-func _handle_triggers(name: String, value: Variant) -> void:
-	if name == "teleport":
+func _handle_triggers(trigger_name: String, value: Variant) -> void:
+	if trigger_name == "teleport":
 		_has_pending_tp = true
 		_pending_tp_pos = value # Vector3
-	elif name == "toss":
+	elif trigger_name == "toss":
 		_pending_toss_vel += value # Vector3
 
 
@@ -94,7 +86,7 @@ func _duck() -> void:
 	_cast.position.y = _marker_duck.position.y
 	_ray.position.y = _marker_duck.position.y
 	
-	_head_y = 1.2
+	_pawn.head_y_target = _HEAD_DUCK
 
 
 func _unduck() -> void:
@@ -118,7 +110,7 @@ func _unduck() -> void:
 	_cast.position.y = _marker_walk.position.y
 	_ray.position.y = _marker_walk.position.y
 	
-	_head_y = 1.55
+	_pawn.head_y_target = _HEAD_WALK
 
 
 # Detect the isGround state from collision results from shape and ray casts

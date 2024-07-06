@@ -1,0 +1,123 @@
+[gd_scene load_steps=6 format=3 uid="uid://bhwuoapyskx81"]
+
+[ext_resource type="Script" path="res://controllers/esc_overlay/esc_overlay.gd" id="1_4lhdi"]
+[ext_resource type="Texture2D" uid="uid://djgwr7lhaxpy0" path="res://controllers/esc_overlay/pattern_56.png" id="1_5cni5"]
+[ext_resource type="Texture2D" uid="uid://ibg6htfu2u0m" path="res://controllers/esc_overlay/larger.png" id="2_dxsby"]
+[ext_resource type="Texture2D" uid="uid://cdvna8pffqhjm" path="res://controllers/esc_overlay/smaller.png" id="3_03uin"]
+[ext_resource type="Texture2D" uid="uid://6v3gak7autbu" path="res://controllers/esc_overlay/power.png" id="4_etsoq"]
+
+[node name="EscOverlay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4lhdi")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+self_modulate = Color(0.0588235, 0.054902, 0.14902, 0.541176)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_5cni5")
+stretch_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.411765, 0.309804, 1, 0.423529)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Column" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 42
+alignment = 1
+
+[node name="RowMain" type="HBoxContainer" parent="CenterContainer/Column"]
+layout_mode = 2
+theme_override_constants/separation = 42
+
+[node name="Fullscreen" type="Button" parent="CenterContainer/Column/RowMain"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+icon = ExtResource("2_dxsby")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Windowed" type="Button" parent="CenterContainer/Column/RowMain"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+icon = ExtResource("3_03uin")
+icon_alignment = 1
+expand_icon = true
+
+[node name="Quit" type="Button" parent="CenterContainer/Column/RowMain"]
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 2
+icon = ExtResource("4_etsoq")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ButtonNext" type="Button" parent="CenterContainer/Column"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Teleport - Next"
+
+[node name="ButtonPrev" type="Button" parent="CenterContainer/Column"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 32
+text = "Teleport - Prev"
+
+[node name="LabelCharacters" type="Label" parent="CenterContainer/Column"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Characters"
+
+[node name="RowCharacters" type="HBoxContainer" parent="CenterContainer/Column"]
+layout_mode = 2
+
+[node name="Human" type="Button" parent="CenterContainer/Column/RowCharacters"]
+layout_mode = 2
+text = "Human"
+
+[node name="Vtol" type="Button" parent="CenterContainer/Column/RowCharacters"]
+layout_mode = 2
+text = "Vtol"
+
+[node name="Spec" type="Button" parent="CenterContainer/Column/RowCharacters"]
+layout_mode = 2
+text = "Spec"
+
+[node name="LabelControllers" type="Label" parent="CenterContainer/Column"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Controllers"
+
+[node name="RowControllers" type="HBoxContainer" parent="CenterContainer/Column"]
+layout_mode = 2
+
+[node name="Fps" type="Button" parent="CenterContainer/Column/RowControllers"]
+layout_mode = 2
+text = "FPS"
+
+[node name="Rts" type="Button" parent="CenterContainer/Column/RowControllers"]
+layout_mode = 2
+text = "RTS
+"

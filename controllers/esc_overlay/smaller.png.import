@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6v3gak7autbu"
-path="res://.godot/imported/power.png-415c69c971ae96aaee410ae65562f441.ctex"
+uid="uid://cdvna8pffqhjm"
+path="res://.godot/imported/smaller.png-1053f349685dfcb02a605f6b1fa95126.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://controller/power.png"
-dest_files=["res://.godot/imported/power.png-415c69c971ae96aaee410ae65562f441.ctex"]
+source_file="res://controllers/esc_overlay/smaller.png"
+dest_files=["res://.godot/imported/smaller.png-1053f349685dfcb02a605f6b1fa95126.ctex"]
 
 [params]
 

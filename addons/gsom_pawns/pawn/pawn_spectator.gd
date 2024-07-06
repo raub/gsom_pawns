@@ -15,12 +15,6 @@ var linear_velocity := Vector3.ZERO
 var _pawn: GsomPawn = null
 
 
-## Get the animated head/eye/camera position Y.
-var head_y: float = 0.0:
-	get:
-		return 0.0
-
-
 @onready var _mesh: MeshInstance3D = $Mesh
 
 
@@ -29,6 +23,8 @@ func _ready() -> void:
 	if !_pawn:
 		push_error("Parent must be a GsomPawn.")
 		return
+	
+	_pawn.head_y_target = 0.0
 
 
 func _process(dt) -> void:
@@ -36,10 +32,10 @@ func _process(dt) -> void:
 
 
 func _physics_process(dt) -> void:
-	_pawn.do_physics(dt)
-	
 	if linear_velocity.length() > 0.01:
 		global_position += linear_velocity * dt
+
+	_pawn.do_physics(dt)
 
 
 func _assign_is_debug_mesh() -> void:

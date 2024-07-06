@@ -1,14 +1,14 @@
 extends GsomPawnHandler
 
 
-## The body will try to reach this speed while running in ONE direction.
-@export var max_speed: float = 7.2 # 300 unit/sec == AG standard
+## The body will try to reach this speed while moving.
+@export var max_speed: float = 8.0
 
 ## Acceleration multiplier. The [code]max_speed[/code] is
 ## multiplied by this to get the final acceleration.
 @export var accel_k: float = 12.0
 
-## How soon whe body will stop with no input - it loses that many m/s from its speed.
+## How soon whe body will stop with no input.
 @export var stop_speed: float = 2.45
 
 ## Move this much faster when sprinting

@@ -1,77 +1,31 @@
 extends Node3D
 
-@onready var _char_human: Node3D = $CharHuman2
+@onready var _char_human: Node3D = $CharHuman
 @onready var _char_vtol: Node3D = $CharVtol
 @onready var _char_spec: Node3D = $CharSpec
-@onready var _controller: Node3D = $Controller
+@onready var _controller_fps: Node3D = $ControllerFps
+@onready var _controller_rts: Node3D = $ControllerRts
 
 
 func _ready() -> void:
-	_register_actions()
-	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	_controller_fps.kind = "human"
+	_controller_fps.possess(_char_human.pawn)
+	_controller_fps.switched_character.connect(_switch_pawn)
+	_controller_fps.switched_controller.connect(_switch_controller)
 	
-	_controller.kind = "human"
-	_controller.possess(_char_human.pawn)
-	_controller.switched.connect(_switch_pawn)
+	_controller_rts.switched_controller.connect(_switch_controller)
 
 
-func _switch_pawn(kind: String) -> void:
-	_controller.kind = kind
-	if kind == "vtol":
-		_controller.possess(_char_vtol.pawn)
-	elif kind == "human":
-		_controller.possess(_char_human.pawn)
+func _switch_pawn(char_kind: String) -> void:
+	_controller_fps.kind = char_kind
+	if char_kind == "vtol":
+		_controller_fps.possess(_char_vtol.pawn)
+	elif char_kind == "human":
+		_controller_fps.possess(_char_human.pawn)
 	else:
-		_controller.possess(_char_spec.pawn)
+		_controller_fps.possess(_char_spec.pawn)
 
 
-func _register_actions() -> void:
-	InputMap.add_action("Duck")
-	var keyCtrl := InputEventKey.new()
-	keyCtrl.keycode = KEY_CTRL
-	InputMap.action_add_event("Duck", keyCtrl)
-	
-	InputMap.add_action("Jump")
-	var keySpace := InputEventKey.new()
-	keySpace.keycode = KEY_SPACE
-	InputMap.action_add_event("Jump", keySpace)
-	
-	InputMap.add_action("Forward")
-	var keyW := InputEventKey.new()
-	keyW.keycode = KEY_W
-	InputMap.action_add_event("Forward", keyW)
-	
-	InputMap.add_action("Back")
-	var keyS := InputEventKey.new()
-	keyS.keycode = KEY_S
-	InputMap.action_add_event("Back", keyS)
-	
-	InputMap.add_action("Left")
-	var keyA := InputEventKey.new()
-	keyA.keycode = KEY_A
-	InputMap.action_add_event("Left", keyA)
-	
-	InputMap.add_action("Right")
-	var keyD := InputEventKey.new()
-	keyD.keycode = KEY_D
-	InputMap.action_add_event("Right", keyD)
-	
-	InputMap.add_action("Zoom")
-	var keyZoom := InputEventMouseButton.new()
-	keyZoom.button_index = MOUSE_BUTTON_WHEEL_UP
-	InputMap.action_add_event("Zoom", keyZoom)
-	
-	InputMap.add_action("Sprint")
-	var keySprint := InputEventKey.new()
-	keySprint.keycode = KEY_SHIFT
-	InputMap.action_add_event("Sprint", keySprint)
-	
-	InputMap.add_action("Unzoom")
-	var keyUnzoom := InputEventMouseButton.new()
-	keyUnzoom.button_index = MOUSE_BUTTON_WHEEL_DOWN
-	InputMap.action_add_event("Unzoom", keyUnzoom)
-	
-	InputMap.add_action("Esc")
-	var keyEsc := InputEventKey.new()
-	keyEsc.keycode = KEY_ESCAPE
-	InputMap.action_add_event("Esc", keyEsc)
+func _switch_controller(ctrl_kind: String) -> void:
+	_controller_fps.is_focused = ctrl_kind == "fps"
+	_controller_rts.is_focused = ctrl_kind == "rts"

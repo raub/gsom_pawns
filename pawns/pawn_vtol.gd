@@ -11,23 +11,11 @@ var _is_debug_mesh := true
 		_assign_is_debug_mesh()
 
 
-var _vell := Vector3.ZERO
 var _pending_toss_vel := Vector3.ZERO
 var _has_pending_tp := false
 var _pending_tp_pos := Vector3.ZERO
 
 var _pawn: GsomPawn = null
-var _is_ground := false
-
-
-## Get the animated head/eye/camera position Y.
-##
-## When switching between hulls, the head position may change. E.g. from walking
-## to crouching, to crawling, to swimming, etc. So the current Y is animated from
-## one position to another with the speed of [code]head_speed[/code].
-var head_y: float = 0.5:
-	get:
-		return 0.5
 
 
 @onready var _mesh: MeshInstance3D = $Shape/Mesh
@@ -42,23 +30,16 @@ func _ready() -> void:
 		return
 	
 	_pawn.triggered.connect(_handle_triggers)
+	
+	_pawn.head_y_target = 0.5
 
 
-func _handle_triggers(name: String, value: Variant) -> void:
-	if name == "teleport":
+func _handle_triggers(trigger_name: String, value: Variant) -> void:
+	if trigger_name == "teleport":
 		_has_pending_tp = true
 		_pending_tp_pos = value # Vector3
-	elif name == "toss":
+	elif trigger_name == "toss":
 		_pending_toss_vel += value # Vector3
-
-
-func teleport(pos: Vector3) -> void:
-	_has_pending_tp = true
-	_pending_tp_pos = pos
-
-
-func toss(velocity: Vector3) -> void:
-	_pending_toss_vel += velocity
 
 
 func _process(dt) -> void:

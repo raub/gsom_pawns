@@ -21,7 +21,7 @@ func _process(_dt: float) -> void:
 
 func _update_audio() -> void:
 	var power_value: float = 0.0
-	if pawn.get_action("jump", false):
+	if pawn.get_action("jump", false) or pawn.get_action("forward", false):
 		power_value += 1
 	if pawn.get_action("duck", false):
 		power_value -= 1

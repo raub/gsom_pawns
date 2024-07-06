@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3t5fp27ju86p"
-path="res://.godot/imported/crosshair012.png-0d0841545cc99621fc4a8941188582cf.ctex"
+uid="uid://6v3gak7autbu"
+path="res://.godot/imported/power.png-dd40be137c47a692944273b6f2074a84.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://controller/crosshair012.png"
-dest_files=["res://.godot/imported/crosshair012.png-0d0841545cc99621fc4a8941188582cf.ctex"]
+source_file="res://controllers/esc_overlay/power.png"
+dest_files=["res://.godot/imported/power.png-dd40be137c47a692944273b6f2074a84.ctex"]
 
 [params]
 

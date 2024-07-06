@@ -1,11 +1,5 @@
 extends Node
 
-signal onSend(what, where)
-signal onReceive(what)
-
-signal onChangeTag(value)
-signal onChangeDest(value)
-
 @export var tag: String = ""
 @export var dest: String = ""
 
@@ -27,7 +21,7 @@ func detachArea(area: Area3D) -> void:
 		area.body_entered.disconnect(_tryToTeleport)
 
 
-func _tryPlaySound() -> void:
+func _try_play_sound() -> void:
 	for child: Node in get_children():
 		if child.has_method("play"):
 			child.call("play")
@@ -39,7 +33,9 @@ func _tryToTeleport(body: Node3D) -> void:
 		push_warning("Teleport - no 'dest'.")
 		return
 	
-	if !body.has_method("teleport"):
+	var _pawn := body.get_parent() as GsomPawn;
+	
+	if !_pawn:
 		return
 	
 	var teleports: Array = body.get_tree().get_nodes_in_group("Teleport").filter(
@@ -50,20 +46,16 @@ func _tryToTeleport(body: Node3D) -> void:
 		push_warning("Teleport - '%s' not found." % dest)
 		return
 	
-	var destTeleport: Node = teleports.front()
-	var parent: Node = destTeleport.get_parent()
+	var dest_teleport: Node = teleports.front()
+	var parent_3d := dest_teleport.get_parent() as Node3D
 	
-	if !(parent is Node3D):
+	if !parent_3d:
 		push_warning("Teleport - destination is not in Node3D.")
 		return
 	
-	var parent3d: Node3D = parent as Node3D
-	body.teleport(parent3d.global_position)
+	_pawn.triggered.emit("teleport", parent_3d.global_position)
 	
-	_tryPlaySound()
-	
-	emit_signal("onSend", body, parent3d)
-	destTeleport.emit_signal("onReceive", body)
+	_try_play_sound()
 
 
 static func getAvailabeTags(body: Node3D) -> PackedStringArray:
