@@ -12,7 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://cdpf5h17w710b" path="res://characters/audio/pl_step8.wav" id="10_xqfcn"]
 [ext_resource type="Script" path="res://addons/gsom_pawns/handlers/pawn_handler_walk.gd" id="11_clgec"]
 
-[node name="CharHuman2" type="Node3D"]
+[node name="CharHuman" type="Node3D"]
 script = ExtResource("1_1xyqf")
 
 [node name="Steps" type="Node3D" parent="."]

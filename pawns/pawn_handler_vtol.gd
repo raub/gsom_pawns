@@ -1,18 +1,12 @@
 extends GsomPawnHandler
 
 
-## The body will try to reach this speed while running in ONE direction.
-@export var max_speed: float = 7.2 # 300 unit/sec == AG standard
-
 ## Acceleration multiplier. The [code]max_speed[/code] is
 ## multiplied by this to get the final acceleration.
-@export var accel_k: float = 3.0
+@export var accel_k: float = 20.0
 
 ## Decrease the Y component of velocity by this much every second.
-##
-## Somehow it's not "9.8", just feels better this way. By default Half-Life 1 has
-## "sv_gravity 800" ~ 19.5 m/s2, so not far off.
-@export var accel_gravity: float = 18.0
+@export var accel_gravity: float = 19.5
 
 
 func _do_integrate(pawn: GsomPawn, state: PhysicsDirectBodyState3D) -> void:
@@ -34,9 +28,9 @@ func _do_integrate(pawn: GsomPawn, state: PhysicsDirectBodyState3D) -> void:
 		var hvel := Vector2(body.linear_velocity.x, body.linear_velocity.z)
 		body.linear_velocity.y -= (accel_gravity * dt) / max(1.0, hvel.length() * 0.3)
 		if thrust > 0:
-			body.linear_velocity -= body.basis.z * dt * thrust * accel_k * max_speed
+			body.linear_velocity -= body.basis.z * dt * thrust * accel_k
 	else:
 		body.linear_velocity *= 0.99
 		body.linear_velocity.y -= accel_gravity * dt
-		body.linear_velocity += body.basis.y * dt * (thrust * accel_k * max_speed + accel_gravity)
+		body.linear_velocity += body.basis.y * dt * (thrust * accel_k + accel_gravity)
 	

@@ -151,6 +151,11 @@ func has_action(name: String) -> bool:
 	return _actions.has(name)
 
 
+## Erase the input value.
+func erase_action(name: String) -> bool:
+	return _actions.erase(name)
+
+
 ## Store arbitrary environmental hints for the physical model or character.
 ##
 ## The relevant hints may be read by handlers or external character wrappers,
@@ -184,6 +189,11 @@ func get_env(name: String, default_value: Variant = null) -> Variant:
 ## Check if the env hint exists.
 func has_env(name: String) -> bool:
 	return _envs.has(name)
+
+
+## Erase the env hint by name.
+func erase_env(name: String) -> bool:
+	return _envs.erase(name)
 
 
 ## Framework method, should be called by [code]scene[/code] instance on [code]_integrate_forces[/code].

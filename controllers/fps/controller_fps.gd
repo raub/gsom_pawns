@@ -16,7 +16,7 @@ var _is_focused: bool = false
 		return _is_focused
 	set(v):
 		_is_focused = v
-		_assignIsFocused()
+		_assign_is_focused()
 
 var _pawn: GsomPawn = null
 
@@ -42,7 +42,7 @@ func _ready() -> void:
 	_esc_overlay.teleported.connect(_handle_teleport)
 	
 	_register_actions()
-	_assignIsFocused()
+	_assign_is_focused()
 
 
 func possess(pawn: GsomPawn) -> void:
@@ -62,7 +62,7 @@ func possess(pawn: GsomPawn) -> void:
 	_pawn.set_action("basis", _head.global_transform.basis)
 
 
-func _assignIsFocused() -> void:
+func _assign_is_focused() -> void:
 	if !_camera:
 		return
 	

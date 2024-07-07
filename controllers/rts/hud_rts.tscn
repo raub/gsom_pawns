@@ -1,0 +1,188 @@
+[gd_scene load_steps=4 format=3 uid="uid://blgmgcyslq125"]
+
+[ext_resource type="Texture2D" uid="uid://du2grbsry6x88" path="res://gdota/dota.jpg" id="1_5ysq5"]
+[ext_resource type="Script" path="res://controllers/rts/hud_rts.gd" id="1_gyrv4"]
+[ext_resource type="PackedScene" uid="uid://bg1yyf25mknyi" path="res://controllers/rts/action_slot.tscn" id="2_osufx"]
+
+[node name="HudRts" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("1_gyrv4")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -534.0
+offset_top = -240.0
+offset_right = 534.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 0
+
+[node name="RectMap" type="ColorRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(240, 240)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer/RectMap"]
+self_modulate = Color(0.690196, 0.690196, 0.690196, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_5ysq5")
+expand_mode = 4
+
+[node name="Control" type="Control" parent="HBoxContainer/RectMap/TextureRect"]
+anchors_preset = 0
+offset_left = 115.0
+offset_top = 122.0
+offset_right = 155.0
+offset_bottom = 162.0
+
+[node name="Line2D" type="Line2D" parent="HBoxContainer/RectMap/TextureRect/Control"]
+points = PackedVector2Array(-20, -10, 20, -10, 15, 10, -15, 10)
+closed = true
+width = 2.0
+default_color = Color(1, 0.709804, 0, 1)
+
+[node name="RectUnits" type="ColorRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(512, 192)
+layout_mode = 2
+size_flags_vertical = 8
+color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+
+[node name="RectActions" type="ColorRect" parent="HBoxContainer"]
+custom_minimum_size = Vector2(316, 240)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+
+[node name="RectActionsGray" type="ColorRect" parent="HBoxContainer/RectActions"]
+self_modulate = Color(0.690196, 0.690196, 0.690196, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.447059, 0.447059, 0.447059, 1)
+
+[node name="Control" type="Control" parent="HBoxContainer/RectActions/RectActionsGray"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Grid" type="GridContainer" parent="HBoxContainer/RectActions/RectActionsGray/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 2
+theme_override_constants/v_separation = 2
+columns = 4
+
+[node name="Slot0" parent="HBoxContainer/RectActions/RectActionsGray/Control/Grid" instance=ExtResource("2_osufx")]
+layout_mode = 2
+
+[node name="Slot1" parent="HBoxContainer/RectActions/RectActionsGray/Control/Grid" instance=ExtResource("2_osufx")]
+layout_mode = 2
+
+[node name="Slot2" parent="HBoxContainer/RectActions/RectActionsGray/Control/Grid" instance=ExtResource("2_osufx")]
+layout_mode = 2
+
+[node name="Slot3" parent="HBoxContainer/RectActions/RectActionsGray/Control/Grid" instance=ExtResource("2_osufx")]
+layout_mode = 2
+
+[node name="Slot4" parent="HBoxContainer/RectActions/RectActionsGray/Control/Grid" instance=ExtResource("2_osufx")]
+layout_mode = 2
+
+[node name="Slot5" parent="HBoxContainer/RectActions/RectActionsGray/Control/Grid" instance=ExtResource("2_osufx")]
+layout_mode = 2
+
+[node name="Slot6" parent="HBoxContainer/RectActions/RectActionsGray/Control/Grid" instance=ExtResource("2_osufx")]
+layout_mode = 2
+
+[node name="Slot7" parent="HBoxContainer/RectActions/RectActionsGray/Control/Grid" instance=ExtResource("2_osufx")]
+layout_mode = 2
+
+[node name="Slot8" parent="HBoxContainer/RectActions/RectActionsGray/Control/Grid" instance=ExtResource("2_osufx")]
+layout_mode = 2
+
+[node name="Slot9" parent="HBoxContainer/RectActions/RectActionsGray/Control/Grid" instance=ExtResource("2_osufx")]
+layout_mode = 2
+
+[node name="Slot10" parent="HBoxContainer/RectActions/RectActionsGray/Control/Grid" instance=ExtResource("2_osufx")]
+layout_mode = 2
+
+[node name="Slot11" parent="HBoxContainer/RectActions/RectActionsGray/Control/Grid" instance=ExtResource("2_osufx")]
+layout_mode = 2
+
+[node name="ScrollLeft" type="Control" parent="."]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="ScrollRight" type="Control" parent="."]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="ScrollUp" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+mouse_filter = 1
+
+[node name="ScrollDown" type="Control" parent="."]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 1

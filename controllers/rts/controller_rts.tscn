@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdly6afa0mx3e"]
+
+[ext_resource type="Script" path="res://controllers/rts/controller_rts.gd" id="1_cei30"]
+[ext_resource type="PackedScene" uid="uid://bhwuoapyskx81" path="res://controllers/esc_overlay/esc_overlay.tscn" id="2_ahdhq"]
+[ext_resource type="PackedScene" uid="uid://blgmgcyslq125" path="res://controllers/rts/hud_rts.tscn" id="3_702av"]
+
+[node name="ControllerRts" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, -196)
+script = ExtResource("1_cei30")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.998135, 0.0539027, -0.0286606, 0, 0.469472, 0.882948, 0.0610485, -0.881301, 0.468596, 0, 5.5, 0)
+far = 100.0
+
+[node name="EscOverlay" parent="." instance=ExtResource("2_ahdhq")]
+visible = false
+controller_kind = "rts"
+
+[node name="HudRts" parent="." instance=ExtResource("3_702av")]

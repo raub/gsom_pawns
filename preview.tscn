@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://preview.gd" id="1_8h8be"]
 [ext_resource type="PackedScene" uid="uid://o047sh8xi1sg" path="res://gdtricks/scenes/gdtricks.tscn" id="2_on0h7"]
-[ext_resource type="PackedScene" uid="uid://byroba8fdub2m" path="res://controllers/controller_fps.tscn" id="4_2qcum"]
-[ext_resource type="PackedScene" uid="uid://bdly6afa0mx3e" path="res://controllers/controller_rts.tscn" id="4_xd27h"]
+[ext_resource type="PackedScene" uid="uid://byroba8fdub2m" path="res://controllers/fps/controller_fps.tscn" id="4_2qcum"]
+[ext_resource type="PackedScene" uid="uid://bdly6afa0mx3e" path="res://controllers/rts/controller_rts.tscn" id="4_xd27h"]
 [ext_resource type="PackedScene" uid="uid://fdumqv0of5vw" path="res://characters/char_human.tscn" id="5_jsp8d"]
 [ext_resource type="PackedScene" uid="uid://cihqtmcih8ejv" path="res://characters/char_vtol.tscn" id="5_meeal"]
 [ext_resource type="PackedScene" uid="uid://d06r2iq5bykhn" path="res://characters/char_spec.tscn" id="6_hc0ut"]
