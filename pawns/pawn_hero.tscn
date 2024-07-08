@@ -16,6 +16,7 @@ height = 1.0
 
 [node name="PawnHero" type="CharacterBody3D"]
 top_level = true
+collision_layer = 257
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true

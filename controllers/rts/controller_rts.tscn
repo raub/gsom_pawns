@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bdly6afa0mx3e"]
+[gd_scene load_steps=5 format=3 uid="uid://bdly6afa0mx3e"]
 
 [ext_resource type="Script" path="res://controllers/rts/controller_rts.gd" id="1_cei30"]
 [ext_resource type="PackedScene" uid="uid://bhwuoapyskx81" path="res://controllers/esc_overlay/esc_overlay.tscn" id="2_ahdhq"]
 [ext_resource type="PackedScene" uid="uid://blgmgcyslq125" path="res://controllers/rts/hud_rts.tscn" id="3_702av"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5bf22"]
+size = Vector3(2, 2, 2)
 
 [node name="ControllerRts" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, -196)
@@ -17,3 +20,12 @@ visible = false
 controller_kind = "rts"
 
 [node name="HudRts" parent="." instance=ExtResource("3_702av")]
+
+[node name="AreaSelect" type="Area3D" parent="."]
+top_level = true
+visible = false
+collision_layer = 2
+collision_mask = 2
+
+[node name="ShapeSelect" type="CollisionShape3D" parent="AreaSelect"]
+shape = SubResource("BoxShape3D_5bf22")

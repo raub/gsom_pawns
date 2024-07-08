@@ -11,6 +11,7 @@ script = ExtResource("1_a43tm")
 [node name="GsomPawn" type="Node" parent="."]
 script = ExtResource("2_0v8ee")
 scene = ExtResource("3_vx6we")
+has_velocity_linear = true
 
 [node name="GsomPawnHandlerSpec" type="Node" parent="GsomPawn"]
 script = ExtResource("4_go5v4")

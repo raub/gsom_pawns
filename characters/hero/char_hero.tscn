@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dmfq666h8ixqm"]
+[gd_scene load_steps=13 format=3 uid="uid://dmfq666h8ixqm"]
 
 [ext_resource type="Script" path="res://characters/hero/char_hero.gd" id="1_esekr"]
 [ext_resource type="AudioStream" uid="uid://g4ddvstcstn" path="res://characters/audio/pl_step1.wav" id="2_obn2p"]
@@ -11,6 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://cdpf5h17w710b" path="res://characters/audio/pl_step8.wav" id="9_7hfur"]
 [ext_resource type="Script" path="res://addons/gsom_pawns/pawn/pawn.gd" id="10_655o3"]
 [ext_resource type="Script" path="res://pawns/pawn_handler_hero.gd" id="11_l6oej"]
+[ext_resource type="PackedScene" uid="uid://dlk5xq1k5oigm" path="res://pawns/pawn_hero.tscn" id="11_xtvbe"]
 
 [node name="CharHero" type="Node3D"]
 script = ExtResource("1_esekr")
@@ -51,6 +52,7 @@ volume_db = -5.0
 
 [node name="GsomPawn" type="Node" parent="."]
 script = ExtResource("10_655o3")
+scene = ExtResource("11_xtvbe")
 
 [node name="PawnHandlerHero" type="Node" parent="GsomPawn"]
 script = ExtResource("11_l6oej")

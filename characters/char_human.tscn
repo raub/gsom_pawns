@@ -51,6 +51,7 @@ volume_db = -5.0
 
 [node name="GsomPawn" type="Node" parent="."]
 script = ExtResource("10_2q8o8")
+has_velocity_linear = true
 
 [node name="GsomPawnHandlerWalk" type="Node" parent="GsomPawn"]
 script = ExtResource("11_clgec")

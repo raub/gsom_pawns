@@ -27,10 +27,15 @@ var _is_focused: bool = false
 #var _pawns: Array[GsomPawn] = []
 var _zoom_offset: float = 0.0
 
+var _is_selecting: bool = false
+var _selection_start: Vector3 = Vector3.ZERO
+
 
 @onready var _esc_overlay: Control = $EscOverlay
 @onready var _hud_rts: Control = $HudRts
 @onready var _camera: Camera3D = $Camera3D
+@onready var _area_select: Area3D = $AreaSelect
+@onready var _shape_select: CollisionShape3D = $AreaSelect/ShapeSelect
 
 
 func _ready() -> void:
@@ -59,6 +64,8 @@ func _process(dt: float) -> void:
 		_hud_rts.visible = is_captured
 	
 	if !is_captured:
+		_is_selecting = false
+		_selection_start = Vector3.ZERO
 		return
 	
 	if Input.is_action_just_released("RTS_Zoom"):
@@ -74,26 +81,81 @@ func _process(dt: float) -> void:
 		_hud_rts.move_map_screen((pox_xz - _PAN_MIN) / _PAN_SIZE)
 
 
-func _physics_process(delta):
+func _physics_process(_dt: float) -> void:
 	if !_is_focused:
 		return
 	var is_captured: bool = Input.mouse_mode == Input.MOUSE_MODE_CONFINED
 	if !is_captured:
 		return
 	
-	if !Input.is_action_pressed("RTS_Pick"):
+	if !_is_selecting and Input.is_action_pressed("RTS_Pick"):
+		var result: Dictionary = _physics_process_pick_ray()
+		if !result.position:
+			return
+		_is_selecting = true
+		_selection_start = _physics_process_pick_ray().position
 		return
 	
+	if _is_selecting and !Input.is_action_pressed("RTS_Pick"):
+		_is_selecting = false
+		var result: Dictionary = _physics_process_pick_ray()
+		var _selection_end: Vector3 = result.position
+		var diff: Vector3 = _selection_end - _selection_start
+		
+		# Point case
+		if diff.length_squared() < 1:
+			prints("pick", result.collider);
+			return
+		
+		var result_box: Array[Dictionary] = _physics_process_pick_shape(_selection_start, _selection_end)
+		prints("result_box", result_box);
+		
+		return
+
+
+func _physics_process_pick_ray() -> Dictionary:
 	var space_state = get_world_3d().direct_space_state
 	var mousepos = get_viewport().get_mouse_position()
-
+	
 	var origin: Vector3 = _camera.project_ray_origin(mousepos)
 	var end: Vector3 = origin + _camera.project_ray_normal(mousepos) * _RAY_LENGTH
 	var query := PhysicsRayQueryParameters3D.create(origin, end)
-	query.collide_with_areas = false
-
+	#query.collision_mask = 0x100
+	
 	var result = space_state.intersect_ray(query)
-	prints("result", result)
+	return result
+
+
+func _physics_process_pick_shape(start: Vector3, end: Vector3) -> Array[Dictionary]:
+	#_area_select.transform = _camera.global_transform
+	_area_select.transform.origin = (start + end) * 0.5
+	var box := _shape_select.shape as BoxShape3D
+	box.size = Vector3(abs(end.x - start.x), 5.0, abs(end.z - start.z))
+	
+	#return {}
+	#
+	var space_state = get_world_3d().direct_space_state
+	#var query := PhysicsShapeQueryParameters3D.create(start, end)
+	
+	var shape_rid = PhysicsServer3D.box_shape_create()
+	PhysicsServer3D.shape_set_data(
+		shape_rid,
+		Vector3(abs(end.x - start.x), 5.0, abs(end.z - start.z))
+	)
+	
+	var params = PhysicsShapeQueryParameters3D.new()
+	params.shape_rid = shape_rid
+	#params.transform = Transform3D(_camera.transform)
+	params.transform.origin = (start + end) * 0.5
+	params.collision_mask = 0x100
+	
+	# Execute physics queries here...
+	var result = space_state.intersect_shape(params, 16)
+	
+	# Release the shape when done with physics queries.
+	PhysicsServer3D.free_rid(shape_rid)
+	
+	return result
 
 
 func _pan(dxy: Vector2) -> void:
@@ -105,6 +167,9 @@ func _pan(dxy: Vector2) -> void:
 
 
 func _assign_is_focused() -> void:
+	_is_selecting = false
+	_selection_start = Vector3.ZERO
+	
 	if !_camera:
 		return
 	

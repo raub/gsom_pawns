@@ -33,8 +33,14 @@ signal triggered(trigger_name: String, value: Variant)
 
 const _SCENE_DEFAULT: PackedScene = preload("./pawn_human.tscn")
 
+var _scene: PackedScene = _SCENE_DEFAULT
 ## Scene that will be instantiated for this pawn
-@export var scene: PackedScene = _SCENE_DEFAULT
+@export var scene: PackedScene = _SCENE_DEFAULT:
+	get:
+		return _scene
+	set(v):
+		_scene = v
+		_assign_scene()
 
 
 ## How quickly the head moves between hulls.
@@ -50,7 +56,7 @@ const _SCENE_DEFAULT: PackedScene = preload("./pawn_human.tscn")
 
 
 ## If the pawn needs to track its linear acceleration.
-@export var has_velocity_linear: bool = true
+@export var has_velocity_linear: bool = false
 
 
 ## If the pawn needs to track its angular acceleration.
@@ -107,20 +113,34 @@ var _parent: Node3D = null
 
 
 func _ready() -> void:
-	_body = scene.instantiate()
-	if _body is Node3D:
-		add_child(_body)
-	else:
-		push_error("The `scene` must be a Node3D.")
-		_body = _SCENE_DEFAULT.instantiate()
-		add_child(_body)
-	
 	_parent = get_parent() as Node3D
 	if !_parent:
 		push_error("Parent must be a Node3D.")
 	
-	_body.position = _parent.global_position
+	_assign_scene()
+
+
+func _assign_scene() -> void:
+	if !_parent:
+		return
+	
+	if _body:
+		remove_child(_body)
+		_body.queue_free()
+	
+	if !_scene:
+		push_error("The `scene` is not set.")
+		_scene = _SCENE_DEFAULT
+		
+	_body = _scene.instantiate()
+	if !(_body is Node3D):
+		push_error("The `scene` must be a Node3D.")
+		_scene = _SCENE_DEFAULT
+		_body = _scene.instantiate()
+	add_child(_body)
+	
 	_head_y = head_y_target
+	_body.position = _parent.global_position
 
 
 ## Set an arbitrary input status. Such as [code]"jump", true[/code], or [code]"forward", 0.5[/code]
