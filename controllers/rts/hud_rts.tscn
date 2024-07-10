@@ -1,8 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://blgmgcyslq125"]
+[gd_scene load_steps=5 format=3 uid="uid://blgmgcyslq125"]
 
 [ext_resource type="Texture2D" uid="uid://du2grbsry6x88" path="res://gdota/dota.jpg" id="1_5ysq5"]
 [ext_resource type="Script" path="res://controllers/rts/hud_rts.gd" id="1_gyrv4"]
 [ext_resource type="PackedScene" uid="uid://bg1yyf25mknyi" path="res://controllers/rts/action_slot.tscn" id="2_osufx"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_37ppk"]
+bg_color = Color(0.145098, 0.6, 0.32549, 0.12549)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.145098, 1, 0.32549, 1)
 
 [node name="HudRts" type="Control"]
 layout_mode = 3
@@ -186,3 +194,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 1
+
+[node name="SelectionRect" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_37ppk")

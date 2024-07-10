@@ -1,0 +1,58 @@
+[gd_scene load_steps=13 format=3 uid="uid://dmfq666h8ixqm"]
+
+[ext_resource type="Script" path="res://characters/unit/char_unit.gd" id="1_hb2i6"]
+[ext_resource type="AudioStream" uid="uid://g4ddvstcstn" path="res://characters/audio/pl_step1.wav" id="2_35esn"]
+[ext_resource type="AudioStream" uid="uid://d0swr5m7o75wc" path="res://characters/audio/pl_step2.wav" id="3_wcuda"]
+[ext_resource type="AudioStream" uid="uid://cxh8vyh7utwth" path="res://characters/audio/pl_step3.wav" id="4_g44f5"]
+[ext_resource type="AudioStream" uid="uid://doui71kb1nsmu" path="res://characters/audio/pl_step4.wav" id="5_t4vup"]
+[ext_resource type="AudioStream" uid="uid://byulds4oocvdf" path="res://characters/audio/pl_step5.wav" id="6_77j4d"]
+[ext_resource type="AudioStream" uid="uid://cb5164hn1y1db" path="res://characters/audio/pl_step6.wav" id="7_kwi8j"]
+[ext_resource type="AudioStream" uid="uid://cr708bsutdcmo" path="res://characters/audio/pl_step7.wav" id="8_l84eq"]
+[ext_resource type="AudioStream" uid="uid://cdpf5h17w710b" path="res://characters/audio/pl_step8.wav" id="9_k2yd2"]
+[ext_resource type="Script" path="res://addons/gsom_pawns/pawn/pawn.gd" id="10_7s4ma"]
+[ext_resource type="PackedScene" uid="uid://dlk5xq1k5oigm" path="res://pawns/pawn_unit.tscn" id="11_lyjb6"]
+[ext_resource type="Script" path="res://pawns/pawn_handler_unit.gd" id="12_5cnkc"]
+
+[node name="CharUnit" type="Node3D"]
+script = ExtResource("1_hb2i6")
+
+[node name="Steps" type="Node3D" parent="."]
+
+[node name="Step1" type="AudioStreamPlayer3D" parent="Steps"]
+stream = ExtResource("2_35esn")
+volume_db = -5.0
+
+[node name="Step2" type="AudioStreamPlayer3D" parent="Steps"]
+stream = ExtResource("3_wcuda")
+volume_db = -5.0
+
+[node name="Step3" type="AudioStreamPlayer3D" parent="Steps"]
+stream = ExtResource("4_g44f5")
+volume_db = -5.0
+
+[node name="Step4" type="AudioStreamPlayer3D" parent="Steps"]
+stream = ExtResource("5_t4vup")
+volume_db = -5.0
+
+[node name="Step5" type="AudioStreamPlayer3D" parent="Steps"]
+stream = ExtResource("6_77j4d")
+volume_db = -5.0
+
+[node name="Step6" type="AudioStreamPlayer3D" parent="Steps"]
+stream = ExtResource("7_kwi8j")
+volume_db = -5.0
+
+[node name="Step7" type="AudioStreamPlayer3D" parent="Steps"]
+stream = ExtResource("8_l84eq")
+volume_db = -5.0
+
+[node name="Step8" type="AudioStreamPlayer3D" parent="Steps"]
+stream = ExtResource("9_k2yd2")
+volume_db = -5.0
+
+[node name="GsomPawn" type="Node" parent="."]
+script = ExtResource("10_7s4ma")
+scene = ExtResource("11_lyjb6")
+
+[node name="PawnHandlerUnit" type="Node" parent="GsomPawn"]
+script = ExtResource("12_5cnkc")

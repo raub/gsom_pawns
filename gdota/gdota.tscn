@@ -1,7 +1,7 @@
 [gd_scene load_steps=16 format=3 uid="uid://b1inyq8cudkvo"]
 
 [ext_resource type="Texture2D" uid="uid://du2grbsry6x88" path="res://gdota/dota.jpg" id="1_vi1dn"]
-[ext_resource type="PackedScene" uid="uid://dmfq666h8ixqm" path="res://characters/hero/char_hero.tscn" id="2_201ci"]
+[ext_resource type="PackedScene" uid="uid://dmfq666h8ixqm" path="res://characters/unit/char_unit.tscn" id="2_201ci"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_emqc6"]
 albedo_texture = ExtResource("1_vi1dn")
@@ -1407,5 +1407,5 @@ shape = SubResource("CylinderShape3D_pyggp")
 transform = Transform3D(-0.704374, 0, 0.709829, 0, 1, 0, -0.709829, 0, -0.704374, -12.4166, 0, 35.7614)
 shape = SubResource("CylinderShape3D_pyggp")
 
-[node name="CharHero" parent="." instance=ExtResource("2_201ci")]
+[node name="CharUnit" parent="." instance=ExtResource("2_201ci")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.47923, 0, 5.50955)

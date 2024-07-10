@@ -109,6 +109,8 @@ var head_y: float = _head_y:
 var _envs := {}
 var _actions := {}
 var _states := {}
+var _traits := {}
+var _info := {}
 var _parent: Node3D = null
 
 
@@ -143,77 +145,152 @@ func _assign_scene() -> void:
 	_body.position = _parent.global_position
 
 
-## Set an arbitrary input status. Such as [code]"jump", true[/code], or [code]"forward", 0.5[/code]
+## Set an arbitrary info field in an info group.
 ##
-## The inputs are to be read by handlers to determine the evolution of the physical model.
-func set_action(name: String, value: Variant) -> void:
-	_actions[name] = value
-
-
-## Clear all input statuses.
-func reset_actions() -> void:
-	_actions.clear()
-
-
-## Fetch an arbitrary input status by name.
+## Such as [code]"actions", "jump", true[/code], or [code]"env", "surface", "wood"[/code].
+## The info can be read and written by any party to determine the state and evolution
+## of the model.
 ##
-## If the status has never been set or [code]reset_actions[/code] has just been called,
-## this method returns [code]null[/code] - that should be accounted for.
-## The inputs are to be read by handlers to determine the evolution of the physical model.
-func get_action(name: String, default_value: Variant = null) -> Variant:
-	if !_actions.has(name):
+## Suggested groups:
+## * actions - processed input from controllers: where to go, how fast, etc.
+## * envs - pawn surrounding environment: surface, sound filters, wind, gravity.
+## * states - pawn internal state: crouch, swim, ladder.
+## * traits - pawn specific abilities, items and levels: hp, boosts, inventory.
+func set_info(group_name: String, field_name: String, value: Variant) -> void:
+	if !_info.has(group_name):
+		_info[group_name] = {}
+	_info[group_name][field_name] = value
+
+
+## Clear an info group by name, or wipe all groups if name is empty.
+func reset_info(group_name: String = "") -> void:
+	if !group_name:
+		_info.clear()
+		return
+	
+	if !_info.has(group_name):
+		return
+	
+	_info[group_name].clear()
+
+
+## Fetch an info field by group name and field name.
+##
+## If the field has never been set or [code]reset_info[/code] has just been called,
+## this method returns [code]default_value[/code].
+func get_info(group_name: String, field_name: String, default_value: Variant = null) -> Variant:
+	if !_info.has(group_name):
 		return default_value
-	return _actions[name]
+	
+	var group = _info[group_name]
+	if !group.has(field_name):
+		return default_value
+	
+	return group[field_name]
 
 
-## Check if the input action exists.
-func has_action(name: String) -> bool:
-	return _actions.has(name)
+## Check if the input info exists.
+func has_info(group_name: String, field_name: String) -> bool:
+	if !_info.has(group_name):
+		return false
+	
+	return _info[group_name].has(field_name)
 
 
 ## Erase the input value.
-func erase_action(name: String) -> bool:
-	return _actions.erase(name)
+func erase_info(group_name: String, field_name: String) -> bool:
+	if !_info.has(group_name):
+		return false
+	
+	var group = _info[group_name]
+	if !group.has(field_name):
+		return false
+	
+	return group.erase(field_name)
 
 
-## Store arbitrary environmental hints for the physical model or character.
-##
-## The relevant hints may be read by handlers or external character wrappers,
-## and also written to by either party. Use it to know such things as
-## - am I in water?
-## - am I on ground?
-## - am I in air?
-## - what is the ground material? - sound/movement adjustment
-## - can I stand up?
-## - custom movement handling: jump pads, wind, conveyors, etc.
-## - trigger actions/damage in certain areas
-func set_env(name: String, value: Variant) -> void:
-	_envs[name] = value
+## Shortcut for [code]set_info("actions", field_name, value)[/code]
+func set_action(field_name: String, value: Variant) -> void:
+	set_info("actions", field_name, value)
+
+## Shortcut for [code]reset_info("actions")[/code]
+func reset_actions() -> void:
+	reset_info("actions")
+
+## Shortcut for [code]get_info("actions", field_name, default_value)[/code]
+func get_action(field_name: String, default_value: Variant = null) -> Variant:
+	return get_info("actions", field_name, default_value)
+
+## Shortcut for [code]has_info("actions", field_name)[/code]
+func has_action(field_name: String) -> bool:
+	return has_info("actions", field_name)
+
+## Shortcut for [code]erase_info("actions", field_name)[/code]
+func erase_action(field_name: String) -> bool:
+	return erase_info("actions", field_name)
 
 
-## Clears all env hints.
+## Shortcut for [code]set_info("envs", field_name, value)[/code]
+func set_env(field_name: String, value: Variant) -> void:
+	set_info("envs", field_name, value)
+
+## Shortcut for [code]reset_info("envs")[/code]
 func reset_envs() -> void:
-	_envs.clear()
+	reset_info("envs")
+
+## Shortcut for [code]get_info("envs", field_name, default_value)[/code]
+func get_env(field_name: String, default_value: Variant = null) -> Variant:
+	return get_info("envs", field_name, default_value)
+
+## Shortcut for [code]has_info("envs", field_name)[/code]
+func has_env(field_name: String) -> bool:
+	return has_info("envs", field_name)
+
+## Shortcut for [code]erase_info("envs", field_name)[/code]
+func erase_env(field_name: String) -> bool:
+	return erase_info("envs", field_name)
 
 
-## Fetch an arbitrary env hint by name.
-##
-## If the hint has never been set or [code]reset_envs[/code] has just been called,
-## this method returns [code]null[/code] - that should be accounted for.
-func get_env(name: String, default_value: Variant = null) -> Variant:
-	if !_envs.has(name):
-		return default_value
-	return _envs[name]
+## Shortcut for [code]set_info("states", field_name, value)[/code]
+func set_state(field_name: String, value: Variant) -> void:
+	set_info("states", field_name, value)
+
+## Shortcut for [code]reset_info("states")[/code]
+func reset_states() -> void:
+	reset_info("states")
+
+## Shortcut for [code]get_info("states", field_name, default_value)[/code]
+func get_state(field_name: String, default_value: Variant = null) -> Variant:
+	return get_info("states", field_name, default_value)
+
+## Shortcut for [code]has_info("states", field_name)[/code]
+func has_state(field_name: String) -> bool:
+	return has_info("states", field_name)
+
+## Shortcut for [code]erase_info("states", field_name)[/code]
+func erase_state(field_name: String) -> bool:
+	return erase_info("states", field_name)
 
 
-## Check if the env hint exists.
-func has_env(name: String) -> bool:
-	return _envs.has(name)
+## Shortcut for [code]set_info("traits", field_name, value)[/code]
+func set_trait(field_name: String, value: Variant) -> void:
+	set_info("traits", field_name, value)
 
+## Shortcut for [code]reset_info("traits")[/code]
+func reset_traits() -> void:
+	reset_info("traits")
 
-## Erase the env hint by name.
-func erase_env(name: String) -> bool:
-	return _envs.erase(name)
+## Shortcut for [code]get_info("traits", field_name, default_value)[/code]
+func get_trait(field_name: String, default_value: Variant = null) -> Variant:
+	return get_info("traits", field_name, default_value)
+
+## Shortcut for [code]has_info("traits", field_name)[/code]
+func has_trait(field_name: String) -> bool:
+	return has_info("traits", field_name)
+
+## Shortcut for [code]erase_info("traits", field_name)[/code]
+func erase_trait(field_name: String) -> bool:
+	return erase_info("traits", field_name)
 
 
 ## Framework method, should be called by [code]scene[/code] instance on [code]_integrate_forces[/code].

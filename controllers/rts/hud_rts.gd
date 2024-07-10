@@ -8,11 +8,18 @@ signal panned(dxy: Vector2)
 @onready var _scroll_down: Control = $ScrollDown
 @onready var _control: Control = $HBoxContainer/RectMap/TextureRect/Control
 @onready var _rect_map: Control = $HBoxContainer/RectMap
+@onready var _selection_rect: Control = $SelectionRect
+
 
 var _wish_scroll := Vector2.ZERO
 @export var wish_scroll: Vector2 = _wish_scroll:
 	get:
 		return _wish_scroll
+
+
+func set_selection(start: Vector2, end: Vector2) -> void:
+	_selection_rect.position = Vector2(min(start.x, end.x), min(start.y, end.y))
+	_selection_rect.size = Vector2(abs(start.x - end.x), abs(start.y - end.y))
 
 
 func _ready() -> void:

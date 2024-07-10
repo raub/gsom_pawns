@@ -2,6 +2,10 @@ extends Node3D
 
 signal switched_controller(controller_kind: String)
 
+const _CHAR_UNIT: GDScript = preload("../../characters/unit/char_unit.gd")
+
+const _SCENE_DECAL_SELECT: PackedScene = preload("./decal_select.tscn")
+const _MAX_BATCH_SIZE: int = 12
 const _RAY_LENGTH: float = 30.0
 
 const _PAN_SENS := Vector2(0.01, 0.01)
@@ -24,11 +28,12 @@ var _is_focused: bool = false
 		_assign_is_focused()
 
 
-#var _pawns: Array[GsomPawn] = []
+var _pawns: Array[GsomPawn] = []
 var _zoom_offset: float = 0.0
 
 var _is_selecting: bool = false
 var _selection_start: Vector3 = Vector3.ZERO
+var _select_decals: Array[Decal] = []
 
 
 @onready var _esc_overlay: Control = $EscOverlay
@@ -36,6 +41,7 @@ var _selection_start: Vector3 = Vector3.ZERO
 @onready var _camera: Camera3D = $Camera3D
 @onready var _area_select: Area3D = $AreaSelect
 @onready var _shape_select: CollisionShape3D = $AreaSelect/ShapeSelect
+@onready var _pool_decals_select: Node = $PoolDecalsSelect
 
 
 func _ready() -> void:
@@ -50,6 +56,14 @@ func _ready() -> void:
 	
 	_register_actions()
 	_assign_is_focused()
+	
+	for _i: int in range(_MAX_BATCH_SIZE):
+		var decal = _SCENE_DECAL_SELECT.instantiate()
+		_pool_decals_select.add_child(decal)
+		decal.visible = false
+		_select_decals.append(decal)
+	
+	prints("units", _CHAR_UNIT.get_units())
 
 
 func _process(dt: float) -> void:
@@ -88,6 +102,30 @@ func _physics_process(_dt: float) -> void:
 	if !is_captured:
 		return
 	
+	_physics_process_pick()
+	
+	if _is_selecting:
+		var unproj_start: Vector2 = _camera.unproject_position(_selection_start)
+		var unproj_end: Vector2 = _hud_rts.get_global_mouse_position()
+		_hud_rts.set_selection(unproj_start, unproj_end)
+	else:
+		_hud_rts.set_selection(Vector2(-10, -10), Vector2(-5, -5))
+	
+	_physics_process_decals()
+
+
+func _physics_process_decals() -> void:
+	for i: int in range(_MAX_BATCH_SIZE):
+		var decal = _select_decals[i]
+		if i >= _pawns.size():
+			decal.visible = false
+			continue
+		decal.visible = true
+		decal.position = _pawns[i].position
+	
+
+
+func _physics_process_pick() -> void:
 	if !_is_selecting and Input.is_action_pressed("RTS_Pick"):
 		var result: Dictionary = _physics_process_pick_ray()
 		if !result.position:
@@ -104,13 +142,24 @@ func _physics_process(_dt: float) -> void:
 		
 		# Point case
 		if diff.length_squared() < 1:
-			prints("pick", result.collider);
+			_fetch_pawns_from_colliders([result])
 			return
 		
 		var result_box: Array[Dictionary] = _physics_process_pick_shape(_selection_start, _selection_end)
-		prints("result_box", result_box);
-		
+		_fetch_pawns_from_colliders(result_box)
 		return
+
+
+func _fetch_pawns_from_colliders(results: Array[Dictionary]) -> void:
+	_pawns = []
+	for result: Dictionary in results:
+		if !result.collider:
+			continue
+		var collider := result.collider as Node
+		var parent := collider.get_parent() as GsomPawn
+		if !parent:
+			continue
+		_pawns.append(parent)
 
 
 func _physics_process_pick_ray() -> Dictionary:

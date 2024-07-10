@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bdly6afa0mx3e"]
+[gd_scene load_steps=6 format=3 uid="uid://bdly6afa0mx3e"]
 
 [ext_resource type="Script" path="res://controllers/rts/controller_rts.gd" id="1_cei30"]
 [ext_resource type="PackedScene" uid="uid://bhwuoapyskx81" path="res://controllers/esc_overlay/esc_overlay.tscn" id="2_ahdhq"]
@@ -6,6 +6,10 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5bf22"]
 size = Vector3(2, 2, 2)
+
+[sub_resource type="QuadMesh" id="QuadMesh_pnvbu"]
+size = Vector2(4, 4)
+orientation = 1
 
 [node name="ControllerRts" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0, -196)
@@ -29,3 +33,9 @@ collision_mask = 2
 
 [node name="ShapeSelect" type="CollisionShape3D" parent="AreaSelect"]
 shape = SubResource("BoxShape3D_5bf22")
+
+[node name="__DebugFloor" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("QuadMesh_pnvbu")
+
+[node name="PoolDecalsSelect" type="Node" parent="."]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dlk5xq1k5oigm"]
 
-[ext_resource type="Script" path="res://pawns/pawn_hero.gd" id="1_0aubo"]
+[ext_resource type="Script" path="res://pawns/pawn_unit.gd" id="1_thgip"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6784i"]
 radius = 0.25
@@ -14,13 +14,13 @@ material = SubResource("StandardMaterial3D_jx2ot")
 radius = 0.25
 height = 1.0
 
-[node name="PawnHero" type="CharacterBody3D"]
+[node name="PawnUnit" type="CharacterBody3D"]
 top_level = true
 collision_layer = 257
 axis_lock_angular_x = true
 axis_lock_angular_y = true
 axis_lock_angular_z = true
-script = ExtResource("1_0aubo")
+script = ExtResource("1_thgip")
 
 [node name="Shape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://230y3am15sox"]
+
+[ext_resource type="Texture2D" uid="uid://cl36x4knxpna0" path="res://characters/unit/circle_01.png" id="1_o8o8u"]
+
+[node name="DecalSelect" type="Decal"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 0.0112, -196)
+size = Vector3(1.5, 0.2, 1.5)
+texture_emission = ExtResource("1_o8o8u")
+modulate = Color(0, 1, 0.0823529, 1)

@@ -14,9 +14,19 @@ var _prev_step_time: int = 0
 @onready var _pawn: GsomPawn = $GsomPawn
 @onready var _steps: Node = $Steps
 
+static var _units: Array = []
 
-func _ready() -> void:
-	pass
+
+static func get_units() -> Array:
+	return _units
+
+
+func _enter_tree() -> void:
+	_units.append(self)
+
+
+func _exit_tree() -> void:
+	_units.erase(self)
 
 
 func _process(_dt: float) -> void:
