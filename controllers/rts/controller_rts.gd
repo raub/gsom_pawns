@@ -35,12 +35,13 @@ var _is_selecting: bool = false
 var _selection_start: Vector3 = Vector3.ZERO
 var _select_decals: Array[Decal] = []
 
+# These are not Input actions because we need to block the input by HUD when necessary
+var _is_select_pressed = false
+var _is_action_pressed = false
 
 @onready var _esc_overlay: Control = $EscOverlay
 @onready var _hud_rts: Control = $HudRts
 @onready var _camera: Camera3D = $Camera3D
-@onready var _area_select: Area3D = $AreaSelect
-@onready var _shape_select: CollisionShape3D = $AreaSelect/ShapeSelect
 @onready var _pool_decals_select: Node = $PoolDecalsSelect
 
 
@@ -62,8 +63,6 @@ func _ready() -> void:
 		_pool_decals_select.add_child(decal)
 		decal.visible = false
 		_select_decals.append(decal)
-	
-	prints("units", _CHAR_UNIT.get_units())
 
 
 func _process(dt: float) -> void:
@@ -82,17 +81,22 @@ func _process(dt: float) -> void:
 		_selection_start = Vector3.ZERO
 		return
 	
-	if Input.is_action_just_released("RTS_Zoom"):
-		_zoom()
-	elif Input.is_action_just_released("RTS_Unzoom"):
-		_unzoom()
+	# Don't do silly stuff while map is being panned
+	if Input.is_action_pressed("RTS_Pan"):
+		return
 	
-	if !Input.is_action_pressed("RTS_Pan"):
+	if _hud_rts.wish_scroll.length_squared() > 0.001:
 		var pox_xz := Vector2(_camera.position.x, _camera.position.z)
 		pox_xz = pox_xz + _hud_rts.wish_scroll * dt * _SCROLL_SPEED
 		_camera.position.x = clamp(pox_xz.x, _PAN_MIN.x, _PAN_MAX.x)
 		_camera.position.z = clamp(pox_xz.y, _PAN_MIN.y, _PAN_MAX.y)
 		_hud_rts.move_map_screen((pox_xz - _PAN_MIN) / _PAN_SIZE)
+		return
+	
+	if Input.is_action_just_released("RTS_Zoom"):
+		_zoom()
+	elif Input.is_action_just_released("RTS_Unzoom"):
+		_unzoom()
 
 
 func _physics_process(_dt: float) -> void:
@@ -112,6 +116,20 @@ func _physics_process(_dt: float) -> void:
 		_hud_rts.set_selection(Vector2(-10, -10), Vector2(-5, -5))
 	
 	_physics_process_decals()
+	
+	_physics_process_follow()
+
+
+func _unhandled_input(_event: InputEvent) -> void:
+	if !_is_focused:
+		return
+	var is_captured: bool = Input.mouse_mode == Input.MOUSE_MODE_CONFINED
+	if !is_captured:
+		return
+	
+	_is_select_pressed = Input.is_action_pressed("RTS_Pick")
+	_is_action_pressed = Input.is_action_pressed("RTS_Action")
+	_hud_rts.accept_event()
 
 
 func _physics_process_decals() -> void:
@@ -122,11 +140,10 @@ func _physics_process_decals() -> void:
 			continue
 		decal.visible = true
 		decal.position = _pawns[i].position
-	
 
 
 func _physics_process_pick() -> void:
-	if !_is_selecting and Input.is_action_pressed("RTS_Pick"):
+	if !_is_selecting and _is_select_pressed:
 		var result: Dictionary = _physics_process_pick_ray()
 		if !result.position:
 			return
@@ -134,7 +151,7 @@ func _physics_process_pick() -> void:
 		_selection_start = _physics_process_pick_ray().position
 		return
 	
-	if _is_selecting and !Input.is_action_pressed("RTS_Pick"):
+	if _is_selecting and !_is_select_pressed:
 		_is_selecting = false
 		var result: Dictionary = _physics_process_pick_ray()
 		var _selection_end: Vector3 = result.position
@@ -150,16 +167,34 @@ func _physics_process_pick() -> void:
 		return
 
 
+func _physics_process_follow() -> void:
+	if !_pawns.size() || !_is_action_pressed:
+		return
+	
+	var result = _physics_process_pick_ray()
+	var pawn_target: GsomPawn = _fetch_pawn(result)
+	
+	for pawn: GsomPawn in _pawns:
+		if pawn_target:
+			pawn.set_action("attack", pawn)
+		elif result.position:
+			pawn.set_action("move", result.position)
+
+
+func _fetch_pawn(result: Dictionary) -> GsomPawn:
+	if !result.collider:
+		return null
+	var collider := result.collider as Node
+	var parent := collider.get_parent() as GsomPawn
+	return parent
+
+
 func _fetch_pawns_from_colliders(results: Array[Dictionary]) -> void:
 	_pawns = []
 	for result: Dictionary in results:
-		if !result.collider:
-			continue
-		var collider := result.collider as Node
-		var parent := collider.get_parent() as GsomPawn
-		if !parent:
-			continue
-		_pawns.append(parent)
+		var parent: GsomPawn = _fetch_pawn(result)
+		if parent:
+			_pawns.append(parent)
 
 
 func _physics_process_pick_ray() -> Dictionary:
@@ -169,22 +204,14 @@ func _physics_process_pick_ray() -> Dictionary:
 	var origin: Vector3 = _camera.project_ray_origin(mousepos)
 	var end: Vector3 = origin + _camera.project_ray_normal(mousepos) * _RAY_LENGTH
 	var query := PhysicsRayQueryParameters3D.create(origin, end)
-	#query.collision_mask = 0x100
+	query.collision_mask = 0x102 # Floor and Pawns
 	
 	var result = space_state.intersect_ray(query)
 	return result
 
 
 func _physics_process_pick_shape(start: Vector3, end: Vector3) -> Array[Dictionary]:
-	#_area_select.transform = _camera.global_transform
-	_area_select.transform.origin = (start + end) * 0.5
-	var box := _shape_select.shape as BoxShape3D
-	box.size = Vector3(abs(end.x - start.x), 5.0, abs(end.z - start.z))
-	
-	#return {}
-	#
 	var space_state = get_world_3d().direct_space_state
-	#var query := PhysicsShapeQueryParameters3D.create(start, end)
 	
 	var shape_rid = PhysicsServer3D.box_shape_create()
 	PhysicsServer3D.shape_set_data(
@@ -194,14 +221,11 @@ func _physics_process_pick_shape(start: Vector3, end: Vector3) -> Array[Dictiona
 	
 	var params = PhysicsShapeQueryParameters3D.new()
 	params.shape_rid = shape_rid
-	#params.transform = Transform3D(_camera.transform)
 	params.transform.origin = (start + end) * 0.5
-	params.collision_mask = 0x100
+	params.collision_mask = 0x100 # Pawns only
 	
-	# Execute physics queries here...
 	var result = space_state.intersect_shape(params, 16)
 	
-	# Release the shape when done with physics queries.
 	PhysicsServer3D.free_rid(shape_rid)
 	
 	return result

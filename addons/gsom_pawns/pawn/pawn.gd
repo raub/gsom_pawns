@@ -106,10 +106,6 @@ var head_y: float = _head_y:
 		return _head_y
 
 
-var _envs := {}
-var _actions := {}
-var _states := {}
-var _traits := {}
 var _info := {}
 var _parent: Node3D = null
 

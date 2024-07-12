@@ -1,11 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bdly6afa0mx3e"]
+[gd_scene load_steps=5 format=3 uid="uid://bdly6afa0mx3e"]
 
 [ext_resource type="Script" path="res://controllers/rts/controller_rts.gd" id="1_cei30"]
 [ext_resource type="PackedScene" uid="uid://bhwuoapyskx81" path="res://controllers/esc_overlay/esc_overlay.tscn" id="2_ahdhq"]
 [ext_resource type="PackedScene" uid="uid://blgmgcyslq125" path="res://controllers/rts/hud_rts.tscn" id="3_702av"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_5bf22"]
-size = Vector3(2, 2, 2)
 
 [sub_resource type="QuadMesh" id="QuadMesh_pnvbu"]
 size = Vector2(4, 4)
@@ -24,15 +21,6 @@ visible = false
 controller_kind = "rts"
 
 [node name="HudRts" parent="." instance=ExtResource("3_702av")]
-
-[node name="AreaSelect" type="Area3D" parent="."]
-top_level = true
-visible = false
-collision_layer = 2
-collision_mask = 2
-
-[node name="ShapeSelect" type="CollisionShape3D" parent="AreaSelect"]
-shape = SubResource("BoxShape3D_5bf22")
 
 [node name="__DebugFloor" type="MeshInstance3D" parent="."]
 visible = false

@@ -10,6 +10,7 @@ var _is_debug_mesh := true
 		_is_debug_mesh = v
 		_assign_is_debug_mesh()
 
+@export var max_speed: float = 4.0
 
 var _pending_toss_vel := Vector3.ZERO
 var _has_pending_tp := false
@@ -19,6 +20,10 @@ var _pawn: GsomPawn = null
 
 
 @onready var _mesh: MeshInstance3D = $Shape/Mesh
+@onready var _navigator: NavigationAgent3D = $NavigationAgent3D
+@onready var _debug_next: MeshInstance3D = $__DebugNext
+@onready var _debug_end: MeshInstance3D = $__DebugEnd
+
 
 func _ready() -> void:
 	_pawn = get_parent() as GsomPawn
@@ -27,6 +32,7 @@ func _ready() -> void:
 		return
 	
 	_pawn.triggered.connect(_handle_triggers)
+	_navigator.velocity_computed.connect(_update_velocity)
 
 
 func _handle_triggers(trigger_name: String, value: Variant) -> void:
@@ -51,14 +57,34 @@ func _physics_process(dt) -> void:
 		_pawn.moved.emit(global_position)
 		return
 	
-	_pawn.do_physics(dt)
+	_debug_next.visible = _is_debug_mesh and _pawn.has_action("move")
+	_debug_end.visible = _is_debug_mesh and _pawn.has_action("move")
 	
+	if _pawn.has_action("move"):
+		var move_target: Vector3 = _pawn.get_action("move")
+		_debug_end.position = move_target
+		_navigator.set_target_position(move_target)
+	
+	if !_navigator.is_navigation_finished():
+		var next_pos: Vector3 = _navigator.get_next_path_position()
+		_debug_next.position = next_pos
+		var new_velocity: Vector3 = global_position.direction_to(next_pos) * max_speed
+		velocity = new_velocity
+	else:
+		velocity = Vector3.ZERO
+	
+	move_and_slide()
+	
+	_pawn.do_physics(dt)
 
 
-func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
-	_pawn.do_integrate(state)
+func _update_velocity(safe_velocity: Vector3) -> void:
+	if !_navigator.is_navigation_finished():
+		velocity = safe_velocity
 
 
 func _assign_is_debug_mesh() -> void:
 	if _mesh:
 		_mesh.visible = _is_debug_mesh
+		_debug_next.visible = _is_debug_mesh and _pawn.has_action("move")
+		_debug_end.visible = _is_debug_mesh and _pawn.has_action("move")
