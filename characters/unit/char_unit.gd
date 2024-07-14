@@ -4,6 +4,14 @@ const _STEP_INTERVAL: int = 400
 const _STEP_MINSPEED: float = 5.0
 const _STEP_MINSPEED_SQ: float = _STEP_MINSPEED * _STEP_MINSPEED
 
+var _team: String = "none"
+@export var team: String = "none":
+	get:
+		return _team
+	set(v):
+		_team = v
+		_assign_team()
+
 
 var pawn: GsomPawn = null:
 	get:
@@ -14,23 +22,34 @@ var _prev_step_time: int = 0
 @onready var _pawn: GsomPawn = $GsomPawn
 @onready var _steps: Node = $Steps
 
-static var _units: Array = []
+static var _units: Array[GsomPawn] = []
 
 
-static func get_units() -> Array:
-	return _units
+static func get_units() -> Array[GsomPawn]:
+	var typed := _units as Array[GsomPawn]
+	return typed
 
 
-func _enter_tree() -> void:
-	_units.append(self)
+func _ready() -> void:
+	_units.append(_pawn)
+	_assign_team()
+
+
+#func _enter_tree() -> void:
+	#_units.append(_pawn)
 
 
 func _exit_tree() -> void:
-	_units.erase(self)
+	_units.erase(_pawn)
 
 
 func _process(_dt: float) -> void:
 	_step()
+
+
+func _assign_team() -> void:
+	if _pawn:
+		_pawn.set_trait("team", _team)
 
 
 func _step() -> void:

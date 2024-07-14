@@ -22,6 +22,12 @@ grow_vertical = 2
 mouse_filter = 1
 script = ExtResource("1_gyrv4")
 
+[node name="SelectionRect" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_37ppk")
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 7
@@ -41,6 +47,7 @@ custom_minimum_size = Vector2(240, 240)
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 8
+mouse_filter = 1
 color = Color(0.0941176, 0.0941176, 0.0941176, 1)
 
 [node name="TextureRect" type="TextureRect" parent="HBoxContainer/RectMap"]
@@ -64,6 +71,7 @@ offset_left = 115.0
 offset_top = 122.0
 offset_right = 155.0
 offset_bottom = 162.0
+mouse_filter = 2
 
 [node name="Line2D" type="Line2D" parent="HBoxContainer/RectMap/TextureRect/Control"]
 points = PackedVector2Array(-20, -10, 20, -10, 15, 10, -15, 10)
@@ -75,6 +83,7 @@ default_color = Color(1, 0.709804, 0, 1)
 custom_minimum_size = Vector2(512, 192)
 layout_mode = 2
 size_flags_vertical = 8
+mouse_filter = 1
 color = Color(0.0941176, 0.0941176, 0.0941176, 1)
 
 [node name="RectActions" type="ColorRect" parent="HBoxContainer"]
@@ -82,6 +91,7 @@ custom_minimum_size = Vector2(316, 240)
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
+mouse_filter = 1
 color = Color(0.0941176, 0.0941176, 0.0941176, 1)
 
 [node name="RectActionsGray" type="ColorRect" parent="HBoxContainer/RectActions"]
@@ -156,47 +166,3 @@ layout_mode = 2
 
 [node name="Slot11" parent="HBoxContainer/RectActions/RectActionsGray/Control/Grid" instance=ExtResource("2_osufx")]
 layout_mode = 2
-
-[node name="ScrollLeft" type="Control" parent="."]
-custom_minimum_size = Vector2(16, 0)
-layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-grow_vertical = 2
-mouse_filter = 1
-
-[node name="ScrollRight" type="Control" parent="."]
-custom_minimum_size = Vector2(16, 0)
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 0
-grow_vertical = 2
-mouse_filter = 1
-
-[node name="ScrollUp" type="Control" parent="."]
-custom_minimum_size = Vector2(0, 16)
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-grow_horizontal = 2
-mouse_filter = 1
-
-[node name="ScrollDown" type="Control" parent="."]
-custom_minimum_size = Vector2(0, 16)
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-mouse_filter = 1
-
-[node name="SelectionRect" type="Panel" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_37ppk")

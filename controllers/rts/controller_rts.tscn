@@ -27,3 +27,5 @@ visible = false
 mesh = SubResource("QuadMesh_pnvbu")
 
 [node name="PoolDecalsSelect" type="Node" parent="."]
+
+[node name="PoolHealthBars" type="Node" parent="."]

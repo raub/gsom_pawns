@@ -5,6 +5,8 @@ signal switched_controller(controller_kind: String)
 const _CHAR_UNIT: GDScript = preload("../../characters/unit/char_unit.gd")
 
 const _SCENE_DECAL_SELECT: PackedScene = preload("./decal_select.tscn")
+const _SCENE_HEALTH_BAR: PackedScene = preload("./health_bar.tscn")
+const _HEALTH_BARS_GAIN: int = 16
 const _MAX_BATCH_SIZE: int = 12
 const _RAY_LENGTH: float = 30.0
 
@@ -26,6 +28,7 @@ var _is_focused: bool = false
 	set(v):
 		_is_focused = v
 		_assign_is_focused()
+		_adjust_health_bars()
 
 
 var _pawns: Array[GsomPawn] = []
@@ -34,15 +37,18 @@ var _zoom_offset: float = 0.0
 var _is_selecting: bool = false
 var _selection_start: Vector3 = Vector3.ZERO
 var _select_decals: Array[Decal] = []
+var _health_bars: Array[Node] = []
 
 # These are not Input actions because we need to block the input by HUD when necessary
-var _is_select_pressed = false
-var _is_action_pressed = false
+var _is_select_pressed: bool = false
+var _is_action_pressed: bool = false
+var _team: String = "team1"
 
 @onready var _esc_overlay: Control = $EscOverlay
 @onready var _hud_rts: Control = $HudRts
 @onready var _camera: Camera3D = $Camera3D
 @onready var _pool_decals_select: Node = $PoolDecalsSelect
+@onready var _pool_health_bars: Node = $PoolHealthBars
 
 
 func _ready() -> void:
@@ -53,7 +59,10 @@ func _ready() -> void:
 		func (new_kind: String) -> void: switched_controller.emit(new_kind),
 	)
 	
-	_hud_rts.panned.connect(_pan)
+	_esc_overlay.switched_team.connect(_switch_team)
+	
+	_hud_rts.panned.connect(_handle_pan)
+	_hud_rts.pressed_map.connect(_handle_map)
 	
 	_register_actions()
 	_assign_is_focused()
@@ -63,6 +72,31 @@ func _ready() -> void:
 		_pool_decals_select.add_child(decal)
 		decal.visible = false
 		_select_decals.append(decal)
+	
+	_adjust_health_bars()
+
+
+func _adjust_health_bars() -> void:
+	var units: Array = _CHAR_UNIT.get_units()
+	var unit_count: int = units.size()
+	var current_count: int = _health_bars.size()
+	
+	while current_count < unit_count:
+		for _i: int in range(_HEALTH_BARS_GAIN):
+			var bar = _SCENE_HEALTH_BAR.instantiate()
+			_pool_health_bars.add_child(bar)
+			_health_bars.append(bar)
+		current_count += _HEALTH_BARS_GAIN
+	
+	for i: int in range(current_count):
+		var bar = _health_bars[i]
+		if i >= unit_count:
+			bar.visible = false
+			continue
+		bar.visible = _is_focused
+		bar.position = units[i].position + Vector3.UP * 1.2
+		bar.is_friendly = units[i].get_trait("team", "none") == _team
+
 
 
 func _process(dt: float) -> void:
@@ -99,6 +133,13 @@ func _process(dt: float) -> void:
 		_unzoom()
 
 
+func _switch_team(team_name: String) -> void:
+	_pawns = []
+	_team = team_name
+	_update_decals()
+	_adjust_health_bars()
+
+
 func _physics_process(_dt: float) -> void:
 	if !_is_focused:
 		return
@@ -115,7 +156,8 @@ func _physics_process(_dt: float) -> void:
 	else:
 		_hud_rts.set_selection(Vector2(-10, -10), Vector2(-5, -5))
 	
-	_physics_process_decals()
+	_update_decals()
+	_adjust_health_bars()
 	
 	_physics_process_follow()
 
@@ -132,7 +174,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 	_hud_rts.accept_event()
 
 
-func _physics_process_decals() -> void:
+func _update_decals() -> void:
 	for i: int in range(_MAX_BATCH_SIZE):
 		var decal = _select_decals[i]
 		if i >= _pawns.size():
@@ -175,7 +217,7 @@ func _physics_process_follow() -> void:
 	var pawn_target: GsomPawn = _fetch_pawn(result)
 	
 	for pawn: GsomPawn in _pawns:
-		if pawn_target:
+		if pawn_target and pawn_target.get_trait("team", "none") != _team:
 			pawn.set_action("attack", pawn)
 		elif result.position:
 			pawn.set_action("move", result.position)
@@ -193,8 +235,9 @@ func _fetch_pawns_from_colliders(results: Array[Dictionary]) -> void:
 	_pawns = []
 	for result: Dictionary in results:
 		var parent: GsomPawn = _fetch_pawn(result)
-		if parent:
+		if parent and parent.get_trait("team", "none") == _team:
 			_pawns.append(parent)
+	_update_decals()
 
 
 func _physics_process_pick_ray() -> Dictionary:
@@ -216,7 +259,7 @@ func _physics_process_pick_shape(start: Vector3, end: Vector3) -> Array[Dictiona
 	var shape_rid = PhysicsServer3D.box_shape_create()
 	PhysicsServer3D.shape_set_data(
 		shape_rid,
-		Vector3(abs(end.x - start.x), 5.0, abs(end.z - start.z))
+		Vector3(abs(end.x - start.x) * 0.5, 5.0, abs(end.z - start.z) * 0.5)
 	)
 	
 	var params = PhysicsShapeQueryParameters3D.new()
@@ -231,7 +274,7 @@ func _physics_process_pick_shape(start: Vector3, end: Vector3) -> Array[Dictiona
 	return result
 
 
-func _pan(dxy: Vector2) -> void:
+func _handle_pan(dxy: Vector2) -> void:
 	var pox_xz := Vector2(_camera.position.x, _camera.position.z)
 	pox_xz = pox_xz - dxy * _PAN_SENS
 	_camera.position.x = clamp(pox_xz.x, _PAN_MIN.x, _PAN_MAX.x)
@@ -239,16 +282,41 @@ func _pan(dxy: Vector2) -> void:
 	_hud_rts.move_map_screen((pox_xz - _PAN_MIN) / _PAN_SIZE)
 
 
+func _handle_map(xy_t: Vector2) -> void:
+	var pox_xz: Vector2 = _PAN_MIN + xy_t * _PAN_SIZE
+	
+	if Input.is_action_pressed("RTS_Action") and _pawns.size():
+		for pawn: GsomPawn in _pawns:
+			pawn.set_action("move", Vector3(pox_xz.x, 0, pox_xz.y))
+		return
+	
+	_hud_rts.move_map_screen(xy_t)
+	_camera.position.x = pox_xz.x
+	_camera.position.z = pox_xz.y
+
+
 func _assign_is_focused() -> void:
 	_is_selecting = false
 	_selection_start = Vector3.ZERO
 	
-	if !_camera:
-		return
+	if _camera:
+		_camera.current = _is_focused
 	
-	_camera.current = _is_focused
-	_esc_overlay.visible = _is_focused
-	_hud_rts.visible = false
+	if _esc_overlay:
+		_esc_overlay.visible = _is_focused
+	
+	if _hud_rts:
+		_hud_rts.visible = false
+	
+	var units: Array = _CHAR_UNIT.get_units()
+	var unit_count: int = units.size()
+	var current_count: int = _health_bars.size()
+	for i: int in range(current_count):
+		var bar = _health_bars[i]
+		if i >= unit_count:
+			bar.visible = false
+			continue
+		bar.visible = _is_focused
 
 
 func _zoom() -> void:

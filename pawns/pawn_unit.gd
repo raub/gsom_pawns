@@ -10,12 +10,20 @@ var _is_debug_mesh := true
 		_is_debug_mesh = v
 		_assign_is_debug_mesh()
 
-@export var max_speed: float = 4.0
+
+var _max_speed: float = 3.0
+## Maximum movement speed for this pawn
+@export var max_speed: float = 3.0:
+	get:
+		return _max_speed
+	set(v):
+		_max_speed = v
+		_assign_max_speed()
+
 
 var _pending_toss_vel := Vector3.ZERO
 var _has_pending_tp := false
 var _pending_tp_pos := Vector3.ZERO
-
 var _pawn: GsomPawn = null
 
 
@@ -30,6 +38,9 @@ func _ready() -> void:
 	if !_pawn:
 		push_error("Parent must be a GsomPawn.")
 		return
+	
+	_assign_max_speed()
+	_assign_is_debug_mesh()
 	
 	_pawn.triggered.connect(_handle_triggers)
 	_navigator.velocity_computed.connect(_update_velocity)
@@ -69,7 +80,8 @@ func _physics_process(dt) -> void:
 		var next_pos: Vector3 = _navigator.get_next_path_position()
 		_debug_next.position = next_pos
 		var new_velocity: Vector3 = global_position.direction_to(next_pos) * max_speed
-		velocity = new_velocity
+		_navigator.velocity = new_velocity # avoidance
+		#velocity = new_velocity # for no avoidance
 	else:
 		velocity = Vector3.ZERO
 	
@@ -88,3 +100,8 @@ func _assign_is_debug_mesh() -> void:
 		_mesh.visible = _is_debug_mesh
 		_debug_next.visible = _is_debug_mesh and _pawn.has_action("move")
 		_debug_end.visible = _is_debug_mesh and _pawn.has_action("move")
+
+
+func _assign_max_speed() -> void:
+	if _navigator:
+		_navigator.max_speed = _max_speed

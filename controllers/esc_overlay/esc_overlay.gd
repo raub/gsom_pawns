@@ -2,6 +2,7 @@ extends Control
 
 signal switched_character(character_kind: String)
 signal switched_controller(controller_kind: String)
+signal switched_team(team_name: String)
 signal teleported(dest: Vector3)
 
 
@@ -17,6 +18,7 @@ var _TP_LIST: PackedStringArray = [
 
 ## Use "fps" or "rts" to fine-tune the UI
 @export var controller_kind: String = "fps"
+@export var controller_team: String = "team1"
 
 var _current_tp_index: int = 0
 
@@ -31,7 +33,11 @@ var _current_tp_index: int = 0
 @onready var _button_fps: Button = $CenterContainer/Column/RowControllers/Fps
 @onready var _button_rts: Button = $CenterContainer/Column/RowControllers/Rts
 @onready var _label_characters: Control = $CenterContainer/Column/LabelCharacters
+@onready var _label_teams: Control = $CenterContainer/Column/LabelTeams
 @onready var _row_characters: Control = $CenterContainer/Column/RowCharacters
+@onready var _row_teams: Control = $CenterContainer/Column/RowTeams
+@onready var _button_team_1: Button = $CenterContainer/Column/RowTeams/Team1
+@onready var _button_team_2: Button = $CenterContainer/Column/RowTeams/Team2
 
 
 func _ready() -> void:
@@ -49,10 +55,15 @@ func _ready() -> void:
 	_button_vtol.pressed.connect(func () -> void: switched_character.emit("vtol"))
 	_button_spec.pressed.connect(func () -> void: switched_character.emit("spec"))
 	
+	_button_team_1.pressed.connect(func () -> void: switched_team.emit("team1"))
+	_button_team_2.pressed.connect(func () -> void: switched_team.emit("team2"))
+	
 	_button_next.visible = controller_kind == "fps"
 	_button_prev.visible = controller_kind == "fps"
 	_label_characters.visible = controller_kind == "fps"
 	_row_characters.visible = controller_kind == "fps"
+	_label_teams.visible = controller_kind == "rts"
+	_row_teams.visible = controller_kind == "rts"
 	
 	_button_fps.visible = controller_kind != "fps"
 	_button_rts.visible = controller_kind != "rts"

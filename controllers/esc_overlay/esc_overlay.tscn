@@ -105,6 +105,22 @@ text = "Vtol"
 layout_mode = 2
 text = "Spec"
 
+[node name="LabelTeams" type="Label" parent="CenterContainer/Column"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Teams"
+
+[node name="RowTeams" type="HBoxContainer" parent="CenterContainer/Column"]
+layout_mode = 2
+
+[node name="Team1" type="Button" parent="CenterContainer/Column/RowTeams"]
+layout_mode = 2
+text = "team1"
+
+[node name="Team2" type="Button" parent="CenterContainer/Column/RowTeams"]
+layout_mode = 2
+text = "team2"
+
 [node name="LabelControllers" type="Label" parent="CenterContainer/Column"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32

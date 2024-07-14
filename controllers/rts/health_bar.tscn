@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://cv8pyfj8b1axu"]
+
+[ext_resource type="Texture2D" uid="uid://bhtassxpxiax6" path="res://controllers/rts/texture_01.png" id="1_f7pdo"]
+[ext_resource type="Script" path="res://controllers/rts/health_bar.gd" id="1_lqdju"]
+
+[node name="HealthBar" type="Node3D"]
+script = ExtResource("1_lqdju")
+
+[node name="Background" type="Sprite3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.03, 0, 0, 0, 0.2, 0, 0, 0)
+cast_shadow = 0
+modulate = Color(0.129412, 0.117647, 0.105882, 1)
+pixel_size = 0.001
+billboard = 1
+double_sided = false
+no_depth_test = true
+fixed_size = true
+render_priority = -1
+texture = ExtResource("1_f7pdo")
+
+[node name="Bar" type="Sprite3D" parent="."]
+transform = Transform3D(0.19, 0, 0, 0, 0.018, 0, 0, 0, 0.19, 0, 0, 0)
+cast_shadow = 0
+modulate = Color(1, 0.117647, 0.105882, 1)
+pixel_size = 0.001
+billboard = 1
+double_sided = false
+no_depth_test = true
+fixed_size = true
+texture = ExtResource("1_f7pdo")

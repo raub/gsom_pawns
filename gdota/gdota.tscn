@@ -48,7 +48,7 @@ size = Vector3(1.30687, 10, 1.77701)
 height = 10.0
 radius = 0.894331
 
-[node name="MeshInstance3D" type="MeshInstance3D"]
+[node name="Godota" type="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.756486, 0, -202.865)
 mesh = SubResource("QuadMesh_3g3b6")
 metadata/_edit_lock_ = true
@@ -1406,14 +1406,36 @@ shape = SubResource("CylinderShape3D_pyggp")
 transform = Transform3D(-0.704374, 0, 0.709829, 0, 1, 0, -0.709829, 0, -0.704374, -12.4166, 0, 35.7614)
 shape = SubResource("CylinderShape3D_pyggp")
 
-[node name="CharUnit" parent="." instance=ExtResource("2_201ci")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.479, 0, 5.51)
+[node name="PresetPawns" type="Node" parent="."]
 
-[node name="CharUnit2" parent="." instance=ExtResource("2_201ci")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.97466, 2.38419e-07, 5.92102)
+[node name="CharUnit" parent="PresetPawns" instance=ExtResource("2_201ci")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.72251, 0, -197.355)
+team = "team1"
 
-[node name="CharUnit3" parent="." instance=ExtResource("2_201ci")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.37844, 4.76837e-07, 7.47656)
+[node name="CharUnit2" parent="PresetPawns" instance=ExtResource("2_201ci")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.21817, 2.38419e-07, -196.944)
+team = "team1"
 
-[node name="CharUnit4" parent="." instance=ExtResource("2_201ci")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.64032, 4.76837e-07, 8.22527)
+[node name="CharUnit3" parent="PresetPawns" instance=ExtResource("2_201ci")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.62195, 4.76837e-07, -195.388)
+team = "team1"
+
+[node name="CharUnit4" parent="PresetPawns" instance=ExtResource("2_201ci")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.88383, 4.76837e-07, -194.64)
+team = "team1"
+
+[node name="CharUnit5" parent="PresetPawns" instance=ExtResource("2_201ci")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.34747, 0, -207.024)
+team = "team2"
+
+[node name="CharUnit6" parent="PresetPawns" instance=ExtResource("2_201ci")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.85181, 2.38419e-07, -206.613)
+team = "team2"
+
+[node name="CharUnit7" parent="PresetPawns" instance=ExtResource("2_201ci")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.44803, 4.76837e-07, -205.058)
+team = "team2"
+
+[node name="CharUnit8" parent="PresetPawns" instance=ExtResource("2_201ci")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.18615, 4.76837e-07, -204.309)
+team = "team2"

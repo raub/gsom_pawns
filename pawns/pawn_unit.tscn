@@ -51,6 +51,8 @@ mesh = SubResource("CapsuleMesh_wa0dg")
 path_desired_distance = 0.5
 target_desired_distance = 0.5
 path_height_offset = 0.5
+avoidance_enabled = true
+neighbor_distance = 5.0
 
 [node name="__DebugNext" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 1.13171)
