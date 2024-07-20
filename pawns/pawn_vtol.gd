@@ -42,11 +42,11 @@ func _handle_triggers(trigger_name: String, value: Variant) -> void:
 		_pending_toss_vel += value # Vector3
 
 
-func _process(dt) -> void:
+func _process(dt: float) -> void:
 	_pawn.do_process(dt)
 
 
-func _physics_process(dt) -> void:
+func _physics_process(dt: float) -> void:
 	if _has_pending_tp:
 		linear_velocity = Vector3.ZERO
 		global_position = _pending_tp_pos

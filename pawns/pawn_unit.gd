@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+const _MAX_SLOW_TICKS: int = 60
+const _PATH_OFFSET_K: float = 0.05
 
 var _is_debug_mesh := true
 ## Show the debug mesh (default to true so you can see the pawn when added)
@@ -21,6 +23,7 @@ var _max_speed: float = 3.0
 		_assign_max_speed()
 
 
+var _slow_ticks: int = 0
 var _pending_toss_vel := Vector3.ZERO
 var _has_pending_tp := false
 var _pending_tp_pos := Vector3.ZERO
@@ -42,32 +45,14 @@ func _ready() -> void:
 	_assign_max_speed()
 	_assign_is_debug_mesh()
 	
-	_pawn.triggered.connect(_handle_triggers)
 	_navigator.velocity_computed.connect(_update_velocity)
 
 
-func _handle_triggers(trigger_name: String, value: Variant) -> void:
-	if trigger_name == "teleport":
-		_has_pending_tp = true
-		_pending_tp_pos = value # Vector3
-	elif trigger_name == "toss":
-		_pending_toss_vel += value # Vector3
-
-
-func _process(dt) -> void:
+func _process(dt: float) -> void:
 	_pawn.do_process(dt)
 
 
-func _physics_process(dt) -> void:
-	if _has_pending_tp:
-		global_position = _pending_tp_pos
-		_has_pending_tp = false
-		_pending_tp_pos = Vector3.ZERO
-		_pawn.reset_actions()
-		_pawn.reset_envs()
-		_pawn.moved.emit(global_position)
-		return
-	
+func _physics_process(dt: float) -> void:
 	_debug_next.visible = _is_debug_mesh and _pawn.has_action("move")
 	_debug_end.visible = _is_debug_mesh and _pawn.has_action("move")
 	
@@ -91,8 +76,22 @@ func _physics_process(dt) -> void:
 
 
 func _update_velocity(safe_velocity: Vector3) -> void:
-	if !_navigator.is_navigation_finished():
-		velocity = safe_velocity
+	if _navigator.is_navigation_finished():
+		_slow_ticks = 0
+		return
+	
+	velocity = safe_velocity
+	
+	if velocity.length_squared() < _max_speed * _max_speed * 0.5:
+		_slow_ticks += 1
+	else:
+		_slow_ticks = maxi(0, _slow_ticks - 2)
+	
+	if _slow_ticks >= _MAX_SLOW_TICKS:
+		var reduction: float = float(_MAX_SLOW_TICKS - _slow_ticks) * _PATH_OFFSET_K
+		var move_target: Vector3 = _pawn.get_action("move")
+		if _pawn.position.distance_squared_to(move_target) < reduction * reduction:
+			_pawn.set_action("move", _pawn.position)
 
 
 func _assign_is_debug_mesh() -> void:

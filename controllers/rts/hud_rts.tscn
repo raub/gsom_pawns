@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://blgmgcyslq125"]
 
-[ext_resource type="Texture2D" uid="uid://du2grbsry6x88" path="res://gdota/dota.jpg" id="1_5ysq5"]
 [ext_resource type="Script" path="res://controllers/rts/hud_rts.gd" id="1_gyrv4"]
+[ext_resource type="Texture2D" uid="uid://ba3yp67yrnljx" path="res://godota/dota-mini.jpg" id="2_0ipl8"]
 [ext_resource type="PackedScene" uid="uid://bg1yyf25mknyi" path="res://controllers/rts/action_slot.tscn" id="2_osufx"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_37ppk"]
@@ -62,7 +62,7 @@ offset_right = -4.0
 offset_bottom = -4.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_5ysq5")
+texture = ExtResource("2_0ipl8")
 expand_mode = 4
 
 [node name="Control" type="Control" parent="HBoxContainer/RectMap/TextureRect"]

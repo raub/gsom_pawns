@@ -26,17 +26,12 @@ static var _units: Array[GsomPawn] = []
 
 
 static func get_units() -> Array[GsomPawn]:
-	var typed := _units as Array[GsomPawn]
-	return typed
+	return _units
 
 
 func _ready() -> void:
 	_units.append(_pawn)
 	_assign_team()
-
-
-#func _enter_tree() -> void:
-	#_units.append(_pawn)
 
 
 func _exit_tree() -> void:
@@ -53,12 +48,12 @@ func _assign_team() -> void:
 
 
 func _step() -> void:
-	var time_now = Time.get_ticks_msec()
+	var time_now: int = Time.get_ticks_msec()
 	
 	if time_now - _prev_step_time < _STEP_INTERVAL:
 		return
 	
-	var is_ground: bool = pawn.get_env("on_ground", false)
+	var is_ground: bool = pawn.get_state("on_ground", false)
 	if !is_ground:
 		return
 	

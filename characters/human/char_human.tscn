@@ -1,0 +1,67 @@
+[gd_scene load_steps=14 format=3 uid="uid://fdumqv0of5vw"]
+
+[ext_resource type="Script" path="res://characters/human/char_human.gd" id="1_1xyqf"]
+[ext_resource type="AudioStream" uid="uid://g4ddvstcstn" path="res://characters/human/audio/pl_step1.wav" id="3_eu6m0"]
+[ext_resource type="AudioStream" uid="uid://d0swr5m7o75wc" path="res://characters/human/audio/pl_step2.wav" id="4_h3vk3"]
+[ext_resource type="AudioStream" uid="uid://cxh8vyh7utwth" path="res://characters/human/audio/pl_step3.wav" id="5_n4x3g"]
+[ext_resource type="AudioStream" uid="uid://doui71kb1nsmu" path="res://characters/human/audio/pl_step4.wav" id="6_tvuxa"]
+[ext_resource type="AudioStream" uid="uid://byulds4oocvdf" path="res://characters/human/audio/pl_step5.wav" id="7_ifk7s"]
+[ext_resource type="AudioStream" uid="uid://cb5164hn1y1db" path="res://characters/human/audio/pl_step6.wav" id="8_fgghn"]
+[ext_resource type="AudioStream" uid="uid://cr708bsutdcmo" path="res://characters/human/audio/pl_step7.wav" id="9_npgma"]
+[ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn.gd" id="10_2q8o8"]
+[ext_resource type="AudioStream" uid="uid://cdpf5h17w710b" path="res://characters/human/audio/pl_step8.wav" id="10_xqfcn"]
+[ext_resource type="Script" path="res://addons/gsom_pawns/examples/handler_rigid_walk.gd" id="11_clgec"]
+[ext_resource type="Script" path="res://addons/gsom_pawns/examples/handler_rigid_ladder.gd" id="12_jihhx"]
+[ext_resource type="Script" path="res://addons/gsom_pawns/examples/handler_rigid_triggers.gd" id="13_7qoqv"]
+
+[node name="CharHuman" type="Node3D"]
+script = ExtResource("1_1xyqf")
+
+[node name="StepsConcrete" type="Node3D" parent="."]
+
+[node name="Step1" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("3_eu6m0")
+volume_db = -5.0
+
+[node name="Step2" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("4_h3vk3")
+volume_db = -5.0
+
+[node name="Step3" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("5_n4x3g")
+volume_db = -5.0
+
+[node name="Step4" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("6_tvuxa")
+volume_db = -5.0
+
+[node name="Step5" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("7_ifk7s")
+volume_db = -5.0
+
+[node name="Step6" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("8_fgghn")
+volume_db = -5.0
+
+[node name="Step7" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("9_npgma")
+volume_db = -5.0
+
+[node name="Step8" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("10_xqfcn")
+volume_db = -5.0
+
+[node name="GsomPawn" type="Node" parent="."]
+script = ExtResource("10_2q8o8")
+has_velocity_linear = true
+
+[node name="Walk" type="Node" parent="GsomPawn"]
+script = ExtResource("11_clgec")
+
+[node name="Ladder" type="Node" parent="GsomPawn"]
+script = ExtResource("12_jihhx")
+
+[node name="Triggers" type="Node" parent="GsomPawn"]
+script = ExtResource("13_7qoqv")
+
+[node name="StepsLadder" type="Node3D" parent="."]

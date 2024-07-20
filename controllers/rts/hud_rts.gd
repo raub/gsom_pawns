@@ -26,8 +26,8 @@ func _ready() -> void:
 
 
 func set_selection(start: Vector2, end: Vector2) -> void:
-	_selection_rect.position = Vector2(min(start.x, end.x), min(start.y, end.y))
-	_selection_rect.size = Vector2(abs(start.x - end.x), abs(start.y - end.y))
+	_selection_rect.position = Vector2(minf(start.x, end.x), minf(start.y, end.y))
+	_selection_rect.size = Vector2(absf(start.x - end.x), absf(start.y - end.y))
 
 
 func _handle_map_input(event: InputEvent) -> void:

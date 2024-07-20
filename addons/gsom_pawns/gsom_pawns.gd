@@ -4,23 +4,17 @@ extends EditorPlugin
 
 func _enter_tree() -> void:
 	add_custom_type(
-		"GsomPawn", "Node", preload("./pawn/pawn.gd"), preload("./pawn/pawn.svg"),
+		"GsomPawn", "Node", preload("./nodes/pawn.gd"), preload("./nodes/pawn.svg"),
 	)
 	add_custom_type(
-		"GsomPawnHandlerWalk",
-		"Node",
-		preload("./handlers/pawn_handler_walk.gd"),
-		preload("./handlers/pawn_handler.svg"),
+		"GsomPawnEnv", "Node", preload("./nodes/pawn_env.gd"), preload("./nodes/pawn_env.svg"),
 	)
 	add_custom_type(
-		"GsomPawnHandlerSpec",
-		"Node",
-		preload("./handlers/pawn_handler_spec.gd"),
-		preload("./handlers/pawn_handler.svg"),
+		"GsomPawnTrigger", "Node", preload("./nodes/pawn_trigger.gd"), preload("./nodes/pawn_trigger.svg"),
 	)
 
 
 func _exit_tree() -> void:
 	remove_custom_type("GsomPawn")
-	remove_custom_type("GsomPawnHandlerWalk")
-	remove_custom_type("GsomPawnHandlerSpec")
+	remove_custom_type("GsomPawnEnv")
+	remove_custom_type("GsomPawnTrigger")

@@ -68,7 +68,7 @@ func _ready() -> void:
 	_assign_is_focused()
 	
 	for _i: int in range(_MAX_BATCH_SIZE):
-		var decal = _SCENE_DECAL_SELECT.instantiate()
+		var decal: Node3D = _SCENE_DECAL_SELECT.instantiate()
 		_pool_decals_select.add_child(decal)
 		decal.visible = false
 		_select_decals.append(decal)
@@ -83,13 +83,13 @@ func _adjust_health_bars() -> void:
 	
 	while current_count < unit_count:
 		for _i: int in range(_HEALTH_BARS_GAIN):
-			var bar = _SCENE_HEALTH_BAR.instantiate()
+			var bar: Node3D = _SCENE_HEALTH_BAR.instantiate()
 			_pool_health_bars.add_child(bar)
 			_health_bars.append(bar)
 		current_count += _HEALTH_BARS_GAIN
 	
 	for i: int in range(current_count):
-		var bar = _health_bars[i]
+		var bar: Node3D = _health_bars[i]
 		if i >= unit_count:
 			bar.visible = false
 			continue
@@ -176,7 +176,7 @@ func _unhandled_input(_event: InputEvent) -> void:
 
 func _update_decals() -> void:
 	for i: int in range(_MAX_BATCH_SIZE):
-		var decal = _select_decals[i]
+		var decal: Node3D = _select_decals[i]
 		if i >= _pawns.size():
 			decal.visible = false
 			continue
@@ -187,7 +187,7 @@ func _update_decals() -> void:
 func _physics_process_pick() -> void:
 	if !_is_selecting and _is_select_pressed:
 		var result: Dictionary = _physics_process_pick_ray()
-		if !result.position:
+		if !result.has("position"):
 			return
 		_is_selecting = true
 		_selection_start = _physics_process_pick_ray().position
@@ -213,7 +213,7 @@ func _physics_process_follow() -> void:
 	if !_pawns.size() || !_is_action_pressed:
 		return
 	
-	var result = _physics_process_pick_ray()
+	var result: Dictionary = _physics_process_pick_ray()
 	var pawn_target: GsomPawn = _fetch_pawn(result)
 	
 	for pawn: GsomPawn in _pawns:
@@ -224,7 +224,7 @@ func _physics_process_follow() -> void:
 
 
 func _fetch_pawn(result: Dictionary) -> GsomPawn:
-	if !result.collider:
+	if !result.has("collider"):
 		return null
 	var collider := result.collider as Node
 	var parent := collider.get_parent() as GsomPawn
@@ -241,33 +241,33 @@ func _fetch_pawns_from_colliders(results: Array[Dictionary]) -> void:
 
 
 func _physics_process_pick_ray() -> Dictionary:
-	var space_state = get_world_3d().direct_space_state
-	var mousepos = get_viewport().get_mouse_position()
+	var space_state: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
+	var mousepos: Vector2 = get_viewport().get_mouse_position()
 	
 	var origin: Vector3 = _camera.project_ray_origin(mousepos)
 	var end: Vector3 = origin + _camera.project_ray_normal(mousepos) * _RAY_LENGTH
 	var query := PhysicsRayQueryParameters3D.create(origin, end)
 	query.collision_mask = 0x102 # Floor and Pawns
 	
-	var result = space_state.intersect_ray(query)
+	var result: Dictionary = space_state.intersect_ray(query)
 	return result
 
 
 func _physics_process_pick_shape(start: Vector3, end: Vector3) -> Array[Dictionary]:
-	var space_state = get_world_3d().direct_space_state
+	var space_state: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
 	
-	var shape_rid = PhysicsServer3D.box_shape_create()
+	var shape_rid: RID = PhysicsServer3D.box_shape_create()
 	PhysicsServer3D.shape_set_data(
 		shape_rid,
-		Vector3(abs(end.x - start.x) * 0.5, 5.0, abs(end.z - start.z) * 0.5)
+		Vector3(absf(end.x - start.x) * 0.5, 5.0, absf(end.z - start.z) * 0.5)
 	)
 	
-	var params = PhysicsShapeQueryParameters3D.new()
+	var params := PhysicsShapeQueryParameters3D.new()
 	params.shape_rid = shape_rid
 	params.transform.origin = (start + end) * 0.5
 	params.collision_mask = 0x100 # Pawns only
 	
-	var result = space_state.intersect_shape(params, 16)
+	var result: Array[Dictionary] = space_state.intersect_shape(params, 16)
 	
 	PhysicsServer3D.free_rid(shape_rid)
 	
@@ -312,7 +312,7 @@ func _assign_is_focused() -> void:
 	var unit_count: int = units.size()
 	var current_count: int = _health_bars.size()
 	for i: int in range(current_count):
-		var bar = _health_bars[i]
+		var bar: Node3D = _health_bars[i]
 		if i >= unit_count:
 			bar.visible = false
 			continue

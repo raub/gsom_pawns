@@ -1,13 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://c4yrinewpl4iu"]
+[gd_scene load_steps=5 format=3 uid="uid://c4yrinewpl4iu"]
 
 [ext_resource type="Script" path="res://preview.gd" id="1_8h8be"]
-[ext_resource type="PackedScene" uid="uid://o047sh8xi1sg" path="res://gdtricks/scenes/gdtricks.tscn" id="2_on0h7"]
-[ext_resource type="PackedScene" uid="uid://byroba8fdub2m" path="res://controllers/fps/controller_fps.tscn" id="4_2qcum"]
-[ext_resource type="PackedScene" uid="uid://bdly6afa0mx3e" path="res://controllers/rts/controller_rts.tscn" id="4_xd27h"]
-[ext_resource type="PackedScene" uid="uid://fdumqv0of5vw" path="res://characters/char_human.tscn" id="5_jsp8d"]
-[ext_resource type="PackedScene" uid="uid://cihqtmcih8ejv" path="res://characters/char_vtol.tscn" id="5_meeal"]
-[ext_resource type="PackedScene" uid="uid://d06r2iq5bykhn" path="res://characters/char_spec.tscn" id="6_hc0ut"]
-[ext_resource type="PackedScene" uid="uid://b1inyq8cudkvo" path="res://gdota/gdota.tscn" id="7_s46ue"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_id2jt"]
 sky_top_color = Color(0.560784, 0.733333, 0.8, 1)
@@ -25,8 +18,6 @@ glow_enabled = true
 [node name="Preview" type="Node3D"]
 script = ExtResource("1_8h8be")
 
-[node name="Gdtricks" parent="." instance=ExtResource("2_on0h7")]
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_86j2b")
 
@@ -35,19 +26,19 @@ transform = Transform3D(0.630324, -0.709044, 0.316147, 0, 0.407231, 0.913325, -0
 light_color = Color(0.635294, 0.635294, 0.635294, 1)
 shadow_enabled = true
 
-[node name="ControllerFps" parent="." instance=ExtResource("4_2qcum")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.2447, 8.90029, 0)
-is_focused = true
+[node name="TimerLoad" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
 
-[node name="ControllerRts" parent="." instance=ExtResource("4_xd27h")]
-
-[node name="CharHuman" parent="." instance=ExtResource("5_jsp8d")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.78672)
-
-[node name="CharVtol" parent="." instance=ExtResource("5_meeal")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.62592, 0, 0)
-
-[node name="CharSpec" parent="." instance=ExtResource("6_hc0ut")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 7, 0)
-
-[node name="Gdota" parent="." instance=ExtResource("7_s46ue")]
+[node name="LabelLoading" type="Label" parent="."]
+top_level = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -37.5
+offset_right = 37.5
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 76
+text = "Loading..."
+horizontal_alignment = 1

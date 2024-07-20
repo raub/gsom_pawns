@@ -1,0 +1,96 @@
+[gd_scene load_steps=11 format=3 uid="uid://cwkm6pyeuhi3t"]
+
+[ext_resource type="Script" path="res://addons/gsom_pawns/examples/pawn_human.gd" id="1_ndbkr"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mp8rm"]
+friction = 0.0
+absorbent = true
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qcngx"]
+radius = 0.45
+height = 1.8
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5wkfk"]
+albedo_color = Color(0.258824, 0.631373, 0.231373, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_c1k11"]
+material = SubResource("StandardMaterial3D_5wkfk")
+radius = 0.45
+height = 1.8
+radial_segments = 24
+rings = 6
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_eisk1"]
+radius = 0.45
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_csb0b"]
+albedo_color = Color(0.258824, 0.631373, 0.231373, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_5hpne"]
+material = SubResource("StandardMaterial3D_csb0b")
+radius = 0.45
+height = 0.9
+radial_segments = 24
+rings = 12
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wedyi"]
+height = 0.9
+radius = 0.3
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_4biv6"]
+height = 0.3
+radius = 0.35
+
+[node name="PawnHuman" type="RigidBody3D"]
+top_level = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 80.0
+physics_material_override = SubResource("PhysicsMaterial_mp8rm")
+gravity_scale = 0.0
+can_sleep = false
+continuous_cd = true
+max_contacts_reported = 4
+contact_monitor = true
+linear_damp_mode = 1
+angular_damp_mode = 1
+script = ExtResource("1_ndbkr")
+
+[node name="ShapeWalk" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_qcngx")
+
+[node name="Mesh" type="MeshInstance3D" parent="ShapeWalk"]
+mesh = SubResource("CapsuleMesh_c1k11")
+skeleton = NodePath("../..")
+
+[node name="ShapeDuck" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("SphereShape3D_eisk1")
+
+[node name="Mesh" type="MeshInstance3D" parent="ShapeDuck"]
+mesh = SubResource("SphereMesh_5hpne")
+skeleton = NodePath("../..")
+
+[node name="CastUp" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9, 0)
+shape = SubResource("CylinderShape3D_wedyi")
+target_position = Vector3(0, 0, 0)
+max_results = 4
+
+[node name="Cast" type="ShapeCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("CylinderShape3D_4biv6")
+target_position = Vector3(0, 0, 0)
+max_results = 4
+
+[node name="Ray" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+target_position = Vector3(0, -0.4, 0)
+
+[node name="MarkerDuck" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
+
+[node name="MarkerWalk" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
