@@ -5,8 +5,7 @@ const _STEP_GROUND_MINSPEED: float = 5.0
 const _STEP_GROUND_MINSPEED_SQ: float = _STEP_GROUND_MINSPEED * _STEP_GROUND_MINSPEED
 
 const _STEP_LADDER_INTERVAL: int = 600
-const _STEP_LADDER_MINSPEED: float = 2.0
-const _STEP_LADDER_MINSPEED_SQ: float = _STEP_GROUND_MINSPEED * _STEP_GROUND_MINSPEED
+const _STEP_LADDER_MINSPEED_SQ: float = 1.0
 
 
 var pawn: GsomPawn = null:
@@ -18,6 +17,7 @@ var _prev_step_ladder_time: int = 0
 
 @onready var _pawn: GsomPawn = $GsomPawn
 @onready var _steps_concrete: Node = $StepsConcrete
+@onready var _steps_metal: Node = $StepsMetal
 @onready var _steps_ladder: Node = $StepsLadder
 
 
@@ -35,11 +35,10 @@ func _produce_step_sound() -> void:
 		_try_step_ground()
 		return
 	
-	var is_ladder: bool = pawn.get_state("on_ladder", false)
+	var is_ladder: bool = pawn.get_env("on_ladder", false)
 	if is_ladder:
 		_try_step_ladder()
 		return
-	
 
 
 func _try_step_ground() -> void:
@@ -54,9 +53,16 @@ func _try_step_ground() -> void:
 	
 	_prev_step_ground_time = time_now
 	
-	var count: int = _steps_concrete.get_child_count()
+	var host_node: Node = _steps_concrete
+	
+	var surface: Dictionary = pawn.get_env("surface", {})
+	if surface.has("material"):
+		if surface.material == "metal":
+			host_node = _steps_metal
+	
+	var count: int = host_node.get_child_count()
 	var rand_idx: int = randi_range(0, count - 1)
-	var player := _steps_concrete.get_child(rand_idx) as AudioStreamPlayer3D
+	var player := host_node.get_child(rand_idx) as AudioStreamPlayer3D
 	player.play()
 
 

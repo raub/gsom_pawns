@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://fdumqv0of5vw"]
+[gd_scene load_steps=22 format=3 uid="uid://fdumqv0of5vw"]
 
 [ext_resource type="Script" path="res://characters/human/char_human.gd" id="1_1xyqf"]
 [ext_resource type="AudioStream" uid="uid://g4ddvstcstn" path="res://characters/human/audio/pl_step1.wav" id="3_eu6m0"]
@@ -13,43 +13,17 @@
 [ext_resource type="Script" path="res://addons/gsom_pawns/examples/handler_rigid_walk.gd" id="11_clgec"]
 [ext_resource type="Script" path="res://addons/gsom_pawns/examples/handler_rigid_ladder.gd" id="12_jihhx"]
 [ext_resource type="Script" path="res://addons/gsom_pawns/examples/handler_rigid_triggers.gd" id="13_7qoqv"]
+[ext_resource type="AudioStream" uid="uid://mjoyd8gbd2gd" path="res://characters/human/audio/pl_ladder1.wav" id="14_ia2hu"]
+[ext_resource type="AudioStream" uid="uid://b5gt5ng3pr7tn" path="res://characters/human/audio/pl_ladder2.wav" id="15_tm0be"]
+[ext_resource type="AudioStream" uid="uid://clm7n0j4i6uq7" path="res://characters/human/audio/pl_ladder3.wav" id="16_ths4q"]
+[ext_resource type="AudioStream" uid="uid://boreonoxto354" path="res://characters/human/audio/pl_ladder4.wav" id="17_xinnu"]
+[ext_resource type="AudioStream" uid="uid://dv5e5y8we1g5f" path="res://characters/human/audio/pl_metal1.wav" id="18_sthks"]
+[ext_resource type="AudioStream" uid="uid://ck3lcd4funsd3" path="res://characters/human/audio/pl_metal2.wav" id="19_tgty2"]
+[ext_resource type="AudioStream" uid="uid://ccapc27ewuyxv" path="res://characters/human/audio/pl_metal3.wav" id="20_a6oq5"]
+[ext_resource type="AudioStream" uid="uid://clre38fn4bp8g" path="res://characters/human/audio/pl_metal4.wav" id="21_1v5kh"]
 
 [node name="CharHuman" type="Node3D"]
 script = ExtResource("1_1xyqf")
-
-[node name="StepsConcrete" type="Node3D" parent="."]
-
-[node name="Step1" type="AudioStreamPlayer3D" parent="StepsConcrete"]
-stream = ExtResource("3_eu6m0")
-volume_db = -5.0
-
-[node name="Step2" type="AudioStreamPlayer3D" parent="StepsConcrete"]
-stream = ExtResource("4_h3vk3")
-volume_db = -5.0
-
-[node name="Step3" type="AudioStreamPlayer3D" parent="StepsConcrete"]
-stream = ExtResource("5_n4x3g")
-volume_db = -5.0
-
-[node name="Step4" type="AudioStreamPlayer3D" parent="StepsConcrete"]
-stream = ExtResource("6_tvuxa")
-volume_db = -5.0
-
-[node name="Step5" type="AudioStreamPlayer3D" parent="StepsConcrete"]
-stream = ExtResource("7_ifk7s")
-volume_db = -5.0
-
-[node name="Step6" type="AudioStreamPlayer3D" parent="StepsConcrete"]
-stream = ExtResource("8_fgghn")
-volume_db = -5.0
-
-[node name="Step7" type="AudioStreamPlayer3D" parent="StepsConcrete"]
-stream = ExtResource("9_npgma")
-volume_db = -5.0
-
-[node name="Step8" type="AudioStreamPlayer3D" parent="StepsConcrete"]
-stream = ExtResource("10_xqfcn")
-volume_db = -5.0
 
 [node name="GsomPawn" type="Node" parent="."]
 script = ExtResource("10_2q8o8")
@@ -64,4 +38,80 @@ script = ExtResource("12_jihhx")
 [node name="Triggers" type="Node" parent="GsomPawn"]
 script = ExtResource("13_7qoqv")
 
+[node name="StepsConcrete" type="Node3D" parent="."]
+
+[node name="Step1" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("3_eu6m0")
+volume_db = -10.0
+
+[node name="Step2" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("4_h3vk3")
+volume_db = -10.0
+
+[node name="Step3" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("5_n4x3g")
+volume_db = -10.0
+
+[node name="Step4" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("6_tvuxa")
+volume_db = -10.0
+
+[node name="Step5" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("7_ifk7s")
+volume_db = -10.0
+
+[node name="Step6" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("8_fgghn")
+volume_db = -10.0
+
+[node name="Step7" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("9_npgma")
+volume_db = -10.0
+
+[node name="Step8" type="AudioStreamPlayer3D" parent="StepsConcrete"]
+stream = ExtResource("10_xqfcn")
+volume_db = -10.0
+
 [node name="StepsLadder" type="Node3D" parent="."]
+
+[node name="Step1" type="AudioStreamPlayer3D" parent="StepsLadder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
+stream = ExtResource("14_ia2hu")
+volume_db = -15.0
+
+[node name="Step2" type="AudioStreamPlayer3D" parent="StepsLadder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
+stream = ExtResource("15_tm0be")
+volume_db = -15.0
+
+[node name="Step3" type="AudioStreamPlayer3D" parent="StepsLadder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
+stream = ExtResource("16_ths4q")
+volume_db = -15.0
+
+[node name="Step4" type="AudioStreamPlayer3D" parent="StepsLadder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
+stream = ExtResource("17_xinnu")
+volume_db = -15.0
+
+[node name="StepsMetal" type="Node3D" parent="."]
+
+[node name="Step1" type="AudioStreamPlayer3D" parent="StepsMetal"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
+stream = ExtResource("18_sthks")
+volume_db = -20.0
+
+[node name="Step2" type="AudioStreamPlayer3D" parent="StepsMetal"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
+stream = ExtResource("19_tgty2")
+volume_db = -20.0
+
+[node name="Step3" type="AudioStreamPlayer3D" parent="StepsMetal"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
+stream = ExtResource("20_a6oq5")
+volume_db = -20.0
+
+[node name="Step4" type="AudioStreamPlayer3D" parent="StepsMetal"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
+stream = ExtResource("21_1v5kh")
+volume_db = -20.0

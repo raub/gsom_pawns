@@ -26,9 +26,15 @@ transform = Transform3D(0.630324, -0.709044, 0.316147, 0, 0.407231, 0.913325, -0
 light_color = Color(0.635294, 0.635294, 0.635294, 1)
 shadow_enabled = true
 
+[node name="TimerPerf" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
 [node name="TimerLoad" type="Timer" parent="."]
 wait_time = 0.2
 autostart = true
+
+[node name="Container" type="Node" parent="."]
 
 [node name="LabelLoading" type="Label" parent="."]
 top_level = true
@@ -42,3 +48,11 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 76
 text = "Loading..."
 horizontal_alignment = 1
+
+[node name="LabelPerf" type="Label" parent="."]
+visible = false
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 64.0
+offset_bottom = 47.0
+text = "perf"

@@ -1,13 +1,20 @@
 extends Node3D
 class_name Main
 
-const PATH_GDTRICKS := "res://gdtricks/gdtricks.tscn"
-const PATH_GODOTA := "res://godota/godota.tscn"
-const PATH_CTRL_FPS := "res://controllers/fps/controller_fps.tscn"
-const PATH_CTRL_RTS := "res://controllers/rts/controller_rts.tscn"
-const PATH_CHAR_HUMAN := "res://characters/human/char_human.tscn"
-const PATH_CHAR_VTOL := "res://characters/vtol/char_vtol.tscn"
-const PATH_CHAR_SPEC := "res://characters/spec/char_spec.tscn"
+const _PATH_GDTRICKS := "res://gdtricks/gdtricks.tscn"
+const _PATH_GODOTA := "res://godota/godota.tscn"
+const _PATH_CTRL_FPS := "res://controllers/fps/controller_fps.tscn"
+const _PATH_CTRL_RTS := "res://controllers/rts/controller_rts.tscn"
+const _PATH_CHAR_HUMAN := "res://characters/human/char_human.tscn"
+const _PATH_CHAR_VTOL := "res://characters/vtol/char_vtol.tscn"
+const _PATH_CHAR_SPEC := "res://characters/spec/char_spec.tscn"
+
+var _DISPLAY_MONITORS: PackedStringArray = [
+	"TIME_FPS","TIME_PROCESS","TIME_PHYSICS_PROCESS",
+	"OBJECT_COUNT","OBJECT_RESOURCE_COUNT",
+	"RENDER_TOTAL_OBJECTS_IN_FRAME","RENDER_TOTAL_PRIMITIVES_IN_FRAME",
+	"RENDER_TOTAL_DRAW_CALLS_IN_FRAME",
+]
 
 static var _instance: Main = null
 
@@ -20,20 +27,26 @@ var _controller_rts: Node3D = null
 
 
 @onready var _timer_load: Timer = $TimerLoad
+@onready var _timer_perf: Timer = $TimerPerf
 @onready var _label_loading: Label = $LabelLoading
+@onready var _label_perf: Label = $LabelPerf
+@onready var _container: Node = $Container
+
 
 func _ready() -> void:
 	_instance = self
 	
 	_timer_load.connect("timeout", _update_load)
+	_timer_perf.connect("timeout", _update_perf)
 	
-	_load_async(PATH_CTRL_FPS, _on_load_cases)
-	_load_async(PATH_GDTRICKS, _on_load_cases)
-	_load_async(PATH_CTRL_RTS, _on_load_cases)
+	_load_async(_PATH_CTRL_FPS, _on_load_cases)
+	_load_async(_PATH_GDTRICKS, _on_load_cases)
+	_load_async(_PATH_CTRL_RTS, _on_load_cases)
 
 
 static func _nop(_res: PackedScene, _path: String) -> void:
 	pass
+
 
 static func load_async(path: String, cb: Callable = Main._nop) -> void:
 	_instance._load_async(path, cb)
@@ -43,41 +56,41 @@ func _on_load_cases(res: PackedScene, path: String) -> void:
 	var inst: Node = res.instantiate()
 	
 	# Need to set position before "ready"
-	if path == PATH_CHAR_HUMAN:
+	if path == _PATH_CHAR_HUMAN:
 		inst.position = Vector3(0.0, 0.0, 5.8)
-	elif path == PATH_CHAR_VTOL:
+	elif path == _PATH_CHAR_VTOL:
 		inst.position = Vector3(-9.0, 0.0, 5.8)
-	elif path == PATH_CHAR_SPEC:
+	elif path == _PATH_CHAR_SPEC:
 		inst.position = Vector3(10.0, 7.0, 5.8)
 	
-	add_child(inst)
+	_container.add_child(inst)
 	
-	if path == PATH_CTRL_RTS:
+	if path == _PATH_CTRL_RTS:
 		_controller_rts = inst
 		_controller_rts.switched_controller.connect(_switch_controller)
 	
-	if path == PATH_GDTRICKS:
-		_load_async(PATH_GODOTA, _on_load_cases)
+	if path == _PATH_GDTRICKS:
+		_load_async(_PATH_GODOTA, _on_load_cases)
 	
-	if path == PATH_CTRL_FPS:
+	if path == _PATH_CTRL_FPS:
 		_controller_fps = inst
 		_controller_fps.kind = "human"
 		_controller_fps.switched_character.connect(_switch_pawn)
 		_controller_fps.switched_controller.connect(_switch_controller)
 		_controller_fps.is_focused = true
 		
-		_load_async(PATH_CHAR_HUMAN, _on_load_cases)
-		_load_async(PATH_CHAR_VTOL, _on_load_cases)
-		_load_async(PATH_CHAR_SPEC, _on_load_cases)
+		_load_async(_PATH_CHAR_HUMAN, _on_load_cases)
+		_load_async(_PATH_CHAR_VTOL, _on_load_cases)
+		_load_async(_PATH_CHAR_SPEC, _on_load_cases)
 	
-	if path == PATH_CHAR_HUMAN:
+	if path == _PATH_CHAR_HUMAN:
 		_char_human = inst
 		_controller_fps.possess(_char_human.pawn)
 	
-	if path == PATH_CHAR_VTOL:
+	if path == _PATH_CHAR_VTOL:
 		_char_vtol = inst
 		
-	if path == PATH_CHAR_SPEC:
+	if path == _PATH_CHAR_SPEC:
 		_char_spec = inst
 
 
@@ -118,6 +131,21 @@ func _update_load() -> void:
 			var res := ResourceLoader.load_threaded_get(path) as PackedScene
 			if cb == Main._nop:
 				var inst: Node = res.instantiate()
-				add_child(inst)
+				_container.add_child(inst)
 			else:
 				cb.call(res, path)
+
+
+func get_perf_line(perf_name: String) -> String:
+	return ("%s: %s" % [perf_name, Performance.get_monitor(Performance[perf_name])])
+
+
+func _update_perf() -> void:
+	if !_label_perf.visible:
+		return
+	
+	var text: String = ""
+	for perf_name: String in _DISPLAY_MONITORS:
+		text += get_perf_line(perf_name) + "\n"
+	
+	_label_perf.text = text

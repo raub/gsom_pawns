@@ -17,8 +17,6 @@ func _exit_tree() -> void:
 
 
 func _trigger_enter(pawn: GsomPawn) -> void:
-	prints("_trigger_enter")
-	
 	var teleports: Array = _teleports.filter(
 		func (node: Node) -> bool:
 			return node.tag == dest

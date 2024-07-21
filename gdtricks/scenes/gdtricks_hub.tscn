@@ -191,7 +191,26 @@ shape = SubResource("BoxShape3D_50fr0")
 
 [node name="GsomPawnTrigger" type="Node" parent="gdtricks_hub/MeshInstance3D/Area3D"]
 script = ExtResource("11_kl2w3")
-trigger_name = "jump_pad"
+trigger_name = "launch"
+value_enter = {
+"vel": Vector3(0, 25, 0)
+}
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="gdtricks_hub"]
+transform = Transform3D(1, 0, 0, 0, 0.746673, 0.665191, 0, -0.665191, 0.746673, -21.5495, 0.358177, 4.01657)
+mesh = SubResource("BoxMesh_e54pq")
+
+[node name="Area3D" type="Area3D" parent="gdtricks_hub/MeshInstance3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="gdtricks_hub/MeshInstance3D2/Area3D"]
+shape = SubResource("BoxShape3D_50fr0")
+
+[node name="GsomPawnTrigger" type="Node" parent="gdtricks_hub/MeshInstance3D2/Area3D"]
+script = ExtResource("11_kl2w3")
+trigger_name = "launch"
+value_enter = {
+"vel": Vector3(0, 25, 0)
+}
 
 [node name="OccluderInstance3D" type="OccluderInstance3D" parent="."]
 occluder = ExtResource("10_co8tn")

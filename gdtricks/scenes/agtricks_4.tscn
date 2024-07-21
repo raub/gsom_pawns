@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://da5k06ac0fquw"]
+[gd_scene load_steps=21 format=3 uid="uid://da5k06ac0fquw"]
 
 [ext_resource type="PackedScene" uid="uid://u714s2fw7wnp" path="res://gdtricks/models/agtricks.blend" id="1_uliro"]
 [ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://gdtricks/misc/teleport.tscn" id="2_26p74"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://ckiyfclt754r" path="res://gdtricks/misc/audio/amb_river.ogg" id="7_n0a6n"]
 [ext_resource type="PackedScene" uid="uid://cio84xpb7o4oc" path="res://gdtricks/models/door_frame.tscn" id="7_pd83p"]
 [ext_resource type="ArrayOccluder3D" uid="uid://do485jyrigvub" path="res://gdtricks/scenes/agtricks_4.occ" id="8_apyhp"]
+[ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn_env.gd" id="8_ewpjd"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_ckhra"]
 material = ExtResource("3_cevl0")
@@ -150,6 +151,31 @@ autoplay = true
 [node name="DoorFrame" parent="Content" index="6" instance=ExtResource("7_pd83p")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.655, 2.888, -38.096)
 dest = "gdtricks-agtricks-5"
+
+[node name="Area3D" type="Area3D" parent="Content" index="7"]
+
+[node name="GsomPawnEnv" type="Node" parent="Content/Area3D" index="0"]
+script = ExtResource("8_ewpjd")
+env_name = "surface"
+env_value = {
+"material": "metal"
+}
+
+[node name="Pilon5" type="CollisionShape3D" parent="Content/Area3D" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.150002, -0.0541389, 9.492)
+shape = SubResource("BoxShape3D_qeb2q")
+
+[node name="Pilon6" type="CollisionShape3D" parent="Content/Area3D" index="2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.150002, 0.346861, -0.108)
+shape = SubResource("BoxShape3D_qeb2q")
+
+[node name="Pilon7" type="CollisionShape3D" parent="Content/Area3D" index="3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.150002, 0.746861, -9.708)
+shape = SubResource("BoxShape3D_qeb2q")
+
+[node name="Pilon8" type="CollisionShape3D" parent="Content/Area3D" index="4"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.150002, 0.746861, -19.307)
+shape = SubResource("BoxShape3D_qeb2q")
 
 [node name="mdl_at1_walls" parent="." index="1"]
 visible = false

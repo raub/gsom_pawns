@@ -101,7 +101,7 @@ func _do_integrate(pawn: GsomPawn, state: PhysicsDirectBodyState3D) -> void:
 	
 	if is_ground:
 		if is_jump:
-			body.linear_velocity.y = speed_jump
+			body.linear_velocity.y = maxf(body.linear_velocity.y, speed_jump)
 			if direction.length():
 				var curspeed: float = body.linear_velocity.dot(direction)
 				var addspeed: float = clampf(max_speed_fly - curspeed, 0, accel_fly * dt)

@@ -14,7 +14,7 @@ size = Vector3(0.916, 0.4, 6.465)
 script = ExtResource("2_g4sm2")
 
 [node name="PortalDoor" parent="." index="1" instance=ExtResource("2_nm1on")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.822428, -0.122318, -0.038579)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.822, -0.122, 0.009)
 dest = "gdtricks-agtricks-2"
 
 [node name="Collider" type="StaticBody3D" parent="." index="2"]

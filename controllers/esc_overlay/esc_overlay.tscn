@@ -45,7 +45,7 @@ grow_vertical = 2
 
 [node name="Column" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
-theme_override_constants/separation = 42
+theme_override_constants/separation = 24
 alignment = 1
 
 [node name="RowMain" type="HBoxContainer" parent="CenterContainer/Column"]
@@ -73,16 +73,20 @@ icon = ExtResource("4_etsoq")
 icon_alignment = 1
 expand_icon = true
 
-[node name="ButtonNext" type="Button" parent="CenterContainer/Column"]
+[node name="RowTeleport" type="HBoxContainer" parent="CenterContainer/Column"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ButtonNext" type="Button" parent="CenterContainer/Column/RowTeleport"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 24
 text = "Teleport - Next"
 
-[node name="ButtonPrev" type="Button" parent="CenterContainer/Column"]
+[node name="ButtonPrev" type="Button" parent="CenterContainer/Column/RowTeleport"]
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 24
 text = "Teleport - Prev"
 
 [node name="LabelCharacters" type="Label" parent="CenterContainer/Column"]
@@ -92,17 +96,21 @@ text = "Characters"
 
 [node name="RowCharacters" type="HBoxContainer" parent="CenterContainer/Column"]
 layout_mode = 2
+theme_override_constants/separation = 16
 
 [node name="Human" type="Button" parent="CenterContainer/Column/RowCharacters"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Human"
 
 [node name="Vtol" type="Button" parent="CenterContainer/Column/RowCharacters"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Vtol"
 
 [node name="Spec" type="Button" parent="CenterContainer/Column/RowCharacters"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "Spec"
 
 [node name="LabelTeams" type="Label" parent="CenterContainer/Column"]
@@ -112,13 +120,16 @@ text = "Teams"
 
 [node name="RowTeams" type="HBoxContainer" parent="CenterContainer/Column"]
 layout_mode = 2
+theme_override_constants/separation = 16
 
 [node name="Team1" type="Button" parent="CenterContainer/Column/RowTeams"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "team1"
 
 [node name="Team2" type="Button" parent="CenterContainer/Column/RowTeams"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "team2"
 
 [node name="LabelControllers" type="Label" parent="CenterContainer/Column"]
@@ -128,12 +139,15 @@ text = "Controllers"
 
 [node name="RowControllers" type="HBoxContainer" parent="CenterContainer/Column"]
 layout_mode = 2
+theme_override_constants/separation = 16
 
 [node name="Fps" type="Button" parent="CenterContainer/Column/RowControllers"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "FPS"
 
 [node name="Rts" type="Button" parent="CenterContainer/Column/RowControllers"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 24
 text = "RTS
 "

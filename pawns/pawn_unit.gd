@@ -24,9 +24,6 @@ var _max_speed: float = 3.0
 
 
 var _slow_ticks: int = 0
-var _pending_toss_vel := Vector3.ZERO
-var _has_pending_tp := false
-var _pending_tp_pos := Vector3.ZERO
 var _pawn: GsomPawn = null
 
 

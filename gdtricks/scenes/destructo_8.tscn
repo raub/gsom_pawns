@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://dl5mntkaumwb0"]
+[gd_scene load_steps=33 format=3 uid="uid://dl5mntkaumwb0"]
 
 [ext_resource type="PackedScene" uid="uid://b5vic7i4uaaua" path="res://gdtricks/models/destructo_8.blend" id="1_e0wnd"]
 [ext_resource type="Material" uid="uid://cnopbqd4dn44t" path="res://gdtricks/misc/water.material" id="2_er2tr"]
@@ -7,6 +7,7 @@
 [ext_resource type="FontFile" uid="uid://cn5tj07kqaeyy" path="res://gdtricks/misc/Kenney Future Narrow.ttf" id="6_ov5q0"]
 [ext_resource type="AudioStream" uid="uid://ckiyfclt754r" path="res://gdtricks/misc/audio/amb_river.ogg" id="7_0n4or"]
 [ext_resource type="PackedScene" uid="uid://cio84xpb7o4oc" path="res://gdtricks/models/door_frame.tscn" id="8_8r6m0"]
+[ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn_env.gd" id="8_bhept"]
 [ext_resource type="ArrayOccluder3D" uid="uid://4y3myrqm5p5j" path="res://gdtricks/scenes/destructo_8.occ" id="8_l638f"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_luj1u"]
@@ -229,6 +230,43 @@ autoplay = true
 [node name="DoorFrame" parent="Content" index="7" instance=ExtResource("8_8r6m0")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.927, 2.846, 21.356)
 dest = "gdtricks-destructo-9"
+
+[node name="Area3D" type="Area3D" parent="Content" index="8"]
+
+[node name="GsomPawnEnv" type="Node" parent="Content/Area3D" index="0"]
+script = ExtResource("8_bhept")
+env_name = "surface"
+env_value = {
+"material": "metal"
+}
+
+[node name="Edge8" type="CollisionShape3D" parent="Content/Area3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.928, 0.10941, -14.941)
+shape = SubResource("BoxShape3D_fbl8a")
+
+[node name="Edge9" type="CollisionShape3D" parent="Content/Area3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.066, 0.10941, -7.608)
+shape = SubResource("BoxShape3D_6g3ht")
+
+[node name="Edge10" type="CollisionShape3D" parent="Content/Area3D" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.335, 0.10941, -0.139999)
+shape = SubResource("BoxShape3D_ydovr")
+
+[node name="Edge11" type="CollisionShape3D" parent="Content/Area3D" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.79149, 0.10941, 8.66002)
+shape = SubResource("BoxShape3D_iwmqh")
+
+[node name="Edge12" type="CollisionShape3D" parent="Content/Area3D" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.13449, 0.10941, 9.37912)
+shape = SubResource("BoxShape3D_6va3v")
+
+[node name="Edge13" type="CollisionShape3D" parent="Content/Area3D" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.46477, 0.10941, 11.4094)
+shape = SubResource("BoxShape3D_21wwk")
+
+[node name="Edge14" type="CollisionShape3D" parent="Content/Area3D" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.465, 0.10941, 20.51)
+shape = SubResource("BoxShape3D_k7aqw")
 
 [node name="mdl_dh8_walls" parent="." index="1"]
 layers = 524289

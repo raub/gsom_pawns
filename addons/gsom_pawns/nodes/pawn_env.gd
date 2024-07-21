@@ -47,6 +47,14 @@ func _ready() -> void:
 	parent.body_exited.connect(_on_exited)
 
 
+func _apply_env(pawn: GsomPawn) -> void:
+	pawn.set_env(env_name, env_value)
+
+
+func _erase_env(pawn: GsomPawn) -> void:
+	pawn.erase_env(env_name)
+
+
 func _on_entered(body: Node3D) -> void:
 	if disabled:
 		return
@@ -59,11 +67,11 @@ func _on_entered(body: Node3D) -> void:
 		return
 	
 	if behavior == EnvBehavior.ENTER_APPLY or behavior == EnvBehavior.ENTER_APPLY_EXIT_REMOVE:
-		pawn.set_env(env_name, true)
+		_apply_env(pawn)
 		return
 	
 	if behavior == EnvBehavior.ENTER_REMOVE or behavior == EnvBehavior.ENTER_REMOVE_EXIT_APPLY:
-		pawn.erase_env(env_name)
+		_erase_env(pawn)
 		return
 
 
@@ -79,9 +87,9 @@ func _on_exited(body: Node3D) -> void:
 		return
 	
 	if behavior == EnvBehavior.EXIT_APPLY or behavior == EnvBehavior.ENTER_REMOVE_EXIT_APPLY:
-		pawn.set_env(env_name, true)
+		_apply_env(pawn)
 		return
 	
 	if behavior == EnvBehavior.EXIT_REMOVE or behavior == EnvBehavior.ENTER_APPLY_EXIT_REMOVE:
-		pawn.erase_env(env_name)
+		_erase_env(pawn)
 		return

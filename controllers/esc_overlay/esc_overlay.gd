@@ -25,8 +25,8 @@ var _current_tp_index: int = 0
 @onready var _fullscreen: Button = $CenterContainer/Column/RowMain/Fullscreen
 @onready var _windowed: Button = $CenterContainer/Column/RowMain/Windowed
 @onready var _quit: Button = $CenterContainer/Column/RowMain/Quit
-@onready var _button_next: Button = $CenterContainer/Column/ButtonNext
-@onready var _button_prev: Button = $CenterContainer/Column/ButtonPrev
+@onready var _button_next: Button = $CenterContainer/Column/RowTeleport/ButtonNext
+@onready var _button_prev: Button = $CenterContainer/Column/RowTeleport/ButtonPrev
 @onready var _button_human: Button = $CenterContainer/Column/RowCharacters/Human
 @onready var _button_vtol: Button = $CenterContainer/Column/RowCharacters/Vtol
 @onready var _button_spec: Button = $CenterContainer/Column/RowCharacters/Spec
@@ -36,6 +36,7 @@ var _current_tp_index: int = 0
 @onready var _label_teams: Control = $CenterContainer/Column/LabelTeams
 @onready var _row_characters: Control = $CenterContainer/Column/RowCharacters
 @onready var _row_teams: Control = $CenterContainer/Column/RowTeams
+@onready var _row_teleport: Control = $CenterContainer/Column/RowTeleport
 @onready var _button_team_1: Button = $CenterContainer/Column/RowTeams/Team1
 @onready var _button_team_2: Button = $CenterContainer/Column/RowTeams/Team2
 
@@ -58,8 +59,7 @@ func _ready() -> void:
 	_button_team_1.pressed.connect(func () -> void: switched_team.emit("team1"))
 	_button_team_2.pressed.connect(func () -> void: switched_team.emit("team2"))
 	
-	_button_next.visible = controller_kind == "fps"
-	_button_prev.visible = controller_kind == "fps"
+	_row_teleport.visible = controller_kind == "fps"
 	_label_characters.visible = controller_kind == "fps"
 	_row_characters.visible = controller_kind == "fps"
 	_label_teams.visible = controller_kind == "rts"

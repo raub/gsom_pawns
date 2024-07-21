@@ -20,7 +20,10 @@ func _handle_triggers(trigger_name: String, value: Dictionary) -> void:
 
 func _perform_action(body: RigidBody3D, action: Dictionary) -> void:
 	var trigger_name: String = action.trigger_name
-	var value: Variant = action.value
+	var value: Dictionary = action.value
+	
+	if !value.size():
+		return
 	
 	if trigger_name == "teleport":
 		body.linear_velocity = Vector3.ZERO
@@ -29,7 +32,11 @@ func _perform_action(body: RigidBody3D, action: Dictionary) -> void:
 	elif trigger_name == "toss":
 		body.linear_velocity += value.vel
 	elif trigger_name == "launch":
-		body.linear_velocity = value.vel
+		body.linear_velocity.y = value.vel.y
+		if abs(body.linear_velocity.x) < abs(value.vel.x):
+			body.linear_velocity.x = value.vel.x
+		if abs(body.linear_velocity.z) < abs(value.vel.z):
+			body.linear_velocity.z = value.vel.z
 
 
 func _do_physics(pawn: GsomPawn, _dt: float) -> void:

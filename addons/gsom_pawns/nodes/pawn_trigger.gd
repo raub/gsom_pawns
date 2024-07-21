@@ -48,7 +48,6 @@ func _attach() -> void:
 
 
 func _trigger_enter(pawn: GsomPawn) -> void:
-	prints("te base")
 	pawn.triggered.emit(trigger_name, value_enter)
 
 
