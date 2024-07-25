@@ -62,15 +62,8 @@ extends GsomPawnHandler
 ## Move this much slower when crouching
 @export var duck_multiplier: float = 0.333333
 
-## Prevent processing while the body is in these envs
-@export var stop_envs: PackedStringArray = ["on_ladder", "in_water"]
-
 
 func _do_integrate(pawn: GsomPawn, state: PhysicsDirectBodyState3D) -> void:
-	for stop: String in stop_envs:
-		if pawn.has_env(stop):
-			return
-	
 	var body: RigidBody3D = pawn.body
 	
 	var dt: float = state.step
@@ -92,7 +85,7 @@ func _do_integrate(pawn: GsomPawn, state: PhysicsDirectBodyState3D) -> void:
 	var is_ground: bool = pawn.get_state("on_ground", false)
 	var normal: Vector3 = pawn.get_state("normal", Vector3.UP)
 	
-	if abs(wish_axis.z) > 0.1 || abs(wish_axis.x) > 0.1:
+	if abs(wish_axis.z) > 0.1 or abs(wish_axis.x) > 0.1:
 		var forward: Vector3 = body.normal.cross(basis.x)
 		var left: Vector3 = body.normal.cross(-basis.z)
 		direction = (forward * wish_axis.z + left * wish_axis.x).normalized()

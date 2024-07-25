@@ -290,25 +290,70 @@ func erase_trait(field_name: String) -> bool:
 	return erase_info("traits", field_name)
 
 
+func _do_integrate_handler(handler: GsomPawnHandler, state: PhysicsDirectBodyState3D) -> void:
+	if handler.disabled:
+		return
+	
+	for env_name: String in handler.include_envs:
+		if !has_env(env_name):
+			return
+	
+	for env_name: String in handler.exclude_envs:
+		if has_env(env_name):
+			return
+	
+	handler._do_integrate(self, state)
+
+
 ## Framework method, should be called by [code]scene[/code] instance on [code]_integrate_forces[/code].
 func do_integrate(state: PhysicsDirectBodyState3D) -> void:
 	for child: Node in get_children():
-		if child is GsomPawnHandler and !child.disabled:
-			child._do_integrate(self, state)
+		if child is GsomPawnHandler:
+			_do_integrate_handler(child, state)
+
+
+func _do_process_handler(handler: GsomPawnHandler, dt: float) -> void:
+	if handler.disabled:
+		return
+	
+	for env_name: String in handler.include_envs:
+		if !has_env(env_name):
+			return
+	
+	for env_name: String in handler.exclude_envs:
+		if has_env(env_name):
+			return
+	
+	handler._do_process(self, dt)
 
 
 ## Framework method, should be called by [code]scene[/code] instance on [code]_process[/code].
 func do_process(dt: float) -> void:
 	for child: Node in get_children():
-		if child is GsomPawnHandler and !child.disabled:
-			child._do_process(self, dt)
+		if child is GsomPawnHandler:
+			_do_process_handler(child, dt)
+
+
+func _do_physics_handler(handler: GsomPawnHandler, dt: float) -> void:
+	if handler.disabled:
+		return
+	
+	for env_name: String in handler.include_envs:
+		if !has_env(env_name):
+			return
+	
+	for env_name: String in handler.exclude_envs:
+		if has_env(env_name):
+			return
+	
+	handler._do_physics(self, dt)
 
 
 ## Framework method, should be called by [code]scene[/code] instance on [code]_physics_process[/code].
 func do_physics(dt: float) -> void:
 	for child: Node in get_children():
-		if child is GsomPawnHandler and !child.disabled:
-			child._do_physics(self, dt)
+		if child is GsomPawnHandler:
+			_do_physics_handler(child, dt)
 	
 	if track_accel_linear and has_velocity_linear:
 		var dvell: Vector3 = (_cached_vell - _body.linear_velocity)

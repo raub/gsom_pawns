@@ -7,6 +7,8 @@ const _STEP_GROUND_MINSPEED_SQ: float = _STEP_GROUND_MINSPEED * _STEP_GROUND_MIN
 const _STEP_LADDER_INTERVAL: int = 600
 const _STEP_LADDER_MINSPEED_SQ: float = 1.0
 
+const _STEP_SWIM_INTERVAL: int = 2000
+
 
 var pawn: GsomPawn = null:
 	get:
@@ -14,11 +16,14 @@ var pawn: GsomPawn = null:
 
 var _prev_step_ground_time: int = 0
 var _prev_step_ladder_time: int = 0
+var _prev_step_swim_time: int = 0
 
 @onready var _pawn: GsomPawn = $GsomPawn
 @onready var _steps_concrete: Node = $StepsConcrete
 @onready var _steps_metal: Node = $StepsMetal
 @onready var _steps_ladder: Node = $StepsLadder
+@onready var _steps_swim: Node = $StepsSwim
+@onready var _steps_wet: Node = $StepsWet
 
 
 func _ready() -> void:
@@ -30,12 +35,17 @@ func _process(_dt: float) -> void:
 
 
 func _produce_step_sound() -> void:
+	var is_water: bool = pawn.has_env("water")
+	if is_water:
+		_try_step_swim()
+		return
+	
 	var is_ground: bool = pawn.get_state("on_ground", false)
 	if is_ground:
 		_try_step_ground()
 		return
 	
-	var is_ladder: bool = pawn.get_env("on_ladder", false)
+	var is_ladder: bool = pawn.has_env("ladder")
 	if is_ladder:
 		_try_step_ladder()
 		return
@@ -59,6 +69,8 @@ func _try_step_ground() -> void:
 	if surface.has("material"):
 		if surface.material == "metal":
 			host_node = _steps_metal
+		if surface.material == "water":
+			host_node = _steps_wet
 	
 	var count: int = host_node.get_child_count()
 	var rand_idx: int = randi_range(0, count - 1)
@@ -80,4 +92,18 @@ func _try_step_ladder() -> void:
 	var count: int = _steps_ladder.get_child_count()
 	var rand_idx: int = randi_range(0, count - 1)
 	var player := _steps_ladder.get_child(rand_idx) as AudioStreamPlayer3D
+	player.play()
+
+
+func _try_step_swim() -> void:
+	var time_now: int = Time.get_ticks_msec()
+	
+	if time_now - _prev_step_swim_time < _STEP_SWIM_INTERVAL:
+		return
+	
+	_prev_step_swim_time = time_now
+	
+	var count: int = _steps_swim.get_child_count()
+	var rand_idx: int = randi_range(0, count - 1)
+	var player := _steps_swim.get_child(rand_idx) as AudioStreamPlayer3D
 	player.play()

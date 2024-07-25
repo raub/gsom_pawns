@@ -1,0 +1,154 @@
+[gd_scene load_steps=8 format=3 uid="uid://dnc1yr7xumxev"]
+
+[ext_resource type="PackedScene" uid="uid://hnlyivllaurp" path="res://maps/gdtricks/models/destructo_6.blend" id="1_v1fj5"]
+[ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn_env.gd" id="2_4obd8"]
+
+[sub_resource type="GDScript" id="GDScript_ta16p"]
+script/source = "extends Node3D
+
+# Start position percent: 0 -- 1
+var _startAt: float = 0.5;
+@export var startAt: float = 0.5:
+	get:
+		return _startAt;
+	set(v):
+		var clamped: float = clampf(v, 0, 1);
+		if _startAt == clamped:
+			return;
+		
+		_startAt = clamped;
+
+
+@onready var _animation: AnimationPlayer = $mdl_dh6_pad/Animation;
+
+
+func _ready() -> void:
+	_animation.current_animation = \"slide\";
+	var anim: Animation = _animation.get_animation(\"slide\");
+	_animation.seek(_startAt * anim.length);
+"
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sserl"]
+size = Vector3(1.598, 2.66143, 1.59826)
+
+[sub_resource type="Animation" id="Animation_hi70j"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(4.8, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_vfahf"]
+resource_name = "slide"
+length = 6.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 3, 6)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 3, 6)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(3.8, -0.25, 0, 0.25, 0, -3.8, -0.25, 0, 0.25, 0, 3.8, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0, 3, 6)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y6sjn"]
+_data = {
+"RESET": SubResource("Animation_hi70j"),
+"slide": SubResource("Animation_vfahf")
+}
+
+[node name="Destructo6Pad" instance=ExtResource("1_v1fj5")]
+script = SubResource("GDScript_ta16p")
+
+[node name="mdl_dh6_walls" parent="." index="0"]
+visible = false
+
+[node name="mdl_dh6_pad" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4.8)
+
+[node name="Body" type="StaticBody3D" parent="mdl_dh6_pad" index="0"]
+
+[node name="Shape" type="CollisionShape3D" parent="mdl_dh6_pad/Body" index="0"]
+shape = SubResource("BoxShape3D_sserl")
+
+[node name="Animation" type="AnimationPlayer" parent="mdl_dh6_pad" index="1"]
+libraries = {
+"": SubResource("AnimationLibrary_y6sjn")
+}
+speed_scale = 0.5
+
+[node name="Area3D" type="Area3D" parent="mdl_dh6_pad" index="2"]
+
+[node name="GsomPawnEnv" type="Node" parent="mdl_dh6_pad/Area3D" index="0"]
+script = ExtResource("2_4obd8")
+env_name = "surface"
+env_value = {
+"material": "metal"
+}
+
+[node name="Shape2" type="CollisionShape3D" parent="mdl_dh6_pad/Area3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.81319, 0)
+shape = SubResource("BoxShape3D_sserl")
+
+[node name="mdl_dh6_slots" parent="." index="2"]
+visible = false
+
+[node name="mdl_dh6_section_2" parent="." index="3"]
+visible = false
+
+[node name="mdl_dh6_section_1" parent="." index="4"]
+visible = false

@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://controllers/fps/controller_fps.gd" id="1_00mp3"]
 [ext_resource type="PackedScene" uid="uid://bhwuoapyskx81" path="res://controllers/esc_overlay/esc_overlay.tscn" id="2_p4ycf"]
 [ext_resource type="Texture2D" uid="uid://b3t5fp27ju86p" path="res://controllers/fps/crosshair012.png" id="6_6nh86"]
-[ext_resource type="AudioStream" uid="uid://80lx0vwk1w2s" path="res://gdtricks/misc/audio/teleport.ogg" id="7_littk"]
+[ext_resource type="AudioStream" uid="uid://80lx0vwk1w2s" path="res://maps/gdtricks/misc/audio/teleport.ogg" id="7_littk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nssj4"]
 bg_color = Color(0.6, 0.6, 0.6, 0)

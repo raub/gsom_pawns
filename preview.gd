@@ -1,8 +1,9 @@
 extends Node3D
 class_name Main
 
-const _PATH_GDTRICKS := "res://gdtricks/gdtricks.tscn"
-const _PATH_GODOTA := "res://godota/godota.tscn"
+const _PATH_GDTRICKS := "res://maps/gdtricks/gdtricks.tscn"
+const _PATH_GODOTA := "res://maps/godota/godota.tscn"
+const _PATH_TEST_CHAMBER := "res://maps/test_chamber/test_chamber.tscn"
 const _PATH_CTRL_FPS := "res://controllers/fps/controller_fps.tscn"
 const _PATH_CTRL_RTS := "res://controllers/rts/controller_rts.tscn"
 const _PATH_CHAR_HUMAN := "res://characters/human/char_human.tscn"
@@ -71,6 +72,7 @@ func _on_load_cases(res: PackedScene, path: String) -> void:
 	
 	if path == _PATH_GDTRICKS:
 		_load_async(_PATH_GODOTA, _on_load_cases)
+		_load_async(_PATH_TEST_CHAMBER, _on_load_cases)
 	
 	if path == _PATH_CTRL_FPS:
 		_controller_fps = inst

@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://dermqn0q1v305"]
+
+[ext_resource type="Script" path="res://maps/gdtricks/misc/portal-sphere.gd" id="1_c2aka"]
+[ext_resource type="PackedScene" uid="uid://ca8hjpx4twqcy" path="res://maps/gdtricks/misc/portal-sphere/portal-sphere.tscn" id="1_ehd6t"]
+[ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://maps/gdtricks/misc/teleport.tscn" id="2_j4nvg"]
+[ext_resource type="AudioStream" uid="uid://cgbnixghsnlfr" path="res://maps/gdtricks/misc/audio/sfx100v2_loop_machine_01.ogg" id="3_3nsi4"]
+[ext_resource type="AudioStream" uid="uid://80lx0vwk1w2s" path="res://maps/gdtricks/misc/audio/teleport.ogg" id="3_xq0qr"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_iddl2"]
+radius = 0.75
+
+[node name="PortalSphere" type="Node3D"]
+script = ExtResource("1_c2aka")
+
+[node name="PortalSphere" parent="." instance=ExtResource("1_ehd6t")]
+
+[node name="Area" type="Area3D" parent="."]
+
+[node name="Shape" type="CollisionShape3D" parent="Area"]
+shape = SubResource("SphereShape3D_iddl2")
+
+[node name="Teleport" parent="Area" instance=ExtResource("2_j4nvg")]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Area/Teleport"]
+stream = ExtResource("3_xq0qr")
+volume_db = -2.0
+pitch_scale = 2.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(0.431373, 1, 0.439216, 1)
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_3nsi4")
+volume_db = 2.0
+unit_size = 2.0
+pitch_scale = 0.7
+autoplay = true

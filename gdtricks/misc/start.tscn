@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://b211ga61017l4"]
-
-[ext_resource type="Script" path="res://gdtricks/misc/start.gd" id="1_ht6kj"]
-
-[node name="Start" type="Node"]
-script = ExtResource("1_ht6kj")

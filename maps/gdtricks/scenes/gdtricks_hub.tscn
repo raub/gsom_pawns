@@ -1,0 +1,153 @@
+[gd_scene load_steps=19 format=3 uid="uid://ckmq3r7djtf2c"]
+
+[ext_resource type="PackedScene" uid="uid://d0433hy1nduia" path="res://maps/gdtricks/models/gdtricks_hub.tscn" id="1_yxban"]
+[ext_resource type="PackedScene" uid="uid://dermqn0q1v305" path="res://maps/gdtricks/misc/portal-sphere.tscn" id="2_iabpe"]
+[ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://maps/gdtricks/misc/teleport.tscn" id="3_vdac8"]
+[ext_resource type="Material" uid="uid://cnopbqd4dn44t" path="res://maps/gdtricks/misc/water.material" id="5_6h6kv"]
+[ext_resource type="AudioStream" uid="uid://csnw3as5h30sn" path="res://maps/gdtricks/misc/audio/pepSound1.ogg" id="6_quogd"]
+[ext_resource type="FontFile" uid="uid://cn5tj07kqaeyy" path="res://maps/gdtricks/misc/Kenney Future Narrow.ttf" id="7_84s3w"]
+[ext_resource type="AudioStream" uid="uid://ckiyfclt754r" path="res://maps/gdtricks/misc/audio/amb_river.ogg" id="8_udqw7"]
+[ext_resource type="Material" uid="uid://c4ht2ams53tmn" path="res://maps/gdtricks/misc/hologram.material" id="9_k7bv6"]
+[ext_resource type="AudioStream" uid="uid://dk38pl0qpjlxu" path="res://maps/gdtricks/misc/audio/amb_forest.ogg" id="9_y0hlr"]
+[ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn_trigger.gd" id="11_kl2w3"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_i7k5x"]
+material = ExtResource("5_6h6kv")
+size = Vector2(13, 12)
+orientation = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ukm3q"]
+size = Vector3(13, 0.5, 12)
+
+[sub_resource type="BoxMesh" id="BoxMesh_e54pq"]
+material = ExtResource("9_k7bv6")
+size = Vector3(1, 0.2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_50fr0"]
+size = Vector3(1, 0.2, 1)
+
+[sub_resource type="BoxOccluder3D" id="BoxOccluder3D_aj25g"]
+size = Vector3(70, 100, 2)
+
+[sub_resource type="BoxOccluder3D" id="BoxOccluder3D_pxk4d"]
+size = Vector3(70, 100, 2)
+
+[sub_resource type="BoxOccluder3D" id="BoxOccluder3D_6785t"]
+size = Vector3(80, 100, 2)
+
+[sub_resource type="BoxOccluder3D" id="BoxOccluder3D_jakxn"]
+size = Vector3(80, 100, 2)
+
+[node name="GdtricksHub" type="Node3D"]
+
+[node name="gdtricks_hub" parent="." instance=ExtResource("1_yxban")]
+
+[node name="PortalAgtricks" parent="gdtricks_hub" instance=ExtResource("2_iabpe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.38018, 1.02898, -21.6375)
+dest = "gdtricks-agtricks-1"
+
+[node name="LabelAt" type="Label3D" parent="gdtricks_hub/PortalAgtricks"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12638, 1.18154, -1.1322)
+pixel_size = 0.01
+text = "AT"
+font = ExtResource("7_84s3w")
+font_size = 110
+
+[node name="PortalTestCh" parent="gdtricks_hub" instance=ExtResource("2_iabpe")]
+transform = Transform3D(-1, 0, 8.9407e-08, 0, 1, 0, -8.9407e-08, 0, -1, 3.38018, 1.02898, 20.6722)
+dest = "test-chamber"
+
+[node name="LabelTc" type="Label3D" parent="gdtricks_hub/PortalTestCh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.12638, 1.18154, -1.1322)
+pixel_size = 0.01
+text = "TC"
+font = ExtResource("7_84s3w")
+font_size = 110
+
+[node name="PortalDestructo" parent="gdtricks_hub" instance=ExtResource("2_iabpe")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.4064, 1.54439, -38.5212)
+dest = "gdtricks-destructo-1"
+
+[node name="Start" type="Marker3D" parent="gdtricks_hub"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.148757, -0.20133, -0.0638943)
+
+[node name="Teleport" parent="gdtricks_hub/Start" instance=ExtResource("3_vdac8")]
+tag = "gdtricks-hub"
+
+[node name="DestructoStart" type="Marker3D" parent="gdtricks_hub"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3822, 0.36001, -23.897)
+
+[node name="Teleport" parent="gdtricks_hub/DestructoStart" instance=ExtResource("3_vdac8")]
+tag = "gdtricks-hub-destructo"
+
+[node name="DestructoFailTp" type="MeshInstance3D" parent="gdtricks_hub"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.95051, -0.124473, -29.2886)
+mesh = SubResource("QuadMesh_i7k5x")
+
+[node name="Area" type="Area3D" parent="gdtricks_hub/DestructoFailTp"]
+
+[node name="Shape" type="CollisionShape3D" parent="gdtricks_hub/DestructoFailTp/Area"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+shape = SubResource("BoxShape3D_ukm3q")
+
+[node name="Teleport" parent="gdtricks_hub/DestructoFailTp/Area" instance=ExtResource("3_vdac8")]
+dest = "gdtricks-hub-destructo"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="gdtricks_hub/DestructoFailTp/Area/Teleport"]
+stream = ExtResource("6_quogd")
+
+[node name="LabelDh" type="Label3D" parent="gdtricks_hub"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.06956, 2.21052, -22.7697)
+pixel_size = 0.01
+text = "DH"
+font = ExtResource("7_84s3w")
+font_size = 110
+
+[node name="AudioWater1" type="AudioStreamPlayer3D" parent="gdtricks_hub"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.20385, -0.0833387, -29.7272)
+stream = ExtResource("8_udqw7")
+volume_db = -4.0
+unit_size = 0.8
+autoplay = true
+
+[node name="AudioAmbience" type="AudioStreamPlayer3D" parent="gdtricks_hub"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.36842, 0)
+stream = ExtResource("9_y0hlr")
+volume_db = -9.0
+unit_size = 50.35
+pitch_scale = 0.87
+autoplay = true
+max_distance = 105.83
+panning_strength = 0.15
+
+[node name="JumpPad" type="MeshInstance3D" parent="gdtricks_hub"]
+transform = Transform3D(1, 0, 0, 0, 0.28522, 0.958462, 0, -0.958462, 0.28522, -21.5495, 0.679052, 4.38296)
+mesh = SubResource("BoxMesh_e54pq")
+
+[node name="Area3D" type="Area3D" parent="gdtricks_hub/JumpPad"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="gdtricks_hub/JumpPad/Area3D"]
+shape = SubResource("BoxShape3D_50fr0")
+
+[node name="GsomPawnTrigger" type="Node" parent="gdtricks_hub/JumpPad/Area3D"]
+script = ExtResource("11_kl2w3")
+trigger_name = "launch"
+value_enter = {
+"vel": Vector3(0, 25, 0)
+}
+
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 35, 35.2469)
+occluder = SubResource("BoxOccluder3D_aj25g")
+
+[node name="OccluderInstance3D2" type="OccluderInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 35, -42.3453)
+occluder = SubResource("BoxOccluder3D_pxk4d")
+
+[node name="OccluderInstance3D3" type="OccluderInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 34.4337, 35, -3.47755)
+occluder = SubResource("BoxOccluder3D_6785t")
+
+[node name="OccluderInstance3D4" type="OccluderInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -34.4972, 35, -3.47755)
+occluder = SubResource("BoxOccluder3D_jakxn")

@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://cio84xpb7o4oc"]
+
+[ext_resource type="PackedScene" uid="uid://cgjvnyp3k8x5x" path="res://maps/gdtricks/models/asset_door_frame.blend" id="1_ryjt8"]
+[ext_resource type="Script" path="res://maps/gdtricks/models/door_frame.gd" id="2_g4sm2"]
+[ext_resource type="PackedScene" uid="uid://bdysrm0iv0lw2" path="res://maps/gdtricks/misc/portal-door.tscn" id="2_nm1on"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8prsh"]
+size = Vector3(0.916231, 5.99591, 0.399916)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_185l4"]
+size = Vector3(0.916, 0.4, 6.465)
+
+[node name="DoorFrame" instance=ExtResource("1_ryjt8")]
+script = ExtResource("2_g4sm2")
+
+[node name="PortalDoor" parent="." index="1" instance=ExtResource("2_nm1on")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.822, -0.122, 0.009)
+dest = "gdtricks-agtricks-2"
+
+[node name="Collider" type="StaticBody3D" parent="." index="2"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -38.096, -2.889, 0.66)
+
+[node name="DoorLeft" type="CollisionShape3D" parent="Collider" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -3.851, 3.064, -38.562)
+shape = SubResource("BoxShape3D_8prsh")
+
+[node name="DoorTop" type="CollisionShape3D" parent="Collider" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.637, 5.862, -38.562)
+shape = SubResource("BoxShape3D_185l4")
+
+[node name="DoorRight" type="CollisionShape3D" parent="Collider" index="2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 2.549, 3.064, -38.562)
+shape = SubResource("BoxShape3D_8prsh")

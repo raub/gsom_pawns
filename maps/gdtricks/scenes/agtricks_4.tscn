@@ -1,0 +1,307 @@
+[gd_scene load_steps=22 format=3 uid="uid://da5k06ac0fquw"]
+
+[ext_resource type="PackedScene" uid="uid://u714s2fw7wnp" path="res://maps/gdtricks/models/agtricks.blend" id="1_uliro"]
+[ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://maps/gdtricks/misc/teleport.tscn" id="2_26p74"]
+[ext_resource type="Material" uid="uid://cnopbqd4dn44t" path="res://maps/gdtricks/misc/water.material" id="3_cevl0"]
+[ext_resource type="AudioStream" uid="uid://csnw3as5h30sn" path="res://maps/gdtricks/misc/audio/pepSound1.ogg" id="4_jev5d"]
+[ext_resource type="FontFile" uid="uid://cn5tj07kqaeyy" path="res://maps/gdtricks/misc/Kenney Future Narrow.ttf" id="6_5lavp"]
+[ext_resource type="AudioStream" uid="uid://ckiyfclt754r" path="res://maps/gdtricks/misc/audio/amb_river.ogg" id="7_n0a6n"]
+[ext_resource type="PackedScene" uid="uid://cio84xpb7o4oc" path="res://maps/gdtricks/models/door_frame.tscn" id="7_pd83p"]
+[ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn_env.gd" id="8_ewpjd"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_ckhra"]
+material = ExtResource("3_cevl0")
+size = Vector2(23, 47)
+orientation = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tpe2f"]
+size = Vector3(23, 0.5, 47)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1d51c"]
+size = Vector3(72.7658, 32.7561, 1.60437)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h62vq"]
+size = Vector3(1.61093, 32.7561, 24.9051)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1trh3"]
+size = Vector3(5.55944, 32.7561, 8.34168)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sxhqa"]
+size = Vector3(5.55944, 32.7561, 8.18531)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xwivi"]
+size = Vector3(5.54442, 17.6215, 7.98701)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ukepg"]
+size = Vector3(12.7611, 9.159, 23.0239)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_51x11"]
+size = Vector3(7.91376, 9.159, 22.8831)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_fx6a4"]
+size = Vector3(47.3017, 2.07092, 22.7325)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qeb2q"]
+size = Vector3(1.6, 5.2, 1.6)
+
+[sub_resource type="QuadOccluder3D" id="QuadOccluder3D_2w2bc"]
+size = Vector2(32, 100)
+
+[sub_resource type="QuadOccluder3D" id="QuadOccluder3D_rp4fl"]
+size = Vector2(80, 100)
+
+[node name="Agtricks4" instance=ExtResource("1_uliro")]
+
+[node name="Content" type="Node3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 53.269, -0.024, 7.047)
+
+[node name="Start" type="Marker3D" parent="Content" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.726276, 0.0791544, 24.7608)
+
+[node name="Teleport" parent="Content/Start" index="0" instance=ExtResource("2_26p74")]
+tag = "gdtricks-agtricks-4"
+
+[node name="TpFail" type="MeshInstance3D" parent="Content" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.646046, -1.223, -8.19512)
+mesh = SubResource("QuadMesh_ckhra")
+
+[node name="Area" type="Area3D" parent="Content/TpFail" index="0"]
+
+[node name="Shape" type="CollisionShape3D" parent="Content/TpFail/Area" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+shape = SubResource("BoxShape3D_tpe2f")
+
+[node name="Teleport" parent="Content/TpFail/Area" index="1" instance=ExtResource("2_26p74")]
+dest = "gdtricks-agtricks-4"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Content/TpFail/Area/Teleport" index="0"]
+stream = ExtResource("4_jev5d")
+
+[node name="Collider" type="StaticBody3D" parent="Content" index="2"]
+
+[node name="WallZPlus" type="CollisionShape3D" parent="Content/Collider" index="0"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 11.3497, 6.93625, -7.6882)
+shape = SubResource("BoxShape3D_1d51c")
+
+[node name="WallZMinus" type="CollisionShape3D" parent="Content/Collider" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -12.6445, 6.93625, -7.6882)
+shape = SubResource("BoxShape3D_1d51c")
+
+[node name="WallXMinus" type="CollisionShape3D" parent="Content/Collider" index="2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.645817, 6.93625, 27.897)
+shape = SubResource("BoxShape3D_h62vq")
+
+[node name="WallXPlus1" type="CollisionShape3D" parent="Content/Collider" index="3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -8.19447, 6.93625, -41.3012)
+shape = SubResource("BoxShape3D_1trh3")
+
+[node name="WallXPlus2" type="CollisionShape3D" parent="Content/Collider" index="4"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6.83059, 6.93625, -41.3135)
+shape = SubResource("BoxShape3D_sxhqa")
+
+[node name="WallXPlus3" type="CollisionShape3D" parent="Content/Collider" index="5"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.620571, 14.5033, -41.3134)
+shape = SubResource("BoxShape3D_xwivi")
+
+[node name="Floor1" type="CollisionShape3D" parent="Content/Collider" index="6"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.689, -4.521, 21.465)
+shape = SubResource("BoxShape3D_ukepg")
+
+[node name="Floor2" type="CollisionShape3D" parent="Content/Collider" index="7"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.696484, -4.52062, -35.2557)
+shape = SubResource("BoxShape3D_51x11")
+
+[node name="Floor3" type="CollisionShape3D" parent="Content/Collider" index="8"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.692089, -7.07903, -8.1302)
+shape = SubResource("BoxShape3D_fx6a4")
+
+[node name="Pilon1" type="CollisionShape3D" parent="Content/Collider" index="9"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.150002, -1.74, 9.492)
+shape = SubResource("BoxShape3D_qeb2q")
+
+[node name="Pilon2" type="CollisionShape3D" parent="Content/Collider" index="10"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.15, -1.339, -0.108)
+shape = SubResource("BoxShape3D_qeb2q")
+
+[node name="Pilon3" type="CollisionShape3D" parent="Content/Collider" index="11"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.15, -0.939, -9.708)
+shape = SubResource("BoxShape3D_qeb2q")
+
+[node name="Pilon4" type="CollisionShape3D" parent="Content/Collider" index="12"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.15, -0.939, -19.307)
+shape = SubResource("BoxShape3D_qeb2q")
+
+[node name="LabelRoom" type="Label3D" parent="Content" index="3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -11.7648, 5.52721, 0.582696)
+pixel_size = 0.05
+text = "AT #4
+"
+font = ExtResource("6_5lavp")
+font_size = 110
+
+[node name="AudioWater1" type="AudioStreamPlayer3D" parent="Content" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.427708, 1.07627, 4.63658)
+stream = ExtResource("7_n0a6n")
+volume_db = -4.0
+unit_size = 2.0
+autoplay = true
+
+[node name="AudioWater2" type="AudioStreamPlayer3D" parent="Content" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.427708, 1.07627, -22.3047)
+stream = ExtResource("7_n0a6n")
+volume_db = -4.0
+unit_size = 2.0
+autoplay = true
+
+[node name="DoorFrame" parent="Content" index="6" instance=ExtResource("7_pd83p")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.655, 2.888, -38.096)
+dest = "gdtricks-agtricks-5"
+
+[node name="Area3D" type="Area3D" parent="Content" index="7"]
+
+[node name="GsomPawnEnv" type="Node" parent="Content/Area3D" index="0"]
+script = ExtResource("8_ewpjd")
+env_name = "surface"
+env_value = {
+"material": "metal"
+}
+
+[node name="Pilon5" type="CollisionShape3D" parent="Content/Area3D" index="1"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.150002, -0.0541389, 9.492)
+shape = SubResource("BoxShape3D_qeb2q")
+
+[node name="Pilon6" type="CollisionShape3D" parent="Content/Area3D" index="2"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.150002, 0.346861, -0.108)
+shape = SubResource("BoxShape3D_qeb2q")
+
+[node name="Pilon7" type="CollisionShape3D" parent="Content/Area3D" index="3"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.150002, 0.746861, -9.708)
+shape = SubResource("BoxShape3D_qeb2q")
+
+[node name="Pilon8" type="CollisionShape3D" parent="Content/Area3D" index="4"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.150002, 0.746861, -19.307)
+shape = SubResource("BoxShape3D_qeb2q")
+
+[node name="mdl_at1_walls" parent="." index="1"]
+visible = false
+
+[node name="mdl_at2_walls" parent="." index="2"]
+visible = false
+
+[node name="mdl_at3_walls" parent="." index="3"]
+visible = false
+
+[node name="mdl_at4_walls" parent="." index="4"]
+layers = 524289
+
+[node name="mdl_at5_walls" parent="." index="5"]
+visible = false
+
+[node name="mdl_at1_board" parent="." index="6"]
+visible = false
+
+[node name="mdl_at1_section_2" parent="." index="7"]
+visible = false
+
+[node name="mdl_at1_floor" parent="." index="8"]
+visible = false
+
+[node name="asset_at_pole" parent="." index="9"]
+visible = false
+
+[node name="mdl_at1_pole_2" parent="." index="10"]
+visible = false
+
+[node name="mdl_at1_pole_1" parent="." index="11"]
+visible = false
+
+[node name="mdl_at1_section_3" parent="." index="16"]
+visible = false
+
+[node name="mdl_at1_section_1" parent="." index="17"]
+visible = false
+
+[node name="mdl_at2_section_1" parent="." index="18"]
+visible = false
+
+[node name="mdl_at2_section_2" parent="." index="19"]
+visible = false
+
+[node name="mdl_at2_section_4" parent="." index="20"]
+visible = false
+
+[node name="mdl_at2_wall_2" parent="." index="21"]
+visible = false
+
+[node name="mdl_at2_wall_3" parent="." index="22"]
+visible = false
+
+[node name="mdl_at2_section_7" parent="." index="23"]
+visible = false
+
+[node name="mdl_at2_section_5" parent="." index="24"]
+visible = false
+
+[node name="mdl_at2_wall_1" parent="." index="25"]
+visible = false
+
+[node name="mdl_at2_floor" parent="." index="26"]
+visible = false
+
+[node name="mdl_at2_section_3" parent="." index="27"]
+visible = false
+
+[node name="mdl_at2_section_6" parent="." index="28"]
+visible = false
+
+[node name="mdl_at3_floor" parent="." index="29"]
+visible = false
+
+[node name="mdl_at3_section_1" parent="." index="30"]
+visible = false
+
+[node name="mdl_at3_section_2" parent="." index="31"]
+visible = false
+
+[node name="mdl_at4_floor" parent="." index="32"]
+layers = 524289
+
+[node name="mdl_at5_floor" parent="." index="35"]
+visible = false
+
+[node name="mdl_at5_section_1" parent="." index="36"]
+visible = false
+
+[node name="mdl_at5_section_2" parent="." index="37"]
+visible = false
+
+[node name="mdl_at5_section_3" parent="." index="38"]
+visible = false
+
+[node name="mdl_at5_slide_3" parent="." index="39"]
+visible = false
+
+[node name="mdl_at5_slide_1" parent="." index="40"]
+visible = false
+
+[node name="mdl_at5_slide_4" parent="." index="41"]
+visible = false
+
+[node name="mdl_at5_slide_2" parent="." index="42"]
+visible = false
+
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="." index="43"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.6939, 35, 37.7912)
+occluder = SubResource("QuadOccluder3D_2w2bc")
+
+[node name="OccluderInstance3D2" type="OccluderInstance3D" parent="." index="44"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 52.6939, 35, -39.0382)
+occluder = SubResource("QuadOccluder3D_2w2bc")
+
+[node name="OccluderInstance3D3" type="OccluderInstance3D" parent="." index="45"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 67.6851, 35, -0.367962)
+occluder = SubResource("QuadOccluder3D_rp4fl")
+
+[node name="OccluderInstance3D4" type="OccluderInstance3D" parent="." index="46"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 37.788, 35, -0.367962)
+occluder = SubResource("QuadOccluder3D_rp4fl")

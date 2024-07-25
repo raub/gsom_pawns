@@ -210,7 +210,7 @@ func _physics_process_pick() -> void:
 
 
 func _physics_process_follow() -> void:
-	if !_pawns.size() || !_is_action_pressed:
+	if !_pawns.size() or !_is_action_pressed:
 		return
 	
 	var result: Dictionary = _physics_process_pick_ray()

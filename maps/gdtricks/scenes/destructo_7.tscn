@@ -1,0 +1,159 @@
+[gd_scene load_steps=19 format=3 uid="uid://hkvai3a53dib"]
+
+[ext_resource type="PackedScene" uid="uid://c68qyxwcshstq" path="res://maps/gdtricks/models/destructo_7.blend" id="1_81f02"]
+[ext_resource type="Material" uid="uid://cnopbqd4dn44t" path="res://maps/gdtricks/misc/water.material" id="2_qenyd"]
+[ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://maps/gdtricks/misc/teleport.tscn" id="3_dd1f2"]
+[ext_resource type="AudioStream" uid="uid://csnw3as5h30sn" path="res://maps/gdtricks/misc/audio/pepSound1.ogg" id="4_3ahhq"]
+[ext_resource type="FontFile" uid="uid://cn5tj07kqaeyy" path="res://maps/gdtricks/misc/Kenney Future Narrow.ttf" id="5_bvj05"]
+[ext_resource type="AudioStream" uid="uid://ckiyfclt754r" path="res://maps/gdtricks/misc/audio/amb_river.ogg" id="6_ov62l"]
+[ext_resource type="PackedScene" uid="uid://cio84xpb7o4oc" path="res://maps/gdtricks/models/door_frame.tscn" id="7_dyuvu"]
+[ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn_env.gd" id="8_6r2js"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_4aixa"]
+material = ExtResource("2_qenyd")
+size = Vector2(21, 16)
+orientation = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_elk0v"]
+size = Vector3(21, 0.5, 16)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_olo88"]
+size = Vector3(3.83484, 4.17639, 10.6249)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_yy66v"]
+size = Vector3(21.1865, 19.7557, 1.50873)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8egv8"]
+size = Vector3(1.46204, 19.9987, 2.0708)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_b3ra7"]
+size = Vector3(1.46204, 19.9987, 7.0235)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y0ll3"]
+size = Vector3(1.46204, 4.6203, 7.0235)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_do6gx"]
+points = PackedVector3Array(6.62575, -1.60464, -4.00776, 5.82575, -1.60464, -3.2076, 5.82575, -1.60464, -4.8076, 5.82575, -0.00502765, -4.00776, 5.02576, -1.60464, -4.00776)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_73f4w"]
+
+[sub_resource type="QuadOccluder3D" id="QuadOccluder3D_f3tnj"]
+size = Vector2(31, 100)
+
+[node name="Destructo7" instance=ExtResource("1_81f02")]
+
+[node name="Content" type="Node3D" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -89.724, 0, 84.846)
+
+[node name="TpFail" type="MeshInstance3D" parent="Content" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.84824, -1.84416, -1.24363)
+mesh = SubResource("QuadMesh_4aixa")
+
+[node name="Area" type="Area3D" parent="Content/TpFail" index="0"]
+
+[node name="Shape" type="CollisionShape3D" parent="Content/TpFail/Area" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+shape = SubResource("BoxShape3D_elk0v")
+
+[node name="Teleport" parent="Content/TpFail/Area" index="1" instance=ExtResource("3_dd1f2")]
+dest = "gdtricks-destructo-7"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Content/TpFail/Area/Teleport" index="0"]
+stream = ExtResource("4_3ahhq")
+
+[node name="Start" type="Marker3D" parent="Content" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.0097, 0.0698318, -7.13043)
+
+[node name="Teleport" parent="Content/Start" index="0" instance=ExtResource("3_dd1f2")]
+tag = "gdtricks-destructo-7"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Content" index="2"]
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Content/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.543, -2.094, 1.304)
+shape = SubResource("BoxShape3D_olo88")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="Content/StaticBody3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.892, -2.094, -9.32)
+shape = SubResource("BoxShape3D_olo88")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="Content/StaticBody3D" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.305, 0.578, 7.084)
+shape = SubResource("BoxShape3D_yy66v")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="Content/StaticBody3D" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.305, 0.578, -9.537)
+shape = SubResource("BoxShape3D_yy66v")
+
+[node name="CollisionShape3D6" type="CollisionShape3D" parent="Content/StaticBody3D" index="4"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.913, 0.578, -2.657)
+shape = SubResource("BoxShape3D_yy66v")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Content/StaticBody3D" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5303, 0.45978, 5.43211)
+shape = SubResource("BoxShape3D_8egv8")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="Content/StaticBody3D" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5303, 0.45978, -5.53141)
+shape = SubResource("BoxShape3D_b3ra7")
+
+[node name="CollisionShape3D8" type="CollisionShape3D" parent="Content/StaticBody3D" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.5303, 8.14896, 1.19279)
+shape = SubResource("BoxShape3D_y0ll3")
+
+[node name="CollisionShape3D9" type="CollisionShape3D" parent="Content/StaticBody3D" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000541687, 0, 9.91821e-05)
+shape = SubResource("ConvexPolygonShape3D_do6gx")
+
+[node name="LabelRoom" type="Label3D" parent="Content" index="3"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 5.97416, 5.60562, 6.14748)
+pixel_size = 0.03
+text = "DH #7"
+font = ExtResource("5_bvj05")
+font_size = 110
+
+[node name="AudioWater1" type="AudioStreamPlayer3D" parent="Content" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.53465, -0.866829, -2.14754)
+stream = ExtResource("6_ov62l")
+volume_db = -4.0
+unit_size = 1.5
+autoplay = true
+
+[node name="DoorFrame" parent="Content" index="5" instance=ExtResource("7_dyuvu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.393, 2.822, 1.228)
+dest = "gdtricks-destructo-8"
+
+[node name="Area3D" type="Area3D" parent="Content" index="6"]
+
+[node name="GsomPawnEnv" type="Node" parent="Content/Area3D" index="0"]
+script = ExtResource("8_6r2js")
+env_name = "surface"
+env_value = {
+"material": "metal"
+}
+
+[node name="CollisionShape3D10" type="CollisionShape3D" parent="Content/Area3D" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.83289, 0.354045, -4.04955)
+shape = SubResource("SphereShape3D_73f4w")
+
+[node name="mdl_dh7_walls" parent="." index="1"]
+layers = 524289
+
+[node name="mdl_dh7_floor" parent="." index="3"]
+layers = 524289
+
+[node name="OccluderInstance3D" type="OccluderInstance3D" parent="." index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.3024, 35, 72.0455)
+occluder = SubResource("QuadOccluder3D_f3tnj")
+
+[node name="OccluderInstance3D2" type="OccluderInstance3D" parent="." index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -82.3024, 35, 95.8969)
+occluder = SubResource("QuadOccluder3D_f3tnj")
+
+[node name="OccluderInstance3D3" type="OccluderInstance3D" parent="." index="8"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -96.8911, 35, 84.2414)
+occluder = SubResource("QuadOccluder3D_f3tnj")
+
+[node name="OccluderInstance3D4" type="OccluderInstance3D" parent="." index="9"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -67.3278, 35, 84.2414)
+occluder = SubResource("QuadOccluder3D_f3tnj")
