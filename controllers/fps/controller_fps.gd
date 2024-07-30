@@ -50,6 +50,9 @@ func possess(pawn: GsomPawn) -> void:
 		push_error("Pawn must have signal 'moved(pos: Vector3, head_y: float)'.")
 	
 	if _pawn:
+		var parent: Node = _pawn.get_parent()
+		parent.visible = true
+		
 		_pawn.moved.disconnect(_handle_move)
 		_pawn.moved_head.disconnect(_handle_move_head)
 		_pawn.reset_actions()
@@ -60,6 +63,8 @@ func possess(pawn: GsomPawn) -> void:
 	
 	_head.position.y = _pawn.head_y
 	_pawn.set_action("basis", _head.global_transform.basis)
+	
+	_update_pawn_visibility()
 
 
 func _assign_is_focused() -> void:
@@ -127,20 +132,29 @@ func _process(_dt: float) -> void:
 		_unzoom()
 
 
+func _update_pawn_visibility() -> void:
+	if !_pawn:
+		return
+	
+	var parent: Node = _pawn.get_parent()
+	parent.visible = _camera_3d.position.z > 0.5
+
+
 func _zoom() -> void:
 	_camera_3d.position.z *= 0.9
 	if _camera_3d.position.z < 1.0:
 		_camera_3d.position.z = 0.0
+	
+	_update_pawn_visibility()
 
 
 func _unzoom() -> void:
 	if _camera_3d.position.z< 2.0:
 		_camera_3d.position.z = 2.0
 	else:
-		_camera_3d.position.z = min(
-			_camera_3d.position.z * 1.1,
-			_UNZOOM_MAX,
-		)
+		_camera_3d.position.z = min(_camera_3d.position.z * 1.1, _UNZOOM_MAX)
+	
+	_update_pawn_visibility()
 
 
 func _rotate_look(dx: float, dy: float) -> void:
