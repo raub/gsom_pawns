@@ -4,15 +4,6 @@ const _HEAD_WALK: float = 1.55
 const _HEAD_DUCK: float = 1.2
 
 
-var _is_debug_mesh := true
-## Show the debug mesh (default to true so you can see the pawn when added)
-@export var is_debug_mesh := true:
-	get:
-		return _is_debug_mesh
-	set(v):
-		_is_debug_mesh = v
-		_assign_is_debug_mesh()
-
 ## Limits what slopes are still considered ground.
 ## Higher values will cause even small slopes to be considered steep.
 @export_range(0.2, 0.9) var slope_normal_y: float = 0.75
@@ -31,8 +22,6 @@ var normal: Vector3 = _normal:
 
 @onready var _shape_walk: CollisionShape3D = $ShapeWalk
 @onready var _shape_duck: CollisionShape3D = $ShapeDuck
-@onready var _mesh_walk: MeshInstance3D = $ShapeWalk/Mesh
-@onready var _mesh_duck: MeshInstance3D = $ShapeDuck/Mesh
 @onready var _cast: ShapeCast3D = $Cast
 @onready var _cast_up: ShapeCast3D = $CastUp
 @onready var _ray: RayCast3D = $Ray
@@ -51,8 +40,6 @@ func _ready() -> void:
 		return
 	
 	_unduck()
-	
-	_assign_is_debug_mesh()
 
 
 func _duck() -> void:
@@ -63,9 +50,6 @@ func _duck() -> void:
 	
 	_shape_walk.disabled = true
 	_shape_duck.disabled = false
-	
-	_mesh_walk.visible = false
-	_mesh_duck.visible = is_debug_mesh
 	
 	_cast_up.enabled = true
 	
@@ -87,9 +71,6 @@ func _unduck() -> void:
 	
 	_shape_walk.disabled = false
 	_shape_duck.disabled = true
-	
-	_mesh_walk.visible = is_debug_mesh
-	_mesh_duck.visible = false
 	
 	_cast_up.enabled = false
 	
@@ -152,11 +133,3 @@ func _physics_process(dt: float) -> void:
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	_pawn.do_integrate(state)
-
-
-func _assign_is_debug_mesh() -> void:
-	if !_mesh_walk:
-		return
-	
-	_mesh_walk.visible = _is_debug_mesh and _shape_duck.disabled
-	_mesh_duck.visible = _is_debug_mesh and _shape_walk.disabled

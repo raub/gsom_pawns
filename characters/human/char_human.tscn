@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://fdumqv0of5vw"]
+[gd_scene load_steps=33 format=3 uid="uid://fdumqv0of5vw"]
 
 [ext_resource type="Script" path="res://characters/human/char_human.gd" id="1_1xyqf"]
 [ext_resource type="AudioStream" uid="uid://g4ddvstcstn" path="res://characters/human/audio/pl_step1.wav" id="3_eu6m0"]
@@ -31,6 +31,7 @@
 [ext_resource type="AudioStream" uid="uid://db70cd2a6i66q" path="res://characters/human/audio/pl_wade2.wav" id="28_f8w1p"]
 [ext_resource type="AudioStream" uid="uid://mh7gjbhnybew" path="res://characters/human/audio/pl_wade3.wav" id="29_n4j3x"]
 [ext_resource type="AudioStream" uid="uid://d4iwk464e30de" path="res://characters/human/audio/pl_wade4.wav" id="30_pasou"]
+[ext_resource type="PackedScene" uid="uid://bpsl88napfyms" path="res://characters/human/models/helmet.tscn" id="32_iqglo"]
 
 [node name="CharHuman" type="Node3D"]
 script = ExtResource("1_1xyqf")
@@ -179,3 +180,5 @@ volume_db = -20.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
 stream = ExtResource("30_pasou")
 volume_db = -20.0
+
+[node name="helmet" parent="." instance=ExtResource("32_iqglo")]

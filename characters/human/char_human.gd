@@ -24,6 +24,7 @@ var _prev_step_swim_time: int = 0
 @onready var _steps_ladder: Node = $StepsLadder
 @onready var _steps_swim: Node = $StepsSwim
 @onready var _steps_wet: Node = $StepsWet
+@onready var _helmet: Node = $helmet
 
 
 func _ready() -> void:
@@ -32,6 +33,38 @@ func _ready() -> void:
 
 func _process(_dt: float) -> void:
 	_produce_step_sound()
+	
+	var view_basis: Basis = _pawn.get_action("basis", Basis.IDENTITY)
+	var forward: Vector3 = Vector3.UP.cross(view_basis.x)
+	var left: Vector3 = Vector3.UP.cross(-view_basis.z)
+	global_transform.basis = Basis.looking_at(forward, Vector3.UP, true)
+	
+	var vel: Vector3 = _pawn.linear_velocity
+	var speed: float = vel.length()
+	var dir := Vector2(vel.x, vel.z).normalized()
+	var dot_forward: float = Vector2(forward.x, forward.z).dot(dir)
+	var dot_left: float = Vector2(left.x, left.z).dot(dir)
+	
+	var is_duck: bool = _pawn.get_state("duck", false)
+	_helmet.position.y = 0.45 if is_duck else 0.0
+	
+	var anim_xz := Vector2(dot_forward, dot_left) * speed * 0.1
+	_helmet.set_direction(Vector2(minf(1.0, anim_xz.x), minf(1.0, anim_xz.y)))
+	_helmet.set_crouch(is_duck)
+	
+	var is_water: bool = pawn.has_env("water")
+	if is_water:
+		_helmet.set_fly(true)
+		return
+	
+	var is_jump: bool = pawn.get_action("jump", false)
+	var is_ground: bool = pawn.get_state("on_ground", false)
+	
+	_helmet.set_fly(!is_ground)
+	
+	if is_ground and is_jump:
+		_helmet.jump()
+
 
 
 func _produce_step_sound() -> void:
