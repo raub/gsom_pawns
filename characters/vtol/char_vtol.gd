@@ -9,14 +9,21 @@ var pawn: GsomPawn = null:
 @onready var _pawn: GsomPawn = $GsomPawn
 @onready var _audio_engine: AudioStreamPlayer3D = $AudioEngine
 @onready var _audio_power: AudioStreamPlayer3D = $AudioPower
+@onready var _vtol_pivot: Node3D = $VtolPivot
+@onready var _vtol: Node3D = $VtolPivot/Vtol
 
 
 func _ready() -> void:
-	pass
+	_vtol.set_down(true)
 
 
 func _process(_dt: float) -> void:
 	_update_audio()
+	
+	var is_up: bool = _pawn.get_action("sprint", false) or _pawn.get_action("forward", false)
+	_vtol.set_down(!is_up)
+	
+	_vtol_pivot.rotation = _pawn.body.rotation
 
 
 func _update_audio() -> void:

@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://cihqtmcih8ejv"]
+[gd_scene load_steps=9 format=3 uid="uid://cihqtmcih8ejv"]
 
 [ext_resource type="Script" path="res://characters/vtol/char_vtol.gd" id="1_saf88"]
-[ext_resource type="PackedScene" uid="uid://dhcy3ffvjqwd3" path="res://pawns/pawn_vtol.tscn" id="3_avq4x"]
+[ext_resource type="Script" path="res://addons/gsom_pawns/examples/handler_rigid_triggers.gd" id="2_w5wly"]
+[ext_resource type="PackedScene" uid="uid://dhcy3ffvjqwd3" path="res://pawns/pawn_vtol.tscn" id="3_2sn0h"]
 [ext_resource type="Script" path="res://pawns/pawn_handler_vtol.gd" id="4_jkpru"]
 [ext_resource type="AudioStream" uid="uid://bo1cfertgs5od" path="res://characters/vtol/pulsemachine.wav" id="4_mesrm"]
 [ext_resource type="AudioStream" uid="uid://btm3rfapf0vky" path="res://characters/vtol/electrical_hum1.wav" id="5_on3yg"]
+[ext_resource type="PackedScene" uid="uid://b2xburclo6msk" path="res://characters/vtol/models/vtol.tscn" id="7_ac83u"]
 [ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn.gd" id="10_lbjy1"]
 
 [node name="CharVtol" type="Node3D"]
@@ -12,11 +14,13 @@ script = ExtResource("1_saf88")
 
 [node name="GsomPawn" type="Node" parent="."]
 script = ExtResource("10_lbjy1")
-scene = ExtResource("3_avq4x")
-has_velocity_linear = true
+scene = ExtResource("3_2sn0h")
 
-[node name="GsomPawnHandlerVtol" type="Node" parent="GsomPawn"]
+[node name="Vtol" type="Node" parent="GsomPawn"]
 script = ExtResource("4_jkpru")
+
+[node name="Triggers" type="Node" parent="GsomPawn"]
+script = ExtResource("2_w5wly")
 
 [node name="AudioEngine" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("4_mesrm")
@@ -28,3 +32,8 @@ autoplay = true
 stream = ExtResource("5_on3yg")
 volume_db = -20.0
 unit_size = 20.0
+
+[node name="VtolPivot" type="Node3D" parent="."]
+
+[node name="Vtol" parent="VtolPivot" instance=ExtResource("7_ac83u")]
+transform = Transform3D(-0.2, 0, -3.01992e-08, 0, 0.2, 0, 3.01992e-08, 0, -0.2, 0, 0.234, -0.232276)

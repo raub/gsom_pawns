@@ -28,7 +28,10 @@ var _prev_step_swim_time: int = 0
 
 
 func _ready() -> void:
-	pass
+	_helmet.set_fly(false)
+	_helmet.set_swim(false)
+	_helmet.set_direction(Vector2.ZERO)
+	_helmet.set_crouch(false)
 
 
 func _process(_dt: float) -> void:
@@ -53,8 +56,9 @@ func _process(_dt: float) -> void:
 	_helmet.set_crouch(is_duck)
 	
 	var is_water: bool = pawn.has_env("water")
+	_helmet.set_swim(is_water)
 	if is_water:
-		_helmet.set_fly(true)
+		_helmet.set_fly(false)
 		return
 	
 	var is_jump: bool = pawn.get_action("jump", false)

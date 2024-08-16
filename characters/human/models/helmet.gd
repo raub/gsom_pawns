@@ -16,5 +16,9 @@ func set_fly(value: bool) -> void:
 	_animation_tree.set("parameters/Blend2 Fly/blend_amount", 1.0 if value else 0.0)
 
 
+func set_swim(value: bool) -> void:
+	_animation_tree.set("parameters/Blend2 Swim/blend_amount", 1.0 if value else 0.0)
+
+
 func jump() -> void:
 	_animation_tree.set("parameters/One Jump/request", 1)

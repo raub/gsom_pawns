@@ -21,6 +21,7 @@ script = ExtResource("1_00mp3")
 [node name="Head" type="Node3D" parent="."]
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
+current = true
 fov = 100.0
 far = 200.0
 
