@@ -107,7 +107,7 @@ func _process(_dt: float) -> void:
 		return
 	
 	if kind == "vtol":
-		_bar_speed.value = min(1.0, _pawn.linear_velocity.length() * 0.04)
+		_bar_speed.value = min(1.0, _pawn.linear_velocity.length() * 0.01)
 	elif kind == "human":
 		var velocity_xz: Vector2 = Vector2(_pawn.linear_velocity.x, _pawn.linear_velocity.z)
 		_bar_speed.value = min(1.0, velocity_xz.length() * 0.04)

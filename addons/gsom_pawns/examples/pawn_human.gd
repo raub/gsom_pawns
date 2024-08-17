@@ -9,7 +9,6 @@ const _HEAD_DUCK: float = 1.2
 @export_range(0.2, 0.9) var slope_normal_y: float = 0.75
 
 
-var _vell := Vector3.ZERO
 var _pawn: GsomPawn = null
 var _is_ground := false
 
@@ -105,7 +104,7 @@ func _update_ground_state() -> void:
 	_is_ground = true
 	
 	if !wasGround:
-		_pawn.triggered.emit("hit_ground", { "speed": _vell.y })
+		_pawn.triggered.emit("hit_ground", { "speed": linear_velocity.y })
 	
 	if _ray.is_colliding():
 		_normal = _ray.get_collision_normal()

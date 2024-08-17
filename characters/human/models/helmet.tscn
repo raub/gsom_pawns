@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://3c65ksdr63n" path="res://characters/human/models/helmet.blend" id="1_8mam6"]
 [ext_resource type="Script" path="res://characters/human/models/helmet.gd" id="2_qmxhv"]
 
-[sub_resource type="Animation" id="Animation_3luwq"]
+[sub_resource type="Animation" id="Animation_nc1eq"]
 resource_name = "jump"
 length = 0.566667
 tracks/0/type = "position_3d"
@@ -826,7 +826,7 @@ tracks/116/interp = 1
 tracks/116/loop_wrap = true
 tracks/116/keys = PackedFloat32Array(0, 1, 8.12406e-10, 22.1416, 3.78122e-07)
 
-[sub_resource type="Animation" id="Animation_vtd77"]
+[sub_resource type="Animation" id="Animation_st5e6"]
 resource_name = "back-loop"
 length = 0.533333
 loop_mode = 1
@@ -1650,7 +1650,7 @@ tracks/116/interp = 1
 tracks/116/loop_wrap = true
 tracks/116/keys = PackedFloat32Array(0, 1, 2.27243e-06, 1.59288, 1.90735e-06)
 
-[sub_resource type="Animation" id="Animation_p0po7"]
+[sub_resource type="Animation" id="Animation_kx03u"]
 resource_name = "crouch_back-loop"
 length = 1.03333
 loop_mode = 1
@@ -2474,7 +2474,7 @@ tracks/116/interp = 1
 tracks/116/loop_wrap = true
 tracks/116/keys = PackedFloat32Array(0, 1, -3.5584e-10, 2.06696, 2.50056)
 
-[sub_resource type="Animation" id="Animation_kp0ik"]
+[sub_resource type="Animation" id="Animation_5p6ax"]
 resource_name = "crouch_forward-loop"
 length = 1.03333
 loop_mode = 1
@@ -3298,7 +3298,7 @@ tracks/116/interp = 1
 tracks/116/loop_wrap = true
 tracks/116/keys = PackedFloat32Array(0, 1, 8.12406e-10, 22.1416, 3.78122e-07)
 
-[sub_resource type="Animation" id="Animation_d77m5"]
+[sub_resource type="Animation" id="Animation_0kslv"]
 resource_name = "crouch_idle-loop"
 length = 6.73333
 loop_mode = 1
@@ -4122,7 +4122,7 @@ tracks/116/interp = 1
 tracks/116/loop_wrap = true
 tracks/116/keys = PackedFloat32Array(0, 1, 0.540878, 0.014156, 0.0137258, 0.84087)
 
-[sub_resource type="Animation" id="Animation_tv58f"]
+[sub_resource type="Animation" id="Animation_vu2au"]
 resource_name = "crouch_left-loop"
 length = 1.03333
 loop_mode = 1
@@ -4946,7 +4946,7 @@ tracks/116/interp = 1
 tracks/116/loop_wrap = true
 tracks/116/keys = PackedFloat32Array(0, 1, -3.5584e-10, 2.06696, 2.50056)
 
-[sub_resource type="Animation" id="Animation_cgwdu"]
+[sub_resource type="Animation" id="Animation_ga8gc"]
 resource_name = "crouch_right-loop"
 length = 1.03333
 loop_mode = 1
@@ -5770,7 +5770,7 @@ tracks/116/interp = 1
 tracks/116/loop_wrap = true
 tracks/116/keys = PackedFloat32Array(0, 1, 0.299085, 0.0135851, 0.0160462, 0.953995, 0.0333333, 1, 0.299085, 0.0135851, 0.0160462, 0.953995, 0.0666667, 1, 0.320046, 0.013261, 0.0128879, 0.947222, 0.1, 1, 0.3573, 0.00904339, 0.0111302, 0.933879, 0.133333, 1, 0.392277, 0.00595852, 0.0132008, 0.919733, 0.166667, 1, 0.432931, 0.00114999, 0.0150254, 0.901301, 0.2, 1, 0.477812, -0.00646651, 0.0168569, 0.878276, 0.233333, 1, 0.5274, -0.0164611, 0.022202, 0.849167, 0.266667, 1, 0.579624, -0.0254106, 0.0293028, 0.813961, 0.3, 1, 0.643239, -0.0356184, 0.00331584, 0.764829, 0.333333, 1, 0.725563, -0.135144, -0.0616711, 0.67193, 0.366667, 1, 0.534258, -0.208943, -0.0399745, 0.818115, 0.4, 1, 0.215466, 0.142503, 0.078328, 0.962877, 0.433333, 1, 0.289333, 0.0252125, 0.0261088, 0.95654, 0.466667, 1, 0.358445, -0.0829283, -0.00903857, 0.929816, 0.5, 1, 0.425254, -0.123798, -0.0109208, 0.896501, 0.533333, 1, 0.392264, -0.0970132, -0.00312388, 0.914717, 0.566667, 1, 0.328664, -0.0537959, -0.0031353, 0.942908, 0.6, 1, 0.2836, 0.0601289, 0.0360736, 0.956376, 0.633333, 1, 0.324588, 0.0746326, 0.0534202, 0.941392, 0.666667, 1, 0.357599, 0.088377, 0.0635628, 0.927509, 0.7, 1, 0.273057, 0.10884, 0.0657778, 0.953555, 0.733333, 1, 0.265651, 0.12085, 0.0630924, 0.954382, 0.766667, 1, 0.266275, 0.0923624, 0.0434609, 0.958477, 0.8, 1, 0.261406, 0.0457533, 0.0319735, 0.963614, 0.833333, 1, 0.298176, 0.0190382, 0.0311699, 0.953812, 0.866667, 1, 0.29992, 0.0255354, 0.0339562, 0.953018, 0.9, 1, 0.301112, 0.0254389, 0.0339529, 0.952645, 0.933333, 1, 0.301708, 0.0254017, 0.0341108, 0.952451, 0.966667, 1, 0.299521, 0.0215271, 0.0295215, 0.95339, 1, 1, 0.300356, 0.0205248, 0.0258456, 0.953256, 1.03333, 1, 0.299085, 0.0136085, 0.0159766, 0.953996)
 
-[sub_resource type="Animation" id="Animation_ahlkc"]
+[sub_resource type="Animation" id="Animation_m1wrt"]
 resource_name = "fly-loop"
 length = 1.03333
 loop_mode = 1
@@ -6594,7 +6594,7 @@ tracks/116/interp = 1
 tracks/116/loop_wrap = true
 tracks/116/keys = PackedFloat32Array(0, 1, 0.294373, 0.0205916, 0.0500551, 0.954157)
 
-[sub_resource type="Animation" id="Animation_ccprq"]
+[sub_resource type="Animation" id="Animation_b170v"]
 resource_name = "forward-loop"
 length = 0.533333
 loop_mode = 1
@@ -7418,7 +7418,7 @@ tracks/116/interp = 1
 tracks/116/loop_wrap = true
 tracks/116/keys = PackedFloat32Array(0, 1, 8.12406e-10, 22.1416, 3.78122e-07)
 
-[sub_resource type="Animation" id="Animation_ehxy6"]
+[sub_resource type="Animation" id="Animation_kncaf"]
 resource_name = "idle-loop"
 length = 2.13333
 loop_mode = 1
@@ -8242,7 +8242,7 @@ tracks/116/interp = 1
 tracks/116/loop_wrap = true
 tracks/116/keys = PackedFloat32Array(0, 1, 8.12406e-10, 22.1416, 3.78122e-07)
 
-[sub_resource type="Animation" id="Animation_5u8qh"]
+[sub_resource type="Animation" id="Animation_n6j8w"]
 resource_name = "left-loop"
 length = 0.533333
 loop_mode = 1
@@ -9066,7 +9066,7 @@ tracks/116/interp = 1
 tracks/116/loop_wrap = true
 tracks/116/keys = PackedFloat32Array(0, 1, 8.12406e-10, 22.1416, 3.78122e-07)
 
-[sub_resource type="Animation" id="Animation_v3kob"]
+[sub_resource type="Animation" id="Animation_jeokq"]
 resource_name = "right-loop"
 length = 0.533333
 loop_mode = 1
@@ -9890,7 +9890,7 @@ tracks/116/interp = 1
 tracks/116/loop_wrap = true
 tracks/116/keys = PackedFloat32Array(0, 1, -3.5584e-10, 2.06696, 2.50056)
 
-[sub_resource type="Animation" id="Animation_mhbe6"]
+[sub_resource type="Animation" id="Animation_he02s"]
 resource_name = "swim-loop"
 length = 3.03333
 loop_mode = 1
@@ -10714,21 +10714,21 @@ tracks/116/interp = 1
 tracks/116/loop_wrap = true
 tracks/116/keys = PackedFloat32Array(0, 1, 8.12406e-10, 22.1416, 3.78122e-07)
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_hyphv"]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_svdf5"]
 _data = {
-"back": SubResource("Animation_vtd77"),
-"crouch_back": SubResource("Animation_p0po7"),
-"crouch_forward": SubResource("Animation_kp0ik"),
-"crouch_idle": SubResource("Animation_d77m5"),
-"crouch_left": SubResource("Animation_tv58f"),
-"crouch_right": SubResource("Animation_cgwdu"),
-"fly": SubResource("Animation_ahlkc"),
-"forward": SubResource("Animation_ccprq"),
-"idle": SubResource("Animation_ehxy6"),
-"jump": SubResource("Animation_3luwq"),
-"left": SubResource("Animation_5u8qh"),
-"right": SubResource("Animation_v3kob"),
-"swim": SubResource("Animation_mhbe6")
+"back": SubResource("Animation_st5e6"),
+"crouch_back": SubResource("Animation_kx03u"),
+"crouch_forward": SubResource("Animation_5p6ax"),
+"crouch_idle": SubResource("Animation_0kslv"),
+"crouch_left": SubResource("Animation_vu2au"),
+"crouch_right": SubResource("Animation_ga8gc"),
+"fly": SubResource("Animation_m1wrt"),
+"forward": SubResource("Animation_b170v"),
+"idle": SubResource("Animation_kncaf"),
+"jump": SubResource("Animation_nc1eq"),
+"left": SubResource("Animation_n6j8w"),
+"right": SubResource("Animation_jeokq"),
+"swim": SubResource("Animation_he02s")
 }
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hhcyi"]
@@ -10836,26 +10836,26 @@ script = ExtResource("2_qmxhv")
 transform = Transform3D(0.00999999, 0, 0, 0, -4.37113e-10, -0.00999999, 0, 0.00999999, -4.37113e-10, 0, 0, 0)
 
 [node name="Skeleton3D" parent="Skeleton" index="0"]
-bones/0/position = Vector3(-0.187362, -1.67531, -91.7351)
-bones/0/rotation = Quaternion(-0.669719, -0.332587, 0.319005, 0.582322)
-bones/1/rotation = Quaternion(0.0472423, 0.00582125, 0.00122044, 0.998866)
+bones/0/position = Vector3(0.0176526, -1.83604, -91.2944)
+bones/0/rotation = Quaternion(-0.676103, -0.336109, 0.315275, 0.574906)
+bones/1/rotation = Quaternion(0.0588093, 0.00701599, 0.000268113, 0.998245)
 bones/1/scale = Vector3(1, 1, 1)
-bones/2/rotation = Quaternion(0.00520958, 0.0116544, 0.00668235, 0.999896)
+bones/2/rotation = Quaternion(0.00879342, 0.0114328, 0.00930706, 0.999853)
 bones/2/scale = Vector3(1, 1, 1)
-bones/3/rotation = Quaternion(0.0835291, 0.0132948, -0.00147283, 0.996416)
+bones/3/rotation = Quaternion(0.0878448, 0.0132903, -0.00257419, 0.996042)
 bones/3/scale = Vector3(1, 1, 1)
-bones/4/rotation = Quaternion(0.0690453, 0.0494112, -0.00214651, 0.996387)
+bones/4/rotation = Quaternion(0.0663328, 0.0503809, -0.000572724, 0.996525)
 bones/5/rotation = Quaternion(4.26614e-08, -4.16924e-13, 2.58802e-11, 1)
 bones/6/position = Vector3(-4.75737e-07, 4.09935, 0.874004)
-bones/6/rotation = Quaternion(-0.0212775, 0.311113, -0.0566945, 0.948442)
+bones/6/rotation = Quaternion(-0.0181643, 0.305476, -0.0586892, 0.950216)
 bones/10/position = Vector3(9.53351e-07, 2.06699, 2.50056)
-bones/11/rotation = Quaternion(-0.698053, -0.424206, 0.417971, -0.397583)
+bones/11/rotation = Quaternion(-0.697675, -0.42255, 0.411472, -0.406684)
 bones/12/position = Vector3(-8.79571e-06, 13.1067, 6.73866e-06)
-bones/12/rotation = Quaternion(0.421369, -0.198561, 0.151113, 0.871887)
+bones/12/rotation = Quaternion(0.416083, -0.210811, 0.151858, 0.87142)
 bones/13/position = Vector3(-4.20566e-06, 31.6721, 6.2095e-06)
-bones/13/rotation = Quaternion(0.509385, -0.543668, 0.46001, 0.483056)
+bones/13/rotation = Quaternion(0.515923, -0.543878, 0.459685, 0.476141)
 bones/14/position = Vector3(4.77231e-06, 23.3088, -3.63257e-06)
-bones/14/rotation = Quaternion(0.0108623, -0.188354, 0.0859376, 0.978274)
+bones/14/rotation = Quaternion(0.00117915, -0.189439, 0.0880001, 0.97794)
 bones/14/scale = Vector3(1, 1, 1)
 bones/15/position = Vector3(-3.02731, -1.30887, -0.505389)
 bones/15/rotation = Quaternion(0.240406, -0.116192, 0.171324, 0.948342)
@@ -10901,14 +10901,15 @@ bones/33/position = Vector3(-2.05632e-06, 2.69836, 4.11258e-06)
 bones/33/rotation = Quaternion(0.275539, -9.4401e-08, 0.00445256, 0.96128)
 bones/34/position = Vector3(-1.1326e-06, 1.59288, -1.42373e-06)
 bones/34/rotation = Quaternion(7.87411e-05, 0.00380246, -0.000588426, 0.999993)
-bones/35/rotation = Quaternion(0.658507, -0.478176, 0.426504, 0.394728)
+bones/34/scale = Vector3(1, 1, 1)
+bones/35/rotation = Quaternion(0.64779, -0.491581, 0.424828, 0.39779)
 bones/35/scale = Vector3(1, 1, 1)
 bones/36/position = Vector3(-5.40176e-06, 13.1106, 9.21803e-06)
-bones/36/rotation = Quaternion(0.292866, -0.179031, -0.309416, 0.886814)
+bones/36/rotation = Quaternion(0.281754, -0.171081, -0.334493, 0.882871)
 bones/37/position = Vector3(-3.87177e-06, 31.6487, 3.82823e-06)
-bones/37/rotation = Quaternion(0.0415372, 0.207069, -0.729266, 0.650821)
+bones/37/rotation = Quaternion(0.047609, 0.213424, -0.728763, 0.648913)
 bones/38/position = Vector3(7.31929e-06, 23.3048, 2.40147e-06)
-bones/38/rotation = Quaternion(0.0842469, 0.0155203, -0.221829, 0.971315)
+bones/38/rotation = Quaternion(0.0719285, 0.0164479, -0.217382, 0.973294)
 bones/38/scale = Vector3(1, 1, 1)
 bones/39/rotation = Quaternion(0.0547352, 0.194216, 0.0989158, 0.974423)
 bones/40/position = Vector3(8.10624e-06, 3.50606, -1.81791e-06)
@@ -10957,21 +10958,21 @@ bones/56/rotation = Quaternion(-0.0225566, 0.0143342, 0.191051, 0.981216)
 bones/57/position = Vector3(2.86221e-06, 5.05016, -1.32634e-05)
 bones/57/rotation = Quaternion(-0.158524, 0.0248075, 0.211201, 0.964183)
 bones/58/position = Vector3(4.95073e-06, 2.631, -1.6349e-07)
-bones/59/rotation = Quaternion(0.134084, 0.195957, 0.96399, -0.119771)
-bones/60/rotation = Quaternion(-0.337141, -0.123952, 0.0232171, 0.93297)
+bones/59/rotation = Quaternion(0.133682, 0.195333, 0.96386, -0.122262)
+bones/60/rotation = Quaternion(-0.352491, -0.120983, 0.0246884, 0.927633)
 bones/60/scale = Vector3(1, 1, 1)
-bones/61/rotation = Quaternion(0.493845, -0.0386487, -0.0839214, 0.864627)
+bones/61/rotation = Quaternion(0.499033, -0.039043, -0.0849436, 0.861526)
 bones/62/rotation = Quaternion(0.300774, 0.00292048, -0.00398573, 0.953683)
-bones/64/rotation = Quaternion(-0.186665, 0.157438, 0.955713, 0.16426)
+bones/64/rotation = Quaternion(-0.185658, 0.156132, 0.95562, 0.167164)
 bones/65/position = Vector3(-2.83015e-06, 45.0125, -4.92313e-06)
-bones/65/rotation = Quaternion(-0.405088, 0.023146, -0.0344234, 0.913336)
-bones/66/rotation = Quaternion(0.602028, 0.0146153, 0.0881557, 0.793459)
+bones/65/rotation = Quaternion(-0.419187, 0.0204073, -0.0349879, 0.906996)
+bones/66/rotation = Quaternion(0.607097, 0.0145719, 0.0877848, 0.78963)
 bones/66/scale = Vector3(1, 1, 1)
 bones/67/rotation = Quaternion(0.290445, 0.0279098, 0.0377624, 0.955739)
 
 [node name="AnimationTree" type="AnimationTree" parent="." index="2"]
 libraries = {
-"": SubResource("AnimationLibrary_hyphv")
+"": SubResource("AnimationLibrary_svdf5")
 }
 tree_root = SubResource("AnimationNodeBlendTree_77tuo")
 anim_player = NodePath("../AnimationPlayer")

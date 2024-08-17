@@ -1,0 +1,67 @@
+[gd_scene load_steps=9 format=3 uid="uid://dlk5xq1k5oigm"]
+
+[ext_resource type="Script" path="res://pawns/unit/pawn_unit.gd" id="1_thgip"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6784i"]
+radius = 0.25
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jx2ot"]
+albedo_color = Color(0.913725, 0.65098, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wa0dg"]
+material = SubResource("StandardMaterial3D_jx2ot")
+radius = 0.25
+height = 1.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ny371"]
+shading_mode = 0
+disable_ambient_light = true
+albedo_color = Color(0.266667, 1, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_u5rpv"]
+material = SubResource("StandardMaterial3D_ny371")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dujxd"]
+shading_mode = 0
+disable_ambient_light = true
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_tamxq"]
+material = SubResource("StandardMaterial3D_dujxd")
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="PawnUnit" type="CharacterBody3D"]
+top_level = true
+collision_layer = 257
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+script = ExtResource("1_thgip")
+
+[node name="Shape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("CapsuleShape3D_6784i")
+
+[node name="Mesh" type="MeshInstance3D" parent="Shape"]
+mesh = SubResource("CapsuleMesh_wa0dg")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_desired_distance = 0.5
+target_desired_distance = 0.5
+path_height_offset = 0.5
+avoidance_enabled = true
+neighbor_distance = 5.0
+
+[node name="__DebugNext" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 1.13171)
+top_level = true
+visible = false
+mesh = SubResource("PrismMesh_u5rpv")
+
+[node name="__DebugEnd" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 0, 1.13171)
+top_level = true
+visible = false
+mesh = SubResource("PrismMesh_tamxq")
