@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://cihqtmcih8ejv"]
 
 [ext_resource type="Script" path="res://characters/vtol/char_vtol.gd" id="1_saf88"]
-[ext_resource type="Script" path="res://addons/gsom_pawns/examples/handler_rigid_triggers.gd" id="2_w5wly"]
-[ext_resource type="PackedScene" uid="uid://dhcy3ffvjqwd3" path="res://pawns/vtol/pawn_vtol.tscn" id="3_2sn0h"]
-[ext_resource type="Script" path="res://pawns/vtol/pawn_handler_vtol.gd" id="4_jkpru"]
-[ext_resource type="AudioStream" uid="uid://bo1cfertgs5od" path="res://characters/vtol/pulsemachine.wav" id="4_mesrm"]
-[ext_resource type="AudioStream" uid="uid://btm3rfapf0vky" path="res://characters/vtol/electrical_hum1.wav" id="5_on3yg"]
+[ext_resource type="Script" path="res://characters/human/pawn/handler_rigid_triggers.gd" id="2_w5wly"]
+[ext_resource type="PackedScene" uid="uid://dhcy3ffvjqwd3" path="res://characters/vtol/pawn/pawn_vtol.tscn" id="3_2sn0h"]
+[ext_resource type="Script" path="res://characters/vtol/pawn/pawn_handler_vtol.gd" id="4_jkpru"]
+[ext_resource type="AudioStream" uid="uid://bo1cfertgs5od" path="res://characters/vtol/audio/pulsemachine.wav" id="4_mesrm"]
+[ext_resource type="AudioStream" uid="uid://btm3rfapf0vky" path="res://characters/vtol/audio/electrical_hum1.wav" id="5_on3yg"]
 [ext_resource type="PackedScene" uid="uid://b2xburclo6msk" path="res://characters/vtol/models/vtol.tscn" id="7_ac83u"]
 [ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn.gd" id="10_lbjy1"]
 

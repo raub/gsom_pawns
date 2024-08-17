@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bo1cfertgs5od"
-path="res://.godot/imported/pulsemachine.wav-06091f4684e9bdfa131c97503b289de3.sample"
+path="res://.godot/imported/pulsemachine.wav-2b449ded5c9f3dfc360d3db04e584720.sample"
 
 [deps]
 
-source_file="res://characters/vtol/pulsemachine.wav"
-dest_files=["res://.godot/imported/pulsemachine.wav-06091f4684e9bdfa131c97503b289de3.sample"]
+source_file="res://characters/vtol/audio/pulsemachine.wav"
+dest_files=["res://.godot/imported/pulsemachine.wav-2b449ded5c9f3dfc360d3db04e584720.sample"]
 
 [params]
 

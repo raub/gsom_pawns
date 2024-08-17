@@ -32,7 +32,7 @@ signal moved_head(head_y: float)
 signal triggered(trigger_name: String, value: Variant)
 
 
-const _SCENE_DEFAULT: PackedScene = preload("../examples/pawn_human.tscn")
+const _SCENE_DEFAULT: PackedScene = preload("./default_scene.tscn")
 
 var _scene: PackedScene = _SCENE_DEFAULT
 ## Scene that will be instantiated for this pawn

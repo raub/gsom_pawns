@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://btm3rfapf0vky"
-path="res://.godot/imported/electrical_hum1.wav-8b93014189f45311d9404260bca299cc.sample"
+path="res://.godot/imported/electrical_hum1.wav-d74700c79fd073f422f9f8ce770d8ad1.sample"
 
 [deps]
 
-source_file="res://characters/vtol/electrical_hum1.wav"
-dest_files=["res://.godot/imported/electrical_hum1.wav-8b93014189f45311d9404260bca299cc.sample"]
+source_file="res://characters/vtol/audio/electrical_hum1.wav"
+dest_files=["res://.godot/imported/electrical_hum1.wav-d74700c79fd073f422f9f8ce770d8ad1.sample"]
 
 [params]
 

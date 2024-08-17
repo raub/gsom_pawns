@@ -10,8 +10,8 @@
 [ext_resource type="AudioStream" uid="uid://cr708bsutdcmo" path="res://characters/human/audio/pl_step7.wav" id="8_l84eq"]
 [ext_resource type="AudioStream" uid="uid://cdpf5h17w710b" path="res://characters/human/audio/pl_step8.wav" id="9_k2yd2"]
 [ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn.gd" id="10_7s4ma"]
-[ext_resource type="PackedScene" uid="uid://dlk5xq1k5oigm" path="res://pawns/unit/pawn_unit.tscn" id="11_lyjb6"]
-[ext_resource type="Script" path="res://pawns/unit/pawn_handler_unit.gd" id="12_5cnkc"]
+[ext_resource type="PackedScene" uid="uid://dlk5xq1k5oigm" path="res://characters/unit/pawn/pawn_unit.tscn" id="11_lyjb6"]
+[ext_resource type="Script" path="res://characters/unit/pawn/pawn_handler_unit.gd" id="12_5cnkc"]
 
 [node name="CharUnit" type="Node3D"]
 script = ExtResource("1_hb2i6")

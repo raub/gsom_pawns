@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cwkm6pyeuhi3t"]
 
-[ext_resource type="Script" path="res://addons/gsom_pawns/examples/pawn_human.gd" id="1_ndbkr"]
+[ext_resource type="Script" path="res://characters/human/pawn/pawn_human.gd" id="1_bdh1k"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mp8rm"]
 friction = 0.0
@@ -35,7 +35,7 @@ max_contacts_reported = 4
 contact_monitor = true
 linear_damp_mode = 1
 angular_damp_mode = 1
-script = ExtResource("1_ndbkr")
+script = ExtResource("1_bdh1k")
 
 [node name="ShapeWalk" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)

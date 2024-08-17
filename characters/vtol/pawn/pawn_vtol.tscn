@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dhcy3ffvjqwd3"]
 
-[ext_resource type="Script" path="res://pawns/vtol/pawn_vtol.gd" id="1_7b37m"]
+[ext_resource type="Script" path="res://characters/vtol/pawn/pawn_vtol.gd" id="1_7b37m"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_5gxgl"]
 friction = 0.0
