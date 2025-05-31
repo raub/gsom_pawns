@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://blgmgcyslq125"]
 
-[ext_resource type="Script" path="res://controllers/rts/hud_rts.gd" id="1_gyrv4"]
+[ext_resource type="Script" uid="uid://1tu8e0jpogsl" path="res://controllers/rts/hud_rts.gd" id="1_gyrv4"]
 [ext_resource type="Texture2D" uid="uid://ba3yp67yrnljx" path="res://maps/godota/dota-mini.jpg" id="2_0ipl8"]
 [ext_resource type="PackedScene" uid="uid://bg1yyf25mknyi" path="res://controllers/rts/action_slot.tscn" id="2_osufx"]
 

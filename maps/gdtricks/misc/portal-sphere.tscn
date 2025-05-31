@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://dermqn0q1v305"]
 
-[ext_resource type="Script" path="res://maps/gdtricks/misc/portal-sphere.gd" id="1_c2aka"]
+[ext_resource type="Script" uid="uid://dg1snnj1vinu3" path="res://maps/gdtricks/misc/portal-sphere.gd" id="1_c2aka"]
 [ext_resource type="PackedScene" uid="uid://ca8hjpx4twqcy" path="res://maps/gdtricks/misc/portal-sphere/portal-sphere.tscn" id="1_ehd6t"]
 [ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://maps/gdtricks/misc/teleport.tscn" id="2_j4nvg"]
 [ext_resource type="AudioStream" uid="uid://cgbnixghsnlfr" path="res://maps/gdtricks/misc/audio/sfx100v2_loop_machine_01.ogg" id="3_3nsi4"]

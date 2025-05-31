@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://maps/gdtricks/misc/teleport.tscn" id="2_jcrjn"]
 [ext_resource type="FontFile" uid="uid://cn5tj07kqaeyy" path="res://maps/gdtricks/misc/Kenney Future Narrow.ttf" id="3_iujao"]
 [ext_resource type="PackedScene" uid="uid://cio84xpb7o4oc" path="res://maps/gdtricks/models/door_frame.tscn" id="4_ay070"]
-[ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn_env.gd" id="5_frr5j"]
+[ext_resource type="Script" uid="uid://dstbsiricpash" path="res://addons/gsom_pawns/nodes/pawn_env.gd" id="5_frr5j"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_n3hwk"]
 size = Vector3(65.9201, 28.0164, 2.76337)

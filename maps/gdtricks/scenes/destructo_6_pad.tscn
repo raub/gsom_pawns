@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dnc1yr7xumxev"]
 
 [ext_resource type="PackedScene" uid="uid://hnlyivllaurp" path="res://maps/gdtricks/models/destructo_6.blend" id="1_v1fj5"]
-[ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn_env.gd" id="2_4obd8"]
+[ext_resource type="Script" uid="uid://dstbsiricpash" path="res://addons/gsom_pawns/nodes/pawn_env.gd" id="2_4obd8"]
 
 [sub_resource type="GDScript" id="GDScript_ta16p"]
 script/source = "extends Node3D
@@ -107,8 +107,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_y6sjn"]
 _data = {
-"RESET": SubResource("Animation_hi70j"),
-"slide": SubResource("Animation_vfahf")
+&"RESET": SubResource("Animation_hi70j"),
+&"slide": SubResource("Animation_vfahf")
 }
 
 [node name="Destructo6Pad" instance=ExtResource("1_v1fj5")]

@@ -32,7 +32,7 @@ func _trigger_enter(pawn: GsomPawn) -> void:
 		push_warning("Teleport - destination is not in Node3D.")
 		return
 	
-	pawn.triggered.emit("teleport", { "pos": parent_3d.global_position })
+	pawn.trigger("teleport", { "pos": parent_3d.global_position })
 	
 	_try_play_sound()
 

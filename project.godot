@@ -13,7 +13,7 @@ config_version=5
 config/name="gsom_pawns"
 config/description="Modular character pawns. Inspired by Unreal Engine pawn class and adjusted for Godot nodes. This project provides also examples of how to use them."
 run/main_scene="res://preview.tscn"
-config/features=PackedStringArray("4.2", "Forward Plus")
+config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.png"
 
 [debug]

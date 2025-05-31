@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cwkm6pyeuhi3t"]
 
-[ext_resource type="Script" path="res://characters/human/pawn/pawn_human.gd" id="1_bdh1k"]
+[ext_resource type="Script" uid="uid://8w8rlf2cdje8" path="res://characters/human/pawn/pawn_human.gd" id="1_bdh1k"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_mp8rm"]
 friction = 0.0

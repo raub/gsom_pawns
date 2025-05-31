@@ -111,31 +111,52 @@ func _switch_controller(ctrl_kind: String) -> void:
 	_controller_rts.is_focused = ctrl_kind == "rts"
 
 
+# This ensures only one threaded loading runs in background
+# Fixes: "ERROR: Another resource is loaded from path ..."
+func _load_async_next() -> void:
+	var has_items: bool = _load_queue.size() > 0
+	if !has_items:
+		return
+	
+	var path: String = _load_queue.keys()[0]
+	ResourceLoader.load_threaded_request(path)
+
+
 func _load_async(path: String, cb: Callable = _nop) -> void:
-	if !_load_queue.has(path):
-		ResourceLoader.load_threaded_request(path)
-		_load_queue[path] = cb
+	if _load_queue.has(path):
+		return
+	
+	_load_queue[path] = cb
+	if _load_queue.size() == 1:
+		_load_async_next()
 
 
 func _update_load() -> void:
-	if _label_loading.visible != (_load_queue.size() > 0):
-		_label_loading.visible = _load_queue.size() > 0
+	var has_items: bool = _load_queue.size() > 0
+	if _label_loading.visible != has_items:
+		_label_loading.visible = has_items
 	
-	for path: String in _load_queue:
-		var status: ResourceLoader.ThreadLoadStatus = ResourceLoader.load_threaded_get_status(path)
-		if status == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
-			continue
-		
-		var cb: Callable = _load_queue[path]
-		_load_queue.erase(path)
-		
-		if status == ResourceLoader.THREAD_LOAD_LOADED:
-			var res := ResourceLoader.load_threaded_get(path) as PackedScene
-			if cb == Main._nop:
-				var inst: Node = res.instantiate()
-				_container.add_child(inst)
-			else:
-				cb.call(res, path)
+	if !has_items:
+		return
+	
+	var path: String = _load_queue.keys()[0]
+	
+	var status: ResourceLoader.ThreadLoadStatus = ResourceLoader.load_threaded_get_status(path)
+	if status == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		return
+	
+	var cb: Callable = _load_queue[path]
+	_load_queue.erase(path)
+	
+	if status == ResourceLoader.THREAD_LOAD_LOADED:
+		var res := ResourceLoader.load_threaded_get(path) as PackedScene
+		if cb == Main._nop:
+			var inst: Node = res.instantiate()
+			_container.add_child(inst)
+		else:
+			cb.call(res, path)
+	
+	_load_async_next();
 
 
 func get_perf_line(perf_name: String) -> String:

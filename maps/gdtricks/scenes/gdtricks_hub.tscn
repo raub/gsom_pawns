@@ -9,7 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://ckiyfclt754r" path="res://maps/gdtricks/misc/audio/amb_river.ogg" id="8_udqw7"]
 [ext_resource type="Material" uid="uid://c4ht2ams53tmn" path="res://maps/gdtricks/misc/hologram.material" id="9_k7bv6"]
 [ext_resource type="AudioStream" uid="uid://dk38pl0qpjlxu" path="res://maps/gdtricks/misc/audio/amb_forest.ogg" id="9_y0hlr"]
-[ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn_trigger.gd" id="11_kl2w3"]
+[ext_resource type="Script" uid="uid://jrrdduiremro" path="res://addons/gsom_pawns/nodes/pawn_trigger.gd" id="11_kl2w3"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_i7k5x"]
 material = ExtResource("5_6h6kv")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cv8pyfj8b1axu"]
 
 [ext_resource type="Texture2D" uid="uid://bhtassxpxiax6" path="res://controllers/rts/texture_01.png" id="1_f7pdo"]
-[ext_resource type="Script" path="res://controllers/rts/health_bar.gd" id="1_lqdju"]
+[ext_resource type="Script" uid="uid://dhqjjt3a6a20t" path="res://controllers/rts/health_bar.gd" id="1_lqdju"]
 
 [node name="HealthBar" type="Node3D"]
 script = ExtResource("1_lqdju")

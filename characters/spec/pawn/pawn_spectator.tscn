@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://wj42jps0lkfw"]
 
-[ext_resource type="Script" path="res://characters/spec/pawn/pawn_spectator.gd" id="1_jonu4"]
+[ext_resource type="Script" uid="uid://crja61nxdjfib" path="res://characters/spec/pawn/pawn_spectator.gd" id="1_jonu4"]
 
 [node name="PawnSpectator" type="Node3D"]
 top_level = true

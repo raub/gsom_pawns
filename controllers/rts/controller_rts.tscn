@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bdly6afa0mx3e"]
 
-[ext_resource type="Script" path="res://controllers/rts/controller_rts.gd" id="1_cei30"]
+[ext_resource type="Script" uid="uid://7js8q2tlmwyr" path="res://controllers/rts/controller_rts.gd" id="1_cei30"]
 [ext_resource type="PackedScene" uid="uid://bhwuoapyskx81" path="res://controllers/esc_overlay/esc_overlay.tscn" id="2_ahdhq"]
 [ext_resource type="PackedScene" uid="uid://blgmgcyslq125" path="res://controllers/rts/hud_rts.tscn" id="3_702av"]
 

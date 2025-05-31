@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dermqn0q1v305" path="res://maps/gdtricks/misc/portal-sphere.tscn" id="5_hq36t"]
 [ext_resource type="FontFile" uid="uid://cn5tj07kqaeyy" path="res://maps/gdtricks/misc/Kenney Future Narrow.ttf" id="6_ngl53"]
 [ext_resource type="AudioStream" uid="uid://ckiyfclt754r" path="res://maps/gdtricks/misc/audio/amb_river.ogg" id="7_ca2qo"]
-[ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn_env.gd" id="8_47mte"]
+[ext_resource type="Script" uid="uid://dstbsiricpash" path="res://addons/gsom_pawns/nodes/pawn_env.gd" id="8_47mte"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_jk6aa"]
 material = ExtResource("2_0xltr")

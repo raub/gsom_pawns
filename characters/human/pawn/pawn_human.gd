@@ -104,7 +104,7 @@ func _update_ground_state() -> void:
 	_is_ground = true
 	
 	if !wasGround:
-		_pawn.triggered.emit("hit_ground", { "speed": linear_velocity.y })
+		_pawn.trigger("hit_ground", { "speed": linear_velocity.y })
 	
 	if _ray.is_colliding():
 		_normal = _ray.get_collision_normal()

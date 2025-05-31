@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c4yrinewpl4iu"]
 
-[ext_resource type="Script" path="res://preview.gd" id="1_8h8be"]
+[ext_resource type="Script" uid="uid://re8qf62gkuh4" path="res://preview.gd" id="1_8h8be"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_id2jt"]
 sky_top_color = Color(0.560784, 0.733333, 0.8, 1)
@@ -50,7 +50,6 @@ text = "Loading..."
 horizontal_alignment = 1
 
 [node name="LabelPerf" type="Label" parent="."]
-visible = false
 offset_left = 24.0
 offset_top = 24.0
 offset_right = 64.0

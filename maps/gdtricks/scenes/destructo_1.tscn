@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dermqn0q1v305" path="res://maps/gdtricks/misc/portal-sphere.tscn" id="5_ig40v"]
 [ext_resource type="FontFile" uid="uid://cn5tj07kqaeyy" path="res://maps/gdtricks/misc/Kenney Future Narrow.ttf" id="6_eu3x5"]
 [ext_resource type="AudioStream" uid="uid://ckiyfclt754r" path="res://maps/gdtricks/misc/audio/amb_river.ogg" id="7_200mr"]
-[ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn_env.gd" id="8_7de1e"]
+[ext_resource type="Script" uid="uid://dstbsiricpash" path="res://addons/gsom_pawns/nodes/pawn_env.gd" id="8_7de1e"]
 
 [sub_resource type="GDScript" id="GDScript_vaqne"]
 script/source = "extends Node3D
@@ -68,8 +68,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jghru"]
 _data = {
-"RESET": SubResource("Animation_x1sni"),
-"rotation": SubResource("Animation_y4goo")
+&"RESET": SubResource("Animation_x1sni"),
+&"rotation": SubResource("Animation_y4goo")
 }
 
 [sub_resource type="QuadOccluder3D" id="QuadOccluder3D_skphl"]

@@ -171,6 +171,11 @@ func reset_info(group_name: String = "") -> void:
 	_info[group_name].clear()
 
 
+## The body has received or produced an event with optional data.
+func trigger(trigger_name: String, value: Variant = null) -> void:
+	triggered.emit(trigger_name, value)
+
+
 ## Fetch an info field by group name and field name.
 ##
 ## If the field has never been set or [code]reset_info[/code] has just been called,

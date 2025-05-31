@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://dlk5xq1k5oigm"]
 
-[ext_resource type="Script" path="res://characters/unit/pawn/pawn_unit.gd" id="1_thgip"]
+[ext_resource type="Script" uid="uid://bstc402w6lro5" path="res://characters/unit/pawn/pawn_unit.gd" id="1_thgip"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6784i"]
 radius = 0.25

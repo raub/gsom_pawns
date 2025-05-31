@@ -80,7 +80,7 @@ func _handle_teleport(pos: Vector3) -> void:
 	if !_pawn:
 		return
 	
-	_pawn.triggered.emit("teleport", pos)
+	_pawn.trigger("teleport", pos)
 	_audio_teleport.play()
 
 

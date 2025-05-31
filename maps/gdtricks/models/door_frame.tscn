@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://cio84xpb7o4oc"]
 
 [ext_resource type="PackedScene" uid="uid://cgjvnyp3k8x5x" path="res://maps/gdtricks/models/asset_door_frame.blend" id="1_ryjt8"]
-[ext_resource type="Script" path="res://maps/gdtricks/models/door_frame.gd" id="2_g4sm2"]
+[ext_resource type="Script" uid="uid://bfe0fw8spi24s" path="res://maps/gdtricks/models/door_frame.gd" id="2_g4sm2"]
 [ext_resource type="PackedScene" uid="uid://bdysrm0iv0lw2" path="res://maps/gdtricks/misc/portal-door.tscn" id="2_nm1on"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8prsh"]

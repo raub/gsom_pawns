@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://d06r2iq5bykhn"]
 
-[ext_resource type="Script" path="res://characters/spec/char_spec.gd" id="1_a43tm"]
-[ext_resource type="Script" path="res://addons/gsom_pawns/nodes/pawn.gd" id="2_0v8ee"]
+[ext_resource type="Script" uid="uid://fx1gm8vivduk" path="res://characters/spec/char_spec.gd" id="1_a43tm"]
+[ext_resource type="Script" uid="uid://cjjp5057i3sll" path="res://addons/gsom_pawns/nodes/pawn.gd" id="2_0v8ee"]
 [ext_resource type="PackedScene" uid="uid://wj42jps0lkfw" path="res://characters/spec/pawn/pawn_spectator.tscn" id="3_vx6we"]
-[ext_resource type="Script" path="res://characters/spec/pawn/handler_spec.gd" id="4_go5v4"]
+[ext_resource type="Script" uid="uid://bawbpqhd5c05e" path="res://characters/spec/pawn/handler_spec.gd" id="4_go5v4"]
 
 [node name="CharSpec" type="Node3D"]
 script = ExtResource("1_a43tm")

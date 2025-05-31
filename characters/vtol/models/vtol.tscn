@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://b2xburclo6msk"]
 
 [ext_resource type="PackedScene" uid="uid://cptu3ei6r3pdg" path="res://characters/vtol/models/vtol.blend" id="1_6peu8"]
-[ext_resource type="Script" path="res://characters/vtol/models/vtol.gd" id="2_8dfrk"]
+[ext_resource type="Script" uid="uid://tcn7aoax8p8" path="res://characters/vtol/models/vtol.gd" id="2_8dfrk"]
 [ext_resource type="Texture2D" uid="uid://dh3gi25m3fhxt" path="res://characters/vtol/trace_05.png" id="3_7o04a"]
 
 [sub_resource type="Gradient" id="Gradient_5dn5d"]
@@ -159,11 +159,11 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ps2y7"]
 _data = {
-"RESET": SubResource("Animation_5ykyn"),
-"engine_down": SubResource("Animation_e1igl"),
-"engine_up": SubResource("Animation_j1jvo"),
-"legs_down": SubResource("Animation_tse0q"),
-"legs_up": SubResource("Animation_d5cyw")
+&"RESET": SubResource("Animation_5ykyn"),
+&"engine_down": SubResource("Animation_e1igl"),
+&"engine_up": SubResource("Animation_j1jvo"),
+&"legs_down": SubResource("Animation_tse0q"),
+&"legs_up": SubResource("Animation_d5cyw")
 }
 
 [node name="vtol" instance=ExtResource("1_6peu8")]

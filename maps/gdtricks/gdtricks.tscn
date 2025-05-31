@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://o047sh8xi1sg"]
 
-[ext_resource type="Script" path="res://maps/gdtricks/gdtricks.gd" id="1_42tcc"]
+[ext_resource type="Script" uid="uid://bgoxddls4214u" path="res://maps/gdtricks/gdtricks.gd" id="1_42tcc"]
 [ext_resource type="PackedScene" uid="uid://ckmq3r7djtf2c" path="res://maps/gdtricks/scenes/gdtricks_hub.tscn" id="5_3k2gw"]
 [ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://maps/gdtricks/misc/teleport.tscn" id="17_l0dlr"]
 [ext_resource type="AudioStream" uid="uid://otpg6bmlfc8l" path="res://maps/gdtricks/misc/audio/the-song-in-the-trees.ogg" id="20_8g14b"]

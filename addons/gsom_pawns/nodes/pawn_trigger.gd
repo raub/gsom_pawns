@@ -48,11 +48,11 @@ func _attach() -> void:
 
 
 func _trigger_enter(pawn: GsomPawn) -> void:
-	pawn.triggered.emit(trigger_name, value_enter)
+	pawn.trigger(trigger_name, value_enter)
 
 
 func _trigger_exit(pawn: GsomPawn) -> void:
-	pawn.triggered.emit(trigger_name, value_enter)
+	pawn.trigger(trigger_name, value_enter)
 
 
 func _on_entered(body: Node3D) -> void:
