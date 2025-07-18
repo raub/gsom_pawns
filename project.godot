@@ -31,6 +31,10 @@ window/size/always_on_top=true
 
 enabled=PackedStringArray("res://addons/gsom_pawns/plugin.cfg")
 
+[global_group]
+
+Teleport="All teleport targets are available here."
+
 [rendering]
 
 anti_aliasing/quality/screen_space_aa=1

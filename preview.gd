@@ -19,7 +19,7 @@ var _DISPLAY_MONITORS: PackedStringArray = [
 
 static var _instance: Main = null
 
-var _load_queue := {}
+var _load_queue: Dictionary[String, Callable] = {}
 var _char_human: Node3D = null
 var _char_vtol: Node3D = null
 var _char_spec: Node3D = null

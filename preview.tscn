@@ -50,6 +50,7 @@ text = "Loading..."
 horizontal_alignment = 1
 
 [node name="LabelPerf" type="Label" parent="."]
+visible = false
 offset_left = 24.0
 offset_top = 24.0
 offset_right = 64.0
