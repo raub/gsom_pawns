@@ -1,11 +1,12 @@
 extends Node3D
+class_name ControllerRts
 
 signal switched_controller(controller_kind: String)
 
-const _CHAR_UNIT: GDScript = preload("../../characters/unit/char_unit.gd")
+const _CHAR_UNIT := preload("../../characters/unit/char_unit.gd")
 
-const _SCENE_DECAL_SELECT: PackedScene = preload("./decal_select.tscn")
-const _SCENE_HEALTH_BAR: PackedScene = preload("./health_bar.tscn")
+const _SCENE_DECAL_SELECT := preload("./decal_select.tscn")
+const _SCENE_HEALTH_BAR := preload("./health_bar.tscn")
 const _HEALTH_BARS_GAIN: int = 16
 const _MAX_BATCH_SIZE: int = 12
 const _RAY_LENGTH: float = 30.0
@@ -37,15 +38,15 @@ var _zoom_offset: float = 0.0
 var _is_selecting: bool = false
 var _selection_start: Vector3 = Vector3.ZERO
 var _select_decals: Array[Decal] = []
-var _health_bars: Array[Node] = []
+var _health_bars: Array[HealthBar] = []
 
 # These are not Input actions because we need to block the input by HUD when necessary
 var _is_select_pressed: bool = false
 var _is_action_pressed: bool = false
 var _team: String = "team1"
 
-@onready var _esc_overlay: Control = $EscOverlay
-@onready var _hud_rts: Control = $HudRts
+@onready var _esc_overlay: EscOverlay = $EscOverlay
+@onready var _hud_rts: HudRts = $HudRts
 @onready var _camera: Camera3D = $Camera3D
 @onready var _pool_decals_select: Node = $PoolDecalsSelect
 @onready var _pool_health_bars: Node = $PoolHealthBars
@@ -77,19 +78,19 @@ func _ready() -> void:
 
 
 func _adjust_health_bars() -> void:
-	var units: Array = _CHAR_UNIT.get_units()
+	var units: Array[GsomPawn] = _CHAR_UNIT.get_units()
 	var unit_count: int = units.size()
 	var current_count: int = _health_bars.size()
 	
 	while current_count < unit_count:
 		for _i: int in range(_HEALTH_BARS_GAIN):
-			var bar: Node3D = _SCENE_HEALTH_BAR.instantiate()
+			var bar: HealthBar = _SCENE_HEALTH_BAR.instantiate()
 			_pool_health_bars.add_child(bar)
 			_health_bars.append(bar)
 		current_count += _HEALTH_BARS_GAIN
 	
 	for i: int in range(current_count):
-		var bar: Node3D = _health_bars[i]
+		var bar: HealthBar = _health_bars[i]
 		if i >= unit_count:
 			bar.visible = false
 			continue
@@ -226,9 +227,13 @@ func _physics_process_follow() -> void:
 func _fetch_pawn(result: Dictionary) -> GsomPawn:
 	if !result.has("collider"):
 		return null
-	var collider := result.collider as Node
-	var parent := collider.get_parent() as GsomPawn
-	return parent
+		
+	var collider: Node = result.collider
+	var parent: Node = collider.get_parent()
+	if parent is GsomPawn:
+		return parent
+	
+	return null
 
 
 func _fetch_pawns_from_colliders(results: Array[Dictionary]) -> void:

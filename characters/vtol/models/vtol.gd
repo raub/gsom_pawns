@@ -1,4 +1,5 @@
 extends Node3D
+class_name ModelVtol
 
 @onready var _animation_player: AnimationPlayer = $AnimationPlayer
 @onready var _gpu_particles_3d: GPUParticles3D = $Engine/GPUParticles3D

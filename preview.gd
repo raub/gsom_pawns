@@ -10,21 +10,25 @@ const _PATH_CHAR_HUMAN := "res://characters/human/char_human.tscn"
 const _PATH_CHAR_VTOL := "res://characters/vtol/char_vtol.tscn"
 const _PATH_CHAR_SPEC := "res://characters/spec/char_spec.tscn"
 
-var _DISPLAY_MONITORS: PackedStringArray = [
-	"TIME_FPS","TIME_PROCESS","TIME_PHYSICS_PROCESS",
-	"OBJECT_COUNT","OBJECT_RESOURCE_COUNT",
-	"RENDER_TOTAL_OBJECTS_IN_FRAME","RENDER_TOTAL_PRIMITIVES_IN_FRAME",
-	"RENDER_TOTAL_DRAW_CALLS_IN_FRAME",
-]
+var _DISPLAY_MONITORS: Dictionary[String, Performance.Monitor] = {
+	"TIME_FPS": Performance.TIME_FPS,
+	"TIME_PROCESS": Performance.TIME_PROCESS,
+	"TIME_PHYSICS_PROCESS": Performance.TIME_PHYSICS_PROCESS,
+	"OBJECT_COUNT": Performance.OBJECT_COUNT,
+	"OBJECT_RESOURCE_COUNT": Performance.OBJECT_RESOURCE_COUNT,
+	"RENDER_TOTAL_OBJECTS_IN_FRAME": Performance.RENDER_TOTAL_OBJECTS_IN_FRAME,
+	"RENDER_TOTAL_PRIMITIVES_IN_FRAME": Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME,
+	"RENDER_TOTAL_DRAW_CALLS_IN_FRAME": Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME,
+}
 
 static var _instance: Main = null
 
 var _load_queue: Dictionary[String, Callable] = {}
-var _char_human: Node3D = null
-var _char_vtol: Node3D = null
-var _char_spec: Node3D = null
-var _controller_fps: Node3D = null
-var _controller_rts: Node3D = null
+var _char_human: CharHuman = null
+var _char_vtol: CharVtol = null
+var _char_spec: CharSpec = null
+var _controller_fps: ControllerFps = null
+var _controller_rts: ControllerRts = null
 
 
 @onready var _timer_load: Timer = $TimerLoad
@@ -58,11 +62,14 @@ func _on_load_cases(res: PackedScene, path: String) -> void:
 	
 	# Need to set position before "ready"
 	if path == _PATH_CHAR_HUMAN:
-		inst.position = Vector3(0.0, 0.0, 5.8)
+		var human: CharHuman = inst
+		human.position = Vector3(0.0, 0.0, 5.8)
 	elif path == _PATH_CHAR_VTOL:
-		inst.position = Vector3(-9.0, 0.0, 5.8)
+		var vtol: CharVtol = inst
+		vtol.position = Vector3(-9.0, 0.0, 5.8)
 	elif path == _PATH_CHAR_SPEC:
-		inst.position = Vector3(10.0, 7.0, 5.8)
+		var spec: CharSpec = inst
+		spec.position = Vector3(10.0, 7.0, 5.8)
 	
 	_container.add_child(inst)
 	
@@ -91,7 +98,7 @@ func _on_load_cases(res: PackedScene, path: String) -> void:
 	
 	if path == _PATH_CHAR_VTOL:
 		_char_vtol = inst
-		
+	
 	if path == _PATH_CHAR_SPEC:
 		_char_spec = inst
 
@@ -159,8 +166,8 @@ func _update_load() -> void:
 	_load_async_next();
 
 
-func get_perf_line(perf_name: String) -> String:
-	return ("%s: %s" % [perf_name, Performance.get_monitor(Performance[perf_name])])
+func get_perf_line(perf_name: String, perf_type: Performance.Monitor) -> String:
+	return ("%s: %s" % [perf_name, Performance.get_monitor(perf_type)])
 
 
 func _update_perf() -> void:
@@ -169,6 +176,6 @@ func _update_perf() -> void:
 	
 	var text: String = ""
 	for perf_name: String in _DISPLAY_MONITORS:
-		text += get_perf_line(perf_name) + "\n"
+		text += get_perf_line(perf_name, _DISPLAY_MONITORS[perf_name]) + "\n"
 	
 	_label_perf.text = text

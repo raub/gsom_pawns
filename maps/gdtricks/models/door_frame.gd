@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var _teleport: Node = $PortalDoor
+@onready var _teleport: PortalDoor = $PortalDoor
 
 
 var _dest: String = ""

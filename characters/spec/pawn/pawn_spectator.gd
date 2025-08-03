@@ -1,5 +1,5 @@
 extends Node3D
-
+class_name PawnSpec
 
 var linear_velocity := Vector3.ZERO
 var _pawn: GsomPawn = null

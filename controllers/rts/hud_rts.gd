@@ -1,4 +1,5 @@
 extends Control
+class_name HudRts
 
 signal panned(dxy: Vector2)
 signal pressed_map(xy_t: Vector2)

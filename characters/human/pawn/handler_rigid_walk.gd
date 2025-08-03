@@ -64,7 +64,7 @@ extends GsomPawnHandler
 
 
 func _do_integrate(pawn: GsomPawn, state: PhysicsDirectBodyState3D) -> void:
-	var body: RigidBody3D = pawn.body
+	var body: PawnHuman = pawn.body
 	
 	var dt: float = state.step
 	var direction := Vector3.ZERO

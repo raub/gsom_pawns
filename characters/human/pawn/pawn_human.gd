@@ -1,4 +1,5 @@
 extends RigidBody3D
+class_name PawnHuman
 
 const _HEAD_WALK: float = 1.55
 const _HEAD_DUCK: float = 1.2

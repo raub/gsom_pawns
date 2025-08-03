@@ -1,4 +1,5 @@
 extends Node3D
+class_name ControllerFps
 
 signal switched_character(character_kind: String)
 signal switched_controller(controller_kind: String)
@@ -23,7 +24,7 @@ var _pawn: GsomPawn = null
 @onready var _audio_teleport: AudioStreamPlayer = $AudioTeleport
 @onready var _camera_3d: Camera3D = $Head/Camera3D
 @onready var _head: Node3D = $Head
-@onready var _esc_overlay: Control = $EscOverlay
+@onready var _esc_overlay: EscOverlay = $EscOverlay
 @onready var _hud: Control = $Hud
 @onready var _bar_speed: ProgressBar = $Hud/CenterContainer/TextureRect/BarSpeed
 @onready var _camera: Camera3D = $Head/Camera3D
@@ -51,7 +52,9 @@ func possess(pawn: GsomPawn) -> void:
 	
 	if _pawn:
 		var parent: Node = _pawn.get_parent()
-		parent.visible = true
+		if parent is Node3D:
+			var parent3d: Node3D = parent
+			parent3d.visible = true
 		
 		_pawn.moved.disconnect(_handle_move)
 		_pawn.moved_head.disconnect(_handle_move_head)
@@ -137,7 +140,9 @@ func _update_pawn_visibility() -> void:
 		return
 	
 	var parent: Node = _pawn.get_parent()
-	parent.visible = _camera_3d.position.z > 0.5
+	if parent is Node3D:
+		var parent3d: Node3D = parent
+		parent3d.visible = _camera_3d.position.z > 0.5
 
 
 func _zoom() -> void:

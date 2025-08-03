@@ -1,4 +1,5 @@
 extends Node3D
+class_name CharUnit
 
 const _STEP_INTERVAL: int = 400
 const _STEP_MINSPEED: float = 5.0

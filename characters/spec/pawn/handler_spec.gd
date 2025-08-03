@@ -17,7 +17,7 @@ extends GsomPawnHandler
 
 
 func _do_physics(pawn: GsomPawn, dt: float) -> void:
-	var body: Node3D = pawn.body
+	var body: PawnSpec = pawn.body
 	
 	var wish_axis := Vector3.ZERO
 	var basis: Basis = pawn.get_action("basis", Basis.IDENTITY)

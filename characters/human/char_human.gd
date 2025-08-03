@@ -1,4 +1,5 @@
 extends Node3D
+class_name CharHuman
 
 const _STEP_GROUND_INTERVAL: int = 400
 const _STEP_GROUND_MINSPEED: float = 5.0
@@ -24,7 +25,7 @@ var _prev_step_swim_time: int = 0
 @onready var _steps_ladder: Node = $StepsLadder
 @onready var _steps_swim: Node = $StepsSwim
 @onready var _steps_wet: Node = $StepsWet
-@onready var _helmet: Node = $helmet
+@onready var _helmet: ModelHelmet = $helmet
 
 
 func _ready() -> void:

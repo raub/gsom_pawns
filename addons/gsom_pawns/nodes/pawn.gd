@@ -28,7 +28,7 @@ signal accelerated_angular(dv: Vector3)
 ## The relative position of the head changed.
 signal moved_head(head_y: float)
 
-## The body has received or produced an event with optional data.
+## The body has produced an event with optional data.
 signal triggered(trigger_name: String, value: Variant)
 
 
@@ -56,11 +56,11 @@ var _scene: PackedScene = _SCENE_DEFAULT
 @export var track_accel_angular: bool = false
 
 
-## If the pawn needs to track its linear acceleration.
+## If the pawn needs to track its linear velocity.
 @export var has_velocity_linear: bool = false
 
 
-## If the pawn needs to track its angular acceleration.
+## If the pawn needs to track its angular velocity.
 @export var has_velocity_angular: bool = false
 
 
@@ -101,13 +101,13 @@ var _head_y: float = 0.0
 ## Get the animated head/eye/camera position Y.
 ##
 ## This value is animated towards [code]head_y_target[/code]
-## with the speed of [code]head_speed[/code].
+## with the speed of [code]head_speed[/code] (meters per second).
 var head_y: float = _head_y:
 	get:
 		return _head_y
 
 
-var _info := {}
+var _info: Dictionary[String, Dictionary] = {}
 var _parent: Node3D = null
 
 
@@ -314,7 +314,8 @@ func _do_integrate_handler(handler: GsomPawnHandler, state: PhysicsDirectBodySta
 func do_integrate(state: PhysicsDirectBodyState3D) -> void:
 	for child: Node in get_children():
 		if child is GsomPawnHandler:
-			_do_integrate_handler(child, state)
+			var handler: GsomPawnHandler = child
+			_do_integrate_handler(handler, state)
 
 
 func _do_process_handler(handler: GsomPawnHandler, dt: float) -> void:
@@ -336,7 +337,8 @@ func _do_process_handler(handler: GsomPawnHandler, dt: float) -> void:
 func do_process(dt: float) -> void:
 	for child: Node in get_children():
 		if child is GsomPawnHandler:
-			_do_process_handler(child, dt)
+			var handler: GsomPawnHandler = child
+			_do_process_handler(handler, dt)
 
 
 func _do_physics_handler(handler: GsomPawnHandler, dt: float) -> void:
@@ -358,23 +360,27 @@ func _do_physics_handler(handler: GsomPawnHandler, dt: float) -> void:
 func do_physics(dt: float) -> void:
 	for child: Node in get_children():
 		if child is GsomPawnHandler:
-			_do_physics_handler(child, dt)
+			var handler: GsomPawnHandler = child
+			_do_physics_handler(handler, dt)
 	
 	if track_accel_linear and has_velocity_linear:
-		var dvell: Vector3 = (_cached_vell - _body.linear_velocity)
+		@warning_ignore("unsafe_property_access")
+		var dvell: Vector3 = (_body.linear_velocity - _cached_vell)
 		if dvell.length_squared() > 0.0001:
 			accelerated_linear.emit(dvell)
 	
 	if has_velocity_linear:
+		@warning_ignore("unsafe_property_access")
 		_cached_vell = _body.linear_velocity
 	
 	if track_accel_angular and has_velocity_angular:
-		var dvela: Vector3 = (_cached_vela - _body.angular_velocity)
+		@warning_ignore("unsafe_property_access")
+		var dvela: Vector3 = (_body.angular_velocity - _cached_vela)
 		if dvela.length_squared() > 0.0001:
 			accelerated_angular.emit(dvela)
-			_cached_vela = _body.angular_velocity
 	
 	if has_velocity_angular:
+		@warning_ignore("unsafe_property_access")
 		_cached_vela = _body.angular_velocity
 	
 	_parent.global_position = _body.position

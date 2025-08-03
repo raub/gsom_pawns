@@ -1,4 +1,5 @@
 extends Node3D
+class_name CharVtol
 
 
 var pawn: GsomPawn = null:
@@ -10,7 +11,7 @@ var pawn: GsomPawn = null:
 @onready var _audio_engine: AudioStreamPlayer3D = $AudioEngine
 @onready var _audio_power: AudioStreamPlayer3D = $AudioPower
 @onready var _vtol_pivot: Node3D = $VtolPivot
-@onready var _vtol: Node3D = $VtolPivot/Vtol
+@onready var _vtol: ModelVtol = $VtolPivot/Vtol
 
 
 func _ready() -> void:

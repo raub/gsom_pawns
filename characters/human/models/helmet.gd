@@ -1,4 +1,5 @@
 extends Node3D
+class_name ModelHelmet
 
 
 @onready var _animation_tree: AnimationTree = $AnimationTree

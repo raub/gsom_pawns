@@ -1,4 +1,5 @@
 extends Control
+class_name EscOverlay
 
 signal switched_character(character_kind: String)
 signal switched_controller(controller_kind: String)
@@ -86,7 +87,7 @@ func _tp_delta(plus_minus_one: int) -> void:
 	_current_tp_index = (next + _TP_LIST.size()) % _TP_LIST.size()
 	var teleports: Array[Node] = get_tree().get_nodes_in_group("Teleport")
 	var wanted_tag: String = _TP_LIST[_current_tp_index]
-	for teleport: Node in teleports:
+	for teleport: Teleport in teleports:
 		if teleport.tag != wanted_tag:
 			continue
 		var tp_parent := teleport.get_parent() as Node3D

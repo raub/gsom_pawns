@@ -1,4 +1,5 @@
 extends GsomPawnTrigger
+class_name Teleport
 
 @export var tag: String = ""
 @export var dest: String = ""
@@ -19,7 +20,10 @@ func _exit_tree() -> void:
 func _trigger_enter(pawn: GsomPawn) -> void:
 	var teleports: Array = _teleports.filter(
 		func (node: Node) -> bool:
-			return node.tag == dest
+			if node is Teleport:
+				var teleport: Teleport = node
+				return teleport.tag == dest
+			return false
 	)
 	if teleports.is_empty():
 		push_warning("Teleport - '%s' not found." % dest)

@@ -1,6 +1,6 @@
 extends Node3D
 
-@onready var _teleport: Node = $Area/Teleport
+@onready var _teleport: Teleport = $Area/Teleport
 
 
 var _dest: String = ""

@@ -1,4 +1,5 @@
 extends Node3D
+class_name HealthBar
 
 const _MODULATE_FRIENDLY := Color("#1eff1b")
 const _MODULATE_ENEMY := Color("#ff1e1b")
