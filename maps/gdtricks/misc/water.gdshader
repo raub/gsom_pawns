@@ -19,7 +19,7 @@ uniform vec2 wave_strengh = vec2(0.079, 0.07);
 uniform vec2 wave_frequency = vec2(29.0, 37.0);
 uniform vec2 time_factor = vec2(1.3, 1.1);
 
-varying vec2 uvWorld;
+varying vec2 uv_world;
 
 
 float waves(vec2 pos, float time){
@@ -31,32 +31,32 @@ float waves(vec2 pos, float time){
 
 
 void vertex() {
-	uvWorld = (MODEL_MATRIX * vec4(VERTEX, 1.0f)).xz;
-	VERTEX.y += waves(uvWorld, TIME * 0.79);
+	uv_world = (MODEL_MATRIX * vec4(VERTEX, 1.0f)).xz;
+	VERTEX.y += waves(uv_world, TIME * 0.79);
 }
 
 
 void fragment() {
 	float time = TIME * speed;
-	float n1 = texture(noise1, uvWorld * 0.137 + time).r;
-	float n2 = texture(noise2, uvWorld * 0.11 - time * 0.2).r;
+	float n1 = texture(noise1, uv_world * 0.137 + time).r;
+	float n2 = texture(noise2, uv_world * 0.11 - time * 0.2).r;
 	
-	vec2 uv_movement = uvWorld * 0.1;
+	vec2 uv_movement = uv_world * 0.1;
 	uv_movement += TIME * speed;
 	
 	float sum = (n1 + n2) - 1.0;
 //	float sum = n1 * n2;
 //	sum = pow(sum, 0.5);
 	
-	float depthRaw = texture(DEPTH_TEXTURE, SCREEN_UV).x;
-	vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, depthRaw);
+	float depth_raw = texture(DEPTH_TEXTURE, SCREEN_UV).x;
+	vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, depth_raw);
 	vec4 view = INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
 	view.xyz /= view.w;
 	
-	float waterDepth = -view.z + VERTEX.z;
-	waterDepth = waterDepth * 0.1 + sum * 0.1;
+	float water_depth = -view.z + VERTEX.z;
+	water_depth = water_depth * 0.1 + sum * 0.1;
 	
-	vec4 col = mix(edge_color, color, step(edge_scale, waterDepth));
+	vec4 col = mix(edge_color, color, step(edge_scale, water_depth));
 	
 	float fin = 0.0;
 	if (sum > 0.0 && sum < 0.1) {

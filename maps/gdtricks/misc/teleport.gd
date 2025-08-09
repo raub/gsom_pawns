@@ -5,35 +5,41 @@ class_name Teleport
 @export var dest: String = ""
 
 
-static var _teleports: Array[Node] = []
+static var _teleports: Array[Teleport] = []
 
 
 func _ready() -> void:
 	_teleports.append(self)
-	_attach()
+	self.attach()
 
 
 func _exit_tree() -> void:
 	_teleports.erase(self)
 
 
-func _trigger_enter(pawn: GsomPawn) -> void:
-	var teleports: Array = _teleports.filter(
-		func (node: Node) -> bool:
-			if node is Teleport:
-				var teleport: Teleport = node
-				return teleport.tag == dest
-			return false
-	)
-	if teleports.is_empty():
-		push_warning("Teleport - '%s' not found." % dest)
-		return
+static func find_by_tag(dest_tag: String) -> Teleport:
+	for tp: Teleport in _teleports:
+		if tp.tag == dest_tag:
+			return tp
+	return null
+
+
+static func find_target_by_tag(dest_tag: String) -> Node3D:
+	var dest_teleport: Teleport = find_by_tag(dest_tag)
+	if !dest_teleport:
+		return null
 	
-	var dest_teleport: Node = teleports.front()
 	var parent_3d := dest_teleport.get_parent() as Node3D
-	
 	if !parent_3d:
-		push_warning("Teleport - destination is not in Node3D.")
+		return null
+	
+	return parent_3d
+
+
+func _trigger_enter(pawn: GsomPawn) -> void:
+	var parent_3d: Node3D = find_target_by_tag(dest)
+	if !parent_3d:
+		push_warning("Teleport - destination is not found or not in Node3D.")
 		return
 	
 	pawn.trigger("teleport", { "pos": parent_3d.global_position })

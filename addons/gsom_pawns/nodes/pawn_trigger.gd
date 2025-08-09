@@ -2,9 +2,10 @@
 extends Node
 class_name GsomPawnTrigger
 
+## Trigger events for GsomPawn
+##
 ## Attach a trigger to Area3D. Depending on behavior,
 ## it will trigger a signal on all entering and/or exiting pawns.
-##
 ## The additional trigger data can be assigned separately for enter and exit.
 
 ## Types of pawn trigger behavior.
@@ -35,49 +36,49 @@ enum TriggerBehavior {
 
 
 func _ready() -> void:
-	_attach()
+	attach()
 
 
-func _attach() -> void:
-	var parent: Area3D = get_parent() as Area3D
-	if !parent:
+## Call this from _ready() if you extend this class.
+func attach() -> void:
+	var parent: Node = get_parent()
+	if parent is not Area3D:
 		return
 	
-	parent.body_entered.connect(_on_entered)
-	parent.body_exited.connect(_on_exited)
+	var parentArea: Area3D = parent
+	parentArea.body_entered.connect(__on_entered)
+	parentArea.body_exited.connect(__on_exited)
 
 
+## Called when a body enters the trigger.
+##
+## Override this for custom triggers.
 func _trigger_enter(pawn: GsomPawn) -> void:
 	pawn.trigger(trigger_name, value_enter)
 
 
+## Called when a body exits from trigger.
+##
+## Override this for custom triggers.
 func _trigger_exit(pawn: GsomPawn) -> void:
-	pawn.trigger(trigger_name, value_enter)
+	pawn.trigger(trigger_name, value_exit)
 
 
-func _on_entered(body: Node3D) -> void:
-	if disabled:
+func __on_entered(body: Node3D) -> void:
+	if disabled or behavior == TriggerBehavior.ON_EXIT:
 		return
 	
-	if behavior == TriggerBehavior.ON_EXIT:
-		return
-	
-	var pawn := body.get_parent() as GsomPawn
-	if !pawn:
-		return
-	
-	_trigger_enter(pawn)
+	var parent: Node = body.get_parent()
+	if parent is GsomPawn:
+		var parentPawn: GsomPawn = parent
+		_trigger_enter(parentPawn)
 
 
-func _on_exited(body: Node3D) -> void:
-	if disabled:
+func __on_exited(body: Node3D) -> void:
+	if disabled or behavior == TriggerBehavior.ON_ENTER:
 		return
 	
-	if behavior == TriggerBehavior.ON_ENTER:
-		return
-	
-	var pawn := body.get_parent() as GsomPawn
-	if !pawn:
-		return
-	
-	_trigger_exit(pawn)
+	var parent: Node = body.get_parent()
+	if parent is GsomPawn:
+		var parentPawn: GsomPawn = parent
+		_trigger_exit(parentPawn)

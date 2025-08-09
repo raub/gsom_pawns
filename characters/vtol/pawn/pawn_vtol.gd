@@ -32,11 +32,11 @@ func _physics_process(dt: float) -> void:
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 	_pawn.do_integrate(state)
 
-# Detect the isGround state from collision results from shape and ray casts
+# Detect the is_ground state from collision results from shape and ray casts
 # If was in air and hit ground - emits `pawn.hit_ground`
 func _update_ground_state() -> void:
 	var result: Array = _cast_ground.collision_result
-	var wasGround: bool = _is_ground
+	var was_ground: bool = _is_ground
 	_is_ground = false
 	
 	if !result.size():
@@ -44,5 +44,5 @@ func _update_ground_state() -> void:
 	
 	_is_ground = true
 	
-	if !wasGround:
+	if !was_ground:
 		_pawn.trigger("hit_ground", { "speed": linear_velocity.y })

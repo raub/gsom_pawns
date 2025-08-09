@@ -2,9 +2,10 @@
 extends Node
 class_name GsomPawnEnv
 
+## Environment description for GsomPawn
+##
 ## Attach an env to Area3D. Depending on behavior,
 ## it will apply and/or remove an env field on all entering and/or exiting pawns.
-##
 ## The default env data is [code]{}[/code], empty dictionary.
 
 ## Types of pawn env behavior.
@@ -38,24 +39,35 @@ enum EnvBehavior {
 
 
 func _ready() -> void:
-	var parent: Area3D = get_parent() as Area3D
-	if !parent:
-		push_error("Parent must be an Area3D.")
+	attach()
+
+
+## Call this from _ready() if you extend this class.
+func attach() -> void:
+	var parent: Node = get_parent()
+	if parent is not Area3D:
 		return
 	
-	parent.body_entered.connect(_on_entered)
-	parent.body_exited.connect(_on_exited)
+	var parentArea: Area3D = parent
+	parentArea.body_entered.connect(__on_entered)
+	parentArea.body_exited.connect(__on_exited)
 
 
+## Called to assign the env value.
+##
+## Override this for custom envs.
 func _apply_env(pawn: GsomPawn) -> void:
 	pawn.set_env(env_name, env_value)
 
 
+## Called to remove the env value.
+##
+## Override this for custom envs.
 func _erase_env(pawn: GsomPawn) -> void:
 	pawn.erase_env(env_name)
 
 
-func _on_entered(body: Node3D) -> void:
+func __on_entered(body: Node3D) -> void:
 	if disabled:
 		return
 	
@@ -75,7 +87,7 @@ func _on_entered(body: Node3D) -> void:
 		return
 
 
-func _on_exited(body: Node3D) -> void:
+func __on_exited(body: Node3D) -> void:
 	if disabled:
 		return
 	

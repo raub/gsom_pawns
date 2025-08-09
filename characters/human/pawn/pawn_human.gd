@@ -80,11 +80,11 @@ func _unduck() -> void:
 	_pawn.head_y_target = _HEAD_WALK
 
 
-# Detect the isGround state from collision results from shape and ray casts
+# Detect the is_ground state from collision results from shape and ray casts
 # If was in air and hit ground - emits `pawn.hit_ground`
 func _update_ground_state() -> void:
 	var result: Array = _cast.collision_result
-	var wasGround: bool = _is_ground
+	var was_ground: bool = _is_ground
 	_is_ground = false
 	_normal = Vector3.UP
 	
@@ -92,22 +92,24 @@ func _update_ground_state() -> void:
 		_pawn.set_state("normal", _normal)
 		return
 	
-	var max_y := Vector3.ZERO
+	var max_y := -Vector3.UP
 	for item: Dictionary in result:
 		if item.normal.y > max_y.y:
 			max_y = item.normal
 	
-	if max_y.y < slope_normal_y:
+	var is_ray_colliding: bool = _ray.is_colliding()
+	
+	if max_y.y < slope_normal_y and (max_y.y > 0.0 || !is_ray_colliding):
 		_pawn.set_state("normal", _normal)
 		return
 	
 	_normal = max_y
 	_is_ground = true
 	
-	if !wasGround:
+	if !was_ground:
 		_pawn.trigger("hit_ground", { "speed": linear_velocity.y })
 	
-	if _ray.is_colliding():
+	if is_ray_colliding:
 		_normal = _ray.get_collision_normal()
 	
 	_pawn.set_state("normal", _normal)

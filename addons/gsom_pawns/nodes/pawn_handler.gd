@@ -2,6 +2,14 @@
 extends Node
 class_name GsomPawnHandler
 
+## Handlers define GsomPawn behavior.
+##
+## You can implement everything into a single handler,
+## but it would be more convenient to divide the behavior into small manageable pieces.
+## For example, a separate handler for movement on ladders or underwater.
+## Or a reusable walk handler that can be utilized for both players and enemies.
+## A separate handler can define interaction with triggers,
+## so those triggers will only interact with pawns that have such handler.
 
 ## Disabled handlers are skipped.
 @export var disabled := false

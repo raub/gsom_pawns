@@ -163,7 +163,7 @@ func _update_load() -> void:
 		else:
 			cb.call(res, path)
 	
-	_load_async_next();
+	_load_async_next()
 
 
 func get_perf_line(perf_name: String, perf_type: Performance.Monitor) -> String:

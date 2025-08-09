@@ -123,8 +123,8 @@ func _process(dt: float) -> void:
 	if _hud_rts.wish_scroll.length_squared() > 0.001:
 		var pox_xz := Vector2(_camera.position.x, _camera.position.z)
 		pox_xz = pox_xz + _hud_rts.wish_scroll * dt * _SCROLL_SPEED
-		_camera.position.x = clamp(pox_xz.x, _PAN_MIN.x, _PAN_MAX.x)
-		_camera.position.z = clamp(pox_xz.y, _PAN_MIN.y, _PAN_MAX.y)
+		_camera.position.x = clampf(pox_xz.x, _PAN_MIN.x, _PAN_MAX.x)
+		_camera.position.z = clampf(pox_xz.y, _PAN_MIN.y, _PAN_MAX.y)
 		_hud_rts.move_map_screen((pox_xz - _PAN_MIN) / _PAN_SIZE)
 		return
 	
@@ -191,7 +191,7 @@ func _physics_process_pick() -> void:
 		if !result.has("position"):
 			return
 		_is_selecting = true
-		_selection_start = _physics_process_pick_ray().position
+		_selection_start = result.position
 		return
 	
 	if _is_selecting and !_is_select_pressed:
@@ -205,7 +205,10 @@ func _physics_process_pick() -> void:
 			_fetch_pawns_from_colliders([result])
 			return
 		
-		var result_box: Array[Dictionary] = _physics_process_pick_shape(_selection_start, _selection_end)
+		var result_box: Array[Dictionary] = _physics_process_pick_shape(
+			_selection_start,
+			_selection_end,
+		)
 		_fetch_pawns_from_colliders(result_box)
 		return
 
@@ -227,7 +230,7 @@ func _physics_process_follow() -> void:
 func _fetch_pawn(result: Dictionary) -> GsomPawn:
 	if !result.has("collider"):
 		return null
-		
+	
 	var collider: Node = result.collider
 	var parent: Node = collider.get_parent()
 	if parent is GsomPawn:
@@ -282,8 +285,8 @@ func _physics_process_pick_shape(start: Vector3, end: Vector3) -> Array[Dictiona
 func _handle_pan(dxy: Vector2) -> void:
 	var pox_xz := Vector2(_camera.position.x, _camera.position.z)
 	pox_xz = pox_xz - dxy * _PAN_SENS
-	_camera.position.x = clamp(pox_xz.x, _PAN_MIN.x, _PAN_MAX.x)
-	_camera.position.z = clamp(pox_xz.y, _PAN_MIN.y, _PAN_MAX.y)
+	_camera.position.x = clampf(pox_xz.x, _PAN_MIN.x, _PAN_MAX.x)
+	_camera.position.z = clampf(pox_xz.y, _PAN_MIN.y, _PAN_MAX.y)
 	_hud_rts.move_map_screen((pox_xz - _PAN_MIN) / _PAN_SIZE)
 
 
@@ -325,47 +328,47 @@ func _assign_is_focused() -> void:
 
 
 func _zoom() -> void:
-	_zoom_offset = max(_zoom_offset - 0.2, _ZOOM_MIN)
+	_zoom_offset = maxf(_zoom_offset - 0.2, _ZOOM_MIN)
 	_camera.position.y = 5.5 +_zoom_offset
 
 
 func _unzoom() -> void:
-	_zoom_offset = min(_zoom_offset + 0.2, _ZOOM_MAX)
+	_zoom_offset = minf(_zoom_offset + 0.2, _ZOOM_MAX)
 	_camera.position.y = 5.5 +_zoom_offset
 
 
 func _register_actions() -> void:
 	InputMap.add_action("RTS_Follow")
-	var keySpace := InputEventKey.new()
-	keySpace.keycode = KEY_SPACE
-	InputMap.action_add_event("RTS_Follow", keySpace)
+	var key_space := InputEventKey.new()
+	key_space.keycode = KEY_SPACE
+	InputMap.action_add_event("RTS_Follow", key_space)
 	
 	InputMap.add_action("RTS_Pick")
-	var keyPick := InputEventMouseButton.new()
-	keyPick.button_index = MOUSE_BUTTON_LEFT
-	InputMap.action_add_event("RTS_Pick", keyPick)
+	var key_pick := InputEventMouseButton.new()
+	key_pick.button_index = MOUSE_BUTTON_LEFT
+	InputMap.action_add_event("RTS_Pick", key_pick)
 	
 	InputMap.add_action("RTS_Action")
-	var keyAction := InputEventMouseButton.new()
-	keyAction.button_index = MOUSE_BUTTON_RIGHT
-	InputMap.action_add_event("RTS_Action", keyAction)
+	var key_action := InputEventMouseButton.new()
+	key_action.button_index = MOUSE_BUTTON_RIGHT
+	InputMap.action_add_event("RTS_Action", key_action)
 	
 	InputMap.add_action("RTS_Pan")
-	var keyPan := InputEventMouseButton.new()
-	keyPan.button_index = MOUSE_BUTTON_MIDDLE
-	InputMap.action_add_event("RTS_Pan", keyPan)
+	var key_pan := InputEventMouseButton.new()
+	key_pan.button_index = MOUSE_BUTTON_MIDDLE
+	InputMap.action_add_event("RTS_Pan", key_pan)
 	
 	InputMap.add_action("RTS_Zoom")
-	var keyZoom := InputEventMouseButton.new()
-	keyZoom.button_index = MOUSE_BUTTON_WHEEL_UP
-	InputMap.action_add_event("RTS_Zoom", keyZoom)
+	var key_zoom := InputEventMouseButton.new()
+	key_zoom.button_index = MOUSE_BUTTON_WHEEL_UP
+	InputMap.action_add_event("RTS_Zoom", key_zoom)
 	
 	InputMap.add_action("RTS_Unzoom")
-	var keyUnzoom := InputEventMouseButton.new()
-	keyUnzoom.button_index = MOUSE_BUTTON_WHEEL_DOWN
-	InputMap.action_add_event("RTS_Unzoom", keyUnzoom)
+	var key_unzoom := InputEventMouseButton.new()
+	key_unzoom.button_index = MOUSE_BUTTON_WHEEL_DOWN
+	InputMap.action_add_event("RTS_Unzoom", key_unzoom)
 	
 	InputMap.add_action("RTS_Esc")
-	var keyEsc := InputEventKey.new()
-	keyEsc.keycode = KEY_ESCAPE
-	InputMap.action_add_event("RTS_Esc", keyEsc)
+	var key_esc := InputEventKey.new()
+	key_esc.keycode = KEY_ESCAPE
+	InputMap.action_add_event("RTS_Esc", key_esc)

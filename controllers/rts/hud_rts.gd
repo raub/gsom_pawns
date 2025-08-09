@@ -38,8 +38,8 @@ func _handle_map_input(event: InputEvent) -> void:
 	
 	_wish_scroll = Vector2.ZERO
 	var xy_t: Vector2 = event_mouse.position / _rect_map_texture.size
-	xy_t.x = clamp(xy_t.x, _XY_T_MIN.x, _XY_T_MAX.x)
-	xy_t.y = clamp(xy_t.y, _XY_T_MIN.y, _XY_T_MAX.y)
+	xy_t.x = clampf(xy_t.x, _XY_T_MIN.x, _XY_T_MAX.x)
+	xy_t.y = clampf(xy_t.y, _XY_T_MIN.y, _XY_T_MAX.y)
 	pressed_map.emit(xy_t)
 	accept_event()
 

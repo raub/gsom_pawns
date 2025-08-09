@@ -14,8 +14,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_4lhdi")
-controller_kind = null
-controller_team = null
 
 [node name="TextureRect" type="TextureRect" parent="."]
 self_modulate = Color(0.0588235, 0.054902, 0.14902, 0.541176)

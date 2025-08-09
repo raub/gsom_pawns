@@ -85,11 +85,8 @@ func _set_fullscreen(is_full: bool) -> void:
 func _tp_delta(plus_minus_one: int) -> void:
 	var next: int = _current_tp_index + plus_minus_one
 	_current_tp_index = (next + _TP_LIST.size()) % _TP_LIST.size()
-	var teleports: Array[Node] = get_tree().get_nodes_in_group("Teleport")
 	var wanted_tag: String = _TP_LIST[_current_tp_index]
-	for teleport: Teleport in teleports:
-		if teleport.tag != wanted_tag:
-			continue
-		var tp_parent := teleport.get_parent() as Node3D
-		if tp_parent:
-			teleported.emit(tp_parent.global_position)
+	
+	var parent_3d: Node3D = Teleport.find_target_by_tag(wanted_tag)
+	if parent_3d:
+		teleported.emit(parent_3d.global_position)

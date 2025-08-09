@@ -44,19 +44,7 @@ has_velocity_linear = true
 
 [node name="Walk" type="Node" parent="GsomPawn"]
 script = ExtResource("11_clgec")
-max_speed_run = null
-max_speed_fly = null
-accel_run_k = null
-accel_fly_k = null
-speed_jump = null
-accel_gravity = null
-stop_speed = null
-duck_multiplier = null
-disabled = null
-include_envs = null
 exclude_envs = ["ladder", "water", "zero_g"]
-include_states = null
-exclude_states = null
 
 [node name="Ladder" type="Node" parent="GsomPawn"]
 script = ExtResource("12_jihhx")

@@ -51,6 +51,6 @@ func _do_physics(pawn: GsomPawn, dt: float) -> void:
 			body.linear_velocity = body.linear_velocity.normalized() * target_speed
 	else:
 		var speed: float = body.linear_velocity.length()
-		var new_speed: float = max(0.0, speed - dt * max_speed * stop_speed)
+		var new_speed: float = maxf(0.0, speed - dt * max_speed * stop_speed)
 		body.linear_velocity = body.linear_velocity.normalized() * new_speed
 	

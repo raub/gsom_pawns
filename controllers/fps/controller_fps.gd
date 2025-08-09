@@ -110,12 +110,12 @@ func _process(_dt: float) -> void:
 		return
 	
 	if kind == "vtol":
-		_bar_speed.value = min(1.0, _pawn.linear_velocity.length() * 0.01)
+		_bar_speed.value = minf(1.0, _pawn.linear_velocity.length() * 0.01)
 	elif kind == "human":
 		var velocity_xz: Vector2 = Vector2(_pawn.linear_velocity.x, _pawn.linear_velocity.z)
-		_bar_speed.value = min(1.0, velocity_xz.length() * 0.04)
+		_bar_speed.value = minf(1.0, velocity_xz.length() * 0.04)
 	else:
-		_bar_speed.value = min(1.0, _pawn.linear_velocity.length() * 0.08)
+		_bar_speed.value = minf(1.0, _pawn.linear_velocity.length() * 0.08)
 	
 	if !is_captured:
 		_pawn.reset_actions()
@@ -157,7 +157,7 @@ func _unzoom() -> void:
 	if _camera_3d.position.z< 2.0:
 		_camera_3d.position.z = 2.0
 	else:
-		_camera_3d.position.z = min(_camera_3d.position.z * 1.1, _UNZOOM_MAX)
+		_camera_3d.position.z = minf(_camera_3d.position.z * 1.1, _UNZOOM_MAX)
 	
 	_update_pawn_visibility()
 
@@ -188,51 +188,51 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _register_actions() -> void:
 	InputMap.add_action("FPS_Duck")
-	var keyCtrl := InputEventKey.new()
-	keyCtrl.keycode = KEY_CTRL
-	InputMap.action_add_event("FPS_Duck", keyCtrl)
+	var key_ctrl := InputEventKey.new()
+	key_ctrl.keycode = KEY_CTRL
+	InputMap.action_add_event("FPS_Duck", key_ctrl)
 	
 	InputMap.add_action("FPS_Jump")
-	var keySpace := InputEventKey.new()
-	keySpace.keycode = KEY_SPACE
-	InputMap.action_add_event("FPS_Jump", keySpace)
+	var key_space := InputEventKey.new()
+	key_space.keycode = KEY_SPACE
+	InputMap.action_add_event("FPS_Jump", key_space)
 	
 	InputMap.add_action("FPS_Forward")
-	var keyW := InputEventKey.new()
-	keyW.keycode = KEY_W
-	InputMap.action_add_event("FPS_Forward", keyW)
+	var key_w := InputEventKey.new()
+	key_w.keycode = KEY_W
+	InputMap.action_add_event("FPS_Forward", key_w)
 	
 	InputMap.add_action("FPS_Back")
-	var keyS := InputEventKey.new()
-	keyS.keycode = KEY_S
-	InputMap.action_add_event("FPS_Back", keyS)
+	var key_s := InputEventKey.new()
+	key_s.keycode = KEY_S
+	InputMap.action_add_event("FPS_Back", key_s)
 	
 	InputMap.add_action("FPS_Left")
-	var keyA := InputEventKey.new()
-	keyA.keycode = KEY_A
-	InputMap.action_add_event("FPS_Left", keyA)
+	var key_a := InputEventKey.new()
+	key_a.keycode = KEY_A
+	InputMap.action_add_event("FPS_Left", key_a)
 	
 	InputMap.add_action("FPS_Right")
-	var keyD := InputEventKey.new()
-	keyD.keycode = KEY_D
-	InputMap.action_add_event("FPS_Right", keyD)
+	var key_d := InputEventKey.new()
+	key_d.keycode = KEY_D
+	InputMap.action_add_event("FPS_Right", key_d)
 	
 	InputMap.add_action("FPS_Zoom")
-	var keyZoom := InputEventMouseButton.new()
-	keyZoom.button_index = MOUSE_BUTTON_WHEEL_UP
-	InputMap.action_add_event("FPS_Zoom", keyZoom)
+	var key_zoom := InputEventMouseButton.new()
+	key_zoom.button_index = MOUSE_BUTTON_WHEEL_UP
+	InputMap.action_add_event("FPS_Zoom", key_zoom)
 	
 	InputMap.add_action("FPS_Sprint")
-	var keySprint := InputEventKey.new()
-	keySprint.keycode = KEY_SHIFT
-	InputMap.action_add_event("FPS_Sprint", keySprint)
+	var key_sprint := InputEventKey.new()
+	key_sprint.keycode = KEY_SHIFT
+	InputMap.action_add_event("FPS_Sprint", key_sprint)
 	
 	InputMap.add_action("FPS_Unzoom")
-	var keyUnzoom := InputEventMouseButton.new()
-	keyUnzoom.button_index = MOUSE_BUTTON_WHEEL_DOWN
-	InputMap.action_add_event("FPS_Unzoom", keyUnzoom)
+	var key_unzoom := InputEventMouseButton.new()
+	key_unzoom.button_index = MOUSE_BUTTON_WHEEL_DOWN
+	InputMap.action_add_event("FPS_Unzoom", key_unzoom)
 	
 	InputMap.add_action("FPS_Esc")
-	var keyEsc := InputEventKey.new()
-	keyEsc.keycode = KEY_ESCAPE
-	InputMap.action_add_event("FPS_Esc", keyEsc)
+	var key_esc := InputEventKey.new()
+	key_esc.keycode = KEY_ESCAPE
+	InputMap.action_add_event("FPS_Esc", key_esc)

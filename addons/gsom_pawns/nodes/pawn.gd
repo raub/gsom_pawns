@@ -32,19 +32,19 @@ signal moved_head(head_y: float)
 signal triggered(trigger_name: String, value: Variant)
 
 
-const _SCENE_DEFAULT: PackedScene = preload("./default_scene.tscn")
+const __SCENE_DEFAULT: PackedScene = preload("./default_scene.tscn")
 
-var _scene: PackedScene = _SCENE_DEFAULT
+var __scene: PackedScene = __SCENE_DEFAULT
 ## Scene that will be instantiated for this pawn
-@export var scene: PackedScene = _SCENE_DEFAULT:
+@export var scene: PackedScene = __SCENE_DEFAULT:
 	get:
-		return _scene
+		return __scene
 	set(v):
-		_scene = v
-		_assign_scene()
+		__scene = v
+		__assign_scene()
 
 
-## How quickly the head moves between hulls.
+## How quickly the "head" moves towards the target position (m/s).
 @export var head_speed: float = 1.0
 
 
@@ -67,29 +67,29 @@ var _scene: PackedScene = _SCENE_DEFAULT
 ## Get position of the body.
 var position: Vector3 = Vector3.ZERO:
 	get:
-		return _body.position
+		return __body.position
 
 
-var _cached_vell := Vector3.ZERO
+var __cached_vell := Vector3.ZERO
 ## Linear velocity vector, only updated if [code]has_velocity_linear[/code].
 var linear_velocity: Vector3 = Vector3.ZERO:
 	get:
-		return _cached_vell
+		return __cached_vell
 
 
-var _cached_vela := Vector3.ZERO
+var __cached_vela := Vector3.ZERO
 ## Angular velocity vector, only updated if [code]has_velocity_angular[/code].
 var angular_velocity: Vector3 = Vector3.ZERO:
 	get:
-		return _cached_vela
+		return __cached_vela
 
 
 # Cache the child physics body after instantiation
-var _body: Node3D = null
+var __body: Node3D = null
 ## Get the cached physical body object as instantiated from [code]scene[/code].
 var body: Node3D = null:
 	get:
-		return _body
+		return __body
 
 
 ## Set this value to define the intended head height of the body.
@@ -97,49 +97,49 @@ var body: Node3D = null:
 ## immediately without animation.
 var head_y_target: float = 0.0
 
-var _head_y: float = 0.0
+var __head_y: float = 0.0
 ## Get the animated head/eye/camera position Y.
 ##
 ## This value is animated towards [code]head_y_target[/code]
 ## with the speed of [code]head_speed[/code] (meters per second).
-var head_y: float = _head_y:
+var head_y: float = __head_y:
 	get:
-		return _head_y
+		return __head_y
 
 
-var _info: Dictionary[String, Dictionary] = {}
-var _parent: Node3D = null
+var __info: Dictionary[String, Dictionary] = {}
+var __parent: Node3D = null
 
 
 func _ready() -> void:
-	_parent = get_parent() as Node3D
-	if !_parent:
+	__parent = get_parent() as Node3D
+	if !__parent:
 		push_error("Parent must be a Node3D.")
 	
-	_assign_scene()
+	__assign_scene()
 
 
-func _assign_scene() -> void:
-	if !_parent:
+func __assign_scene() -> void:
+	if !__parent:
 		return
 	
-	if _body:
-		remove_child(_body)
-		_body.queue_free()
+	if __body:
+		remove_child(__body)
+		__body.queue_free()
 	
-	if !_scene:
+	if !__scene:
 		push_error("The `scene` is not set.")
-		_scene = _SCENE_DEFAULT
+		__scene = __SCENE_DEFAULT
 		
-	_body = _scene.instantiate()
-	if !(_body is Node3D):
+	__body = __scene.instantiate()
+	if !(__body is Node3D):
 		push_error("The `scene` must be a Node3D.")
-		_scene = _SCENE_DEFAULT
-		_body = _scene.instantiate()
-	add_child(_body)
+		__scene = __SCENE_DEFAULT
+		__body = __scene.instantiate()
+	add_child(__body)
 	
-	_head_y = head_y_target
-	_body.position = _parent.global_position
+	__head_y = head_y_target
+	__body.position = __parent.global_position
 
 
 ## Set an arbitrary info field in an info group.
@@ -154,24 +154,24 @@ func _assign_scene() -> void:
 ## * states - pawn internal state: crouch, swim, ladder.
 ## * traits - pawn specific abilities, items and levels: hp, boosts, inventory.
 func set_info(group_name: String, field_name: String, value: Variant) -> void:
-	if !_info.has(group_name):
-		_info[group_name] = {}
-	_info[group_name][field_name] = value
+	if !__info.has(group_name):
+		__info[group_name] = {}
+	__info[group_name][field_name] = value
 
 
 ## Clear an info group by name, or wipe all groups if name is empty.
 func reset_info(group_name: String = "") -> void:
 	if !group_name:
-		_info.clear()
+		__info.clear()
 		return
 	
-	if !_info.has(group_name):
+	if !__info.has(group_name):
 		return
 	
-	_info[group_name].clear()
+	__info[group_name].clear()
 
 
-## The body has received or produced an event with optional data.
+## Produce an event from this pawn with optional data.
 func trigger(trigger_name: String, value: Variant = null) -> void:
 	triggered.emit(trigger_name, value)
 
@@ -181,10 +181,10 @@ func trigger(trigger_name: String, value: Variant = null) -> void:
 ## If the field has never been set or [code]reset_info[/code] has just been called,
 ## this method returns [code]default_value[/code].
 func get_info(group_name: String, field_name: String, default_value: Variant = null) -> Variant:
-	if !_info.has(group_name):
+	if !__info.has(group_name):
 		return default_value
 	
-	var group: Dictionary = _info[group_name]
+	var group: Dictionary = __info[group_name]
 	if !group.has(field_name):
 		return default_value
 	
@@ -193,18 +193,18 @@ func get_info(group_name: String, field_name: String, default_value: Variant = n
 
 ## Check if the input info exists.
 func has_info(group_name: String, field_name: String) -> bool:
-	if !_info.has(group_name):
+	if !__info.has(group_name):
 		return false
 	
-	return _info[group_name].has(field_name)
+	return __info[group_name].has(field_name)
 
 
 ## Erase the input value.
 func erase_info(group_name: String, field_name: String) -> bool:
-	if !_info.has(group_name):
+	if !__info.has(group_name):
 		return false
 	
-	var group: Dictionary = _info[group_name]
+	var group: Dictionary = __info[group_name]
 	if !group.has(field_name):
 		return false
 	
@@ -295,19 +295,23 @@ func erase_trait(field_name: String) -> bool:
 	return erase_info("traits", field_name)
 
 
-func _do_integrate_handler(handler: GsomPawnHandler, state: PhysicsDirectBodyState3D) -> void:
+func __check_handler(handler: GsomPawnHandler) -> bool:
 	if handler.disabled:
-		return
+		return false
 	
 	for env_name: String in handler.include_envs:
 		if !has_env(env_name):
-			return
+			return false
 	
 	for env_name: String in handler.exclude_envs:
 		if has_env(env_name):
-			return
+			return false
 	
-	handler._do_integrate(self, state)
+	return true
+
+func __do_integrate_handler(handler: GsomPawnHandler, state: PhysicsDirectBodyState3D) -> void:
+	if __check_handler(handler):
+		handler._do_integrate(self, state)
 
 
 ## Framework method, should be called by [code]scene[/code] instance on [code]_integrate_forces[/code].
@@ -315,22 +319,12 @@ func do_integrate(state: PhysicsDirectBodyState3D) -> void:
 	for child: Node in get_children():
 		if child is GsomPawnHandler:
 			var handler: GsomPawnHandler = child
-			_do_integrate_handler(handler, state)
+			__do_integrate_handler(handler, state)
 
 
-func _do_process_handler(handler: GsomPawnHandler, dt: float) -> void:
-	if handler.disabled:
-		return
-	
-	for env_name: String in handler.include_envs:
-		if !has_env(env_name):
-			return
-	
-	for env_name: String in handler.exclude_envs:
-		if has_env(env_name):
-			return
-	
-	handler._do_process(self, dt)
+func __do_process_handler(handler: GsomPawnHandler, dt: float) -> void:
+	if __check_handler(handler):
+		handler._do_process(self, dt)
 
 
 ## Framework method, should be called by [code]scene[/code] instance on [code]_process[/code].
@@ -338,22 +332,12 @@ func do_process(dt: float) -> void:
 	for child: Node in get_children():
 		if child is GsomPawnHandler:
 			var handler: GsomPawnHandler = child
-			_do_process_handler(handler, dt)
+			__do_process_handler(handler, dt)
 
 
-func _do_physics_handler(handler: GsomPawnHandler, dt: float) -> void:
-	if handler.disabled:
-		return
-	
-	for env_name: String in handler.include_envs:
-		if !has_env(env_name):
-			return
-	
-	for env_name: String in handler.exclude_envs:
-		if has_env(env_name):
-			return
-	
-	handler._do_physics(self, dt)
+func __do_physics_handler(handler: GsomPawnHandler, dt: float) -> void:
+	if __check_handler(handler):
+		handler._do_physics(self, dt)
 
 
 ## Framework method, should be called by [code]scene[/code] instance on [code]_physics_process[/code].
@@ -361,47 +345,47 @@ func do_physics(dt: float) -> void:
 	for child: Node in get_children():
 		if child is GsomPawnHandler:
 			var handler: GsomPawnHandler = child
-			_do_physics_handler(handler, dt)
+			__do_physics_handler(handler, dt)
 	
 	if track_accel_linear and has_velocity_linear:
 		@warning_ignore("unsafe_property_access")
-		var dvell: Vector3 = (_body.linear_velocity - _cached_vell)
+		var dvell: Vector3 = (__body.linear_velocity - __cached_vell)
 		if dvell.length_squared() > 0.0001:
 			accelerated_linear.emit(dvell)
 	
 	if has_velocity_linear:
 		@warning_ignore("unsafe_property_access")
-		_cached_vell = _body.linear_velocity
+		__cached_vell = __body.linear_velocity
 	
 	if track_accel_angular and has_velocity_angular:
 		@warning_ignore("unsafe_property_access")
-		var dvela: Vector3 = (_body.angular_velocity - _cached_vela)
+		var dvela: Vector3 = (__body.angular_velocity - __cached_vela)
 		if dvela.length_squared() > 0.0001:
 			accelerated_angular.emit(dvela)
 	
 	if has_velocity_angular:
 		@warning_ignore("unsafe_property_access")
-		_cached_vela = _body.angular_velocity
+		__cached_vela = __body.angular_velocity
 	
-	_parent.global_position = _body.position
-	moved.emit(_body.position)
+	__parent.global_position = __body.position
+	moved.emit(__body.position)
 
 
 func _process(dt: float) -> void:
 	if Engine.is_editor_hint():
 		return
 	
-	if _head_y == head_y_target:
+	if __head_y == head_y_target:
 		return
 	
-	if head_y_target > _head_y:
-		_head_y = min(_head_y + head_speed * dt, head_y_target)
+	if head_y_target > __head_y:
+		__head_y = minf(__head_y + head_speed * dt, head_y_target)
 	else:
-		_head_y = max(_head_y - head_speed * dt, head_y_target)
+		__head_y = maxf(__head_y - head_speed * dt, head_y_target)
 	
-	moved_head.emit(_head_y)
+	moved_head.emit(__head_y)
 
 
 func _physics_process(_dt: float) -> void:
 	if Engine.is_editor_hint():
-		_body.position = _parent.global_position
+		__body.position = __parent.global_position
