@@ -1,16 +1,16 @@
 extends Node3D
 class_name Main
 
-const _PATH_GDTRICKS := "res://maps/gdtricks/gdtricks.tscn"
-const _PATH_GODOTA := "res://maps/godota/godota.tscn"
-const _PATH_TEST_CHAMBER := "res://maps/test_chamber/test_chamber.tscn"
-const _PATH_CTRL_FPS := "res://controllers/fps/controller_fps.tscn"
-const _PATH_CTRL_RTS := "res://controllers/rts/controller_rts.tscn"
-const _PATH_CHAR_HUMAN := "res://characters/human/char_human.tscn"
-const _PATH_CHAR_VTOL := "res://characters/vtol/char_vtol.tscn"
-const _PATH_CHAR_SPEC := "res://characters/spec/char_spec.tscn"
+const __PATH_GDTRICKS := "res://maps/gdtricks/gdtricks.tscn"
+const __PATH_GODOTA := "res://maps/godota/godota.tscn"
+const __PATH_TEST_CHAMBER := "res://maps/test_chamber/test_chamber.tscn"
+const __PATH_CTRL_FPS := "res://controllers/fps/controller_fps.tscn"
+const __PATH_CTRL_RTS := "res://controllers/rts/controller_rts.tscn"
+const __PATH_CHAR_HUMAN := "res://characters/human/char_human.tscn"
+const __PATH_CHAR_VTOL := "res://characters/vtol/char_vtol.tscn"
+const __PATH_CHAR_SPEC := "res://characters/spec/char_spec.tscn"
 
-var _DISPLAY_MONITORS: Dictionary[String, Performance.Monitor] = {
+var __DISPLAY_MONITORS: Dictionary[String, Performance.Monitor] = {
 	"TIME_FPS": Performance.TIME_FPS,
 	"TIME_PROCESS": Performance.TIME_PROCESS,
 	"TIME_PHYSICS_PROCESS": Performance.TIME_PHYSICS_PROCESS,
@@ -21,161 +21,161 @@ var _DISPLAY_MONITORS: Dictionary[String, Performance.Monitor] = {
 	"RENDER_TOTAL_DRAW_CALLS_IN_FRAME": Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME,
 }
 
-static var _instance: Main = null
+static var __instance: Main = null
 
-var _load_queue: Dictionary[String, Callable] = {}
-var _char_human: CharHuman = null
-var _char_vtol: CharVtol = null
-var _char_spec: CharSpec = null
-var _controller_fps: ControllerFps = null
-var _controller_rts: ControllerRts = null
+var __load_queue: Dictionary[String, Callable] = {}
+var __char_human: CharHuman = null
+var __char_vtol: CharVtol = null
+var __char_spec: CharSpec = null
+var __controller_fps: ControllerFps = null
+var __controller_rts: ControllerRts = null
 
 
-@onready var _timer_load: Timer = $TimerLoad
-@onready var _timer_perf: Timer = $TimerPerf
-@onready var _label_loading: Label = $LabelLoading
-@onready var _label_perf: Label = $LabelPerf
-@onready var _container: Node = $Container
+@onready var __timer_load: Timer = $TimerLoad
+@onready var __timer_perf: Timer = $TimerPerf
+@onready var __label_loading: Label = $LabelLoading
+@onready var __label_perf: Label = $LabelPerf
+@onready var __container: Node = $Container
 
 
 func _ready() -> void:
-	_instance = self
+	__instance = self
 	
-	_timer_load.connect("timeout", _update_load)
-	_timer_perf.connect("timeout", _update_perf)
+	__timer_load.connect("timeout", __update_load)
+	__timer_perf.connect("timeout", __update_perf)
 	
-	_load_async(_PATH_CTRL_FPS, _on_load_cases)
-	_load_async(_PATH_GDTRICKS, _on_load_cases)
-	_load_async(_PATH_CTRL_RTS, _on_load_cases)
+	__load_async(__PATH_CTRL_FPS, __on_load_cases)
+	__load_async(__PATH_GDTRICKS, __on_load_cases)
+	__load_async(__PATH_CTRL_RTS, __on_load_cases)
 
 
-static func _nop(_res: PackedScene, _path: String) -> void:
+static func __nop(_res: PackedScene, _path: String) -> void:
 	pass
 
 
-static func load_async(path: String, cb: Callable = Main._nop) -> void:
-	_instance._load_async(path, cb)
+static func load_async(path: String, cb: Callable = Main.__nop) -> void:
+	__instance.__load_async(path, cb)
 
 
-func _on_load_cases(res: PackedScene, path: String) -> void:
+func __on_load_cases(res: PackedScene, path: String) -> void:
 	var inst: Node = res.instantiate()
 	
 	# Need to set position before "ready"
-	if path == _PATH_CHAR_HUMAN:
+	if path == __PATH_CHAR_HUMAN:
 		var human: CharHuman = inst
 		human.position = Vector3(0.0, 0.0, 5.8)
-	elif path == _PATH_CHAR_VTOL:
+	elif path == __PATH_CHAR_VTOL:
 		var vtol: CharVtol = inst
 		vtol.position = Vector3(-9.0, 0.0, 5.8)
-	elif path == _PATH_CHAR_SPEC:
+	elif path == __PATH_CHAR_SPEC:
 		var spec: CharSpec = inst
 		spec.position = Vector3(10.0, 7.0, 5.8)
 	
-	_container.add_child(inst)
+	__container.add_child(inst)
 	
-	if path == _PATH_CTRL_RTS:
-		_controller_rts = inst
-		_controller_rts.switched_controller.connect(_switch_controller)
+	if path == __PATH_CTRL_RTS:
+		__controller_rts = inst
+		__controller_rts.switched_controller.connect(__switch_controller)
 	
-	if path == _PATH_GDTRICKS:
-		_load_async(_PATH_GODOTA, _on_load_cases)
-		_load_async(_PATH_TEST_CHAMBER, _on_load_cases)
+	if path == __PATH_GDTRICKS:
+		__load_async(__PATH_GODOTA, __on_load_cases)
+		__load_async(__PATH_TEST_CHAMBER, __on_load_cases)
 	
-	if path == _PATH_CTRL_FPS:
-		_controller_fps = inst
-		_controller_fps.kind = "human"
-		_controller_fps.switched_character.connect(_switch_pawn)
-		_controller_fps.switched_controller.connect(_switch_controller)
-		_controller_fps.is_focused = true
+	if path == __PATH_CTRL_FPS:
+		__controller_fps = inst
+		__controller_fps.kind = "human"
+		__controller_fps.switched_character.connect(__switch_pawn)
+		__controller_fps.switched_controller.connect(__switch_controller)
+		__controller_fps.is_focused = true
 		
-		_load_async(_PATH_CHAR_HUMAN, _on_load_cases)
-		_load_async(_PATH_CHAR_VTOL, _on_load_cases)
-		_load_async(_PATH_CHAR_SPEC, _on_load_cases)
+		__load_async(__PATH_CHAR_HUMAN, __on_load_cases)
+		__load_async(__PATH_CHAR_VTOL, __on_load_cases)
+		__load_async(__PATH_CHAR_SPEC, __on_load_cases)
 	
-	if path == _PATH_CHAR_HUMAN:
-		_char_human = inst
-		_controller_fps.possess(_char_human.pawn)
+	if path == __PATH_CHAR_HUMAN:
+		__char_human = inst
+		__controller_fps.possess(__char_human.pawn)
 	
-	if path == _PATH_CHAR_VTOL:
-		_char_vtol = inst
+	if path == __PATH_CHAR_VTOL:
+		__char_vtol = inst
 	
-	if path == _PATH_CHAR_SPEC:
-		_char_spec = inst
+	if path == __PATH_CHAR_SPEC:
+		__char_spec = inst
 
 
-func _switch_pawn(char_kind: String) -> void:
-	_controller_fps.kind = char_kind
+func __switch_pawn(char_kind: String) -> void:
+	__controller_fps.kind = char_kind
 	if char_kind == "vtol":
-		_controller_fps.possess(_char_vtol.pawn)
+		__controller_fps.possess(__char_vtol.pawn)
 	elif char_kind == "human":
-		_controller_fps.possess(_char_human.pawn)
+		__controller_fps.possess(__char_human.pawn)
 	else:
-		_controller_fps.possess(_char_spec.pawn)
+		__controller_fps.possess(__char_spec.pawn)
 
 
-func _switch_controller(ctrl_kind: String) -> void:
-	_controller_fps.is_focused = ctrl_kind == "fps"
-	_controller_rts.is_focused = ctrl_kind == "rts"
+func __switch_controller(ctrl_kind: String) -> void:
+	__controller_fps.is_focused = ctrl_kind == "fps"
+	__controller_rts.is_focused = ctrl_kind == "rts"
 
 
 # This ensures only one threaded loading runs in background
 # Fixes: "ERROR: Another resource is loaded from path ..."
-func _load_async_next() -> void:
-	var has_items: bool = _load_queue.size() > 0
+func __load_async_next() -> void:
+	var has_items: bool = __load_queue.size() > 0
 	if !has_items:
 		return
 	
-	var path: String = _load_queue.keys()[0]
+	var path: String = __load_queue.keys()[0]
 	ResourceLoader.load_threaded_request(path)
 
 
-func _load_async(path: String, cb: Callable = _nop) -> void:
-	if _load_queue.has(path):
+func __load_async(path: String, cb: Callable = __nop) -> void:
+	if __load_queue.has(path):
 		return
 	
-	_load_queue[path] = cb
-	if _load_queue.size() == 1:
-		_load_async_next()
+	__load_queue[path] = cb
+	if __load_queue.size() == 1:
+		__load_async_next()
 
 
-func _update_load() -> void:
-	var has_items: bool = _load_queue.size() > 0
-	if _label_loading.visible != has_items:
-		_label_loading.visible = has_items
+func __update_load() -> void:
+	var has_items: bool = __load_queue.size() > 0
+	if __label_loading.visible != has_items:
+		__label_loading.visible = has_items
 	
 	if !has_items:
 		return
 	
-	var path: String = _load_queue.keys()[0]
+	var path: String = __load_queue.keys()[0]
 	
 	var status: ResourceLoader.ThreadLoadStatus = ResourceLoader.load_threaded_get_status(path)
 	if status == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
 		return
 	
-	var cb: Callable = _load_queue[path]
-	_load_queue.erase(path)
+	var cb: Callable = __load_queue[path]
+	__load_queue.erase(path)
 	
 	if status == ResourceLoader.THREAD_LOAD_LOADED:
 		var res := ResourceLoader.load_threaded_get(path) as PackedScene
-		if cb == Main._nop:
+		if cb == Main.__nop:
 			var inst: Node = res.instantiate()
-			_container.add_child(inst)
+			__container.add_child(inst)
 		else:
 			cb.call(res, path)
 	
-	_load_async_next()
+	__load_async_next()
 
 
-func get_perf_line(perf_name: String, perf_type: Performance.Monitor) -> String:
+func __get_perf_line(perf_name: String, perf_type: Performance.Monitor) -> String:
 	return ("%s: %s" % [perf_name, Performance.get_monitor(perf_type)])
 
 
-func _update_perf() -> void:
-	if !_label_perf.visible:
+func __update_perf() -> void:
+	if !__label_perf.visible:
 		return
 	
 	var text: String = ""
-	for perf_name: String in _DISPLAY_MONITORS:
-		text += get_perf_line(perf_name, _DISPLAY_MONITORS[perf_name]) + "\n"
+	for perf_name: String in __DISPLAY_MONITORS:
+		text += __get_perf_line(perf_name, __DISPLAY_MONITORS[perf_name]) + "\n"
 	
-	_label_perf.text = text
+	__label_perf.text = text

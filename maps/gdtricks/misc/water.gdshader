@@ -40,24 +40,24 @@ void fragment() {
 	float time = TIME * speed;
 	float n1 = texture(noise1, uv_world * 0.137 + time).r;
 	float n2 = texture(noise2, uv_world * 0.11 - time * 0.2).r;
-	
+
 	vec2 uv_movement = uv_world * 0.1;
 	uv_movement += TIME * speed;
-	
+
 	float sum = (n1 + n2) - 1.0;
 //	float sum = n1 * n2;
 //	sum = pow(sum, 0.5);
-	
+
 	float depth_raw = texture(DEPTH_TEXTURE, SCREEN_UV).x;
 	vec3 ndc = vec3(SCREEN_UV * 2.0 - 1.0, depth_raw);
 	vec4 view = INV_PROJECTION_MATRIX * vec4(ndc, 1.0);
 	view.xyz /= view.w;
-	
+
 	float water_depth = -view.z + VERTEX.z;
 	water_depth = water_depth * 0.1 + sum * 0.1;
-	
+
 	vec4 col = mix(edge_color, color, step(edge_scale, water_depth));
-	
+
 	float fin = 0.0;
 	if (sum > 0.0 && sum < 0.1) {
 		fin = 0.03;
@@ -65,9 +65,9 @@ void fragment() {
 	if (sum > 0.55) {
 		fin = 0.5;
 	}
-	
+
 	ALBEDO = mix(col.rgb, vec3(1.0), fin);
-	
-	ROUGHNESS = 1.0;
+
+	ROUGHNESS = 0.6;
 	SPECULAR = 0.0;
 }

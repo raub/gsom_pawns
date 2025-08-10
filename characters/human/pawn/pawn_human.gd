@@ -1,8 +1,8 @@
 extends RigidBody3D
 class_name PawnHuman
 
-const _HEAD_WALK: float = 1.55
-const _HEAD_DUCK: float = 1.2
+const __HEAD_WALK: float = 1.55
+const __HEAD_DUCK: float = 1.2
 
 
 ## Limits what slopes are still considered ground.
@@ -10,86 +10,86 @@ const _HEAD_DUCK: float = 1.2
 @export_range(0.2, 0.9) var slope_normal_y: float = 0.75
 
 
-var _pawn: GsomPawn = null
-var _is_ground := false
+var __pawn: GsomPawn = null
+var __is_ground := false
 
-var _normal := Vector3.UP
+var __normal := Vector3.UP
 ## Get the current body-to-ground normal
-var normal: Vector3 = _normal:
+var normal: Vector3 = __normal:
 	get:
-		return _normal
+		return __normal
 
 
-@onready var _shape_walk: CollisionShape3D = $ShapeWalk
-@onready var _shape_duck: CollisionShape3D = $ShapeDuck
-@onready var _cast: ShapeCast3D = $Cast
-@onready var _cast_up: ShapeCast3D = $CastUp
-@onready var _ray: RayCast3D = $Ray
-@onready var _marker_duck: Marker3D = $MarkerDuck
-@onready var _marker_walk: Marker3D = $MarkerWalk
+@onready var __shape_walk: CollisionShape3D = $ShapeWalk
+@onready var __shape_duck: CollisionShape3D = $ShapeDuck
+@onready var __cast: ShapeCast3D = $Cast
+@onready var __cast_up: ShapeCast3D = $CastUp
+@onready var __ray: RayCast3D = $Ray
+@onready var __marker_duck: Marker3D = $MarkerDuck
+@onready var __marker_walk: Marker3D = $MarkerWalk
 
 
 func _ready() -> void:
-	_cast_up.add_exception(self)
-	_cast.add_exception(self)
-	_ray.add_exception(self)
+	__cast_up.add_exception(self)
+	__cast.add_exception(self)
+	__ray.add_exception(self)
 	
-	_pawn = get_parent() as GsomPawn
-	if !_pawn:
+	__pawn = get_parent() as GsomPawn
+	if !__pawn:
 		push_error("Parent must be a GsomPawn.")
 		return
 	
-	_unduck()
+	__unduck()
 
 
-func _duck() -> void:
-	if _pawn.get_state("duck", false):
+func __duck() -> void:
+	if __pawn.get_state("duck", false):
 		return
 	
-	_pawn.set_state("duck", true)
+	__pawn.set_state("duck", true)
 	
-	_shape_walk.disabled = true
-	_shape_duck.disabled = false
+	__shape_walk.disabled = true
+	__shape_duck.disabled = false
 	
-	_cast_up.enabled = true
+	__cast_up.enabled = true
 	
-	_cast.position.y = _marker_duck.position.y
-	_ray.position.y = _marker_duck.position.y
+	__cast.position.y = __marker_duck.position.y
+	__ray.position.y = __marker_duck.position.y
 	
-	_pawn.head_y_target = _HEAD_DUCK
+	__pawn.head_y_target = __HEAD_DUCK
 
 
-func _unduck() -> void:
-	if _cast_up.is_colliding() or !_pawn.get_state("duck", true):
+func __unduck() -> void:
+	if __cast_up.is_colliding() or !__pawn.get_state("duck", true):
 		return
 	
-	_pawn.set_state("duck", false)
+	__pawn.set_state("duck", false)
 	
 	# HACK: don't let the full shape pierce into floor
-	if _is_ground:
-		global_position.y += _shape_duck.position.y - 0.45
+	if __is_ground:
+		global_position.y += __shape_duck.position.y - 0.45
 	
-	_shape_walk.disabled = false
-	_shape_duck.disabled = true
+	__shape_walk.disabled = false
+	__shape_duck.disabled = true
 	
-	_cast_up.enabled = false
+	__cast_up.enabled = false
 	
-	_cast.position.y = _marker_walk.position.y
-	_ray.position.y = _marker_walk.position.y
+	__cast.position.y = __marker_walk.position.y
+	__ray.position.y = __marker_walk.position.y
 	
-	_pawn.head_y_target = _HEAD_WALK
+	__pawn.head_y_target = __HEAD_WALK
 
 
 # Detect the is_ground state from collision results from shape and ray casts
 # If was in air and hit ground - emits `pawn.hit_ground`
-func _update_ground_state() -> void:
-	var result: Array = _cast.collision_result
-	var was_ground: bool = _is_ground
-	_is_ground = false
-	_normal = Vector3.UP
+func __update_ground_state() -> void:
+	var result: Array = __cast.collision_result
+	var was_ground: bool = __is_ground
+	__is_ground = false
+	__normal = Vector3.UP
 	
 	if !result.size():
-		_pawn.set_state("normal", _normal)
+		__pawn.set_state("normal", __normal)
 		return
 	
 	var max_y := -Vector3.UP
@@ -97,41 +97,41 @@ func _update_ground_state() -> void:
 		if item.normal.y > max_y.y:
 			max_y = item.normal
 	
-	var is_ray_colliding: bool = _ray.is_colliding()
+	var is_ray_colliding: bool = __ray.is_colliding()
 	
 	if max_y.y < slope_normal_y and (max_y.y > 0.0 || !is_ray_colliding):
-		_pawn.set_state("normal", _normal)
+		__pawn.set_state("normal", __normal)
 		return
 	
-	_normal = max_y
-	_is_ground = true
+	__normal = max_y
+	__is_ground = true
 	
 	if !was_ground:
-		_pawn.trigger("hit_ground", { "speed": linear_velocity.y })
+		__pawn.trigger("hit_ground", { "speed": linear_velocity.y })
 	
 	if is_ray_colliding:
-		_normal = _ray.get_collision_normal()
+		__normal = __ray.get_collision_normal()
 	
-	_pawn.set_state("normal", _normal)
+	__pawn.set_state("normal", __normal)
 
 
 func _process(dt: float) -> void:
-	_pawn.do_process(dt)
+	__pawn.do_process(dt)
 
 
 func _physics_process(dt: float) -> void:
-	_update_ground_state()
+	__update_ground_state()
 	
-	_pawn.set_env("up_blocked", _cast_up.is_colliding())
-	_pawn.set_state("on_ground", _is_ground)
+	__pawn.set_env("up_blocked", __cast_up.is_colliding())
+	__pawn.set_state("on_ground", __is_ground)
 	
-	if _pawn.get_action("duck", false):
-		_duck()
+	if __pawn.get_action("duck", false):
+		__duck()
 	else:
-		_unduck()
+		__unduck()
 	
-	_pawn.do_physics(dt)
+	__pawn.do_physics(dt)
 
 
 func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
-	_pawn.do_integrate(state)
+	__pawn.do_integrate(state)

@@ -48,9 +48,9 @@ func attach() -> void:
 	if parent is not Area3D:
 		return
 	
-	var parentArea: Area3D = parent
-	parentArea.body_entered.connect(__on_entered)
-	parentArea.body_exited.connect(__on_exited)
+	var parent_area: Area3D = parent
+	parent_area.body_entered.connect(__on_entered)
+	parent_area.body_exited.connect(__on_exited)
 
 
 ## Called to assign the env value.

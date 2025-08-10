@@ -4,10 +4,10 @@ class_name CharSpec
 
 var pawn: GsomPawn = null:
 	get:
-		return _pawn
+		return __pawn
 
 
-@onready var _pawn: GsomPawn = $GsomPawn
+@onready var __pawn: GsomPawn = $GsomPawn
 
 
 func _ready() -> void:

@@ -7,25 +7,25 @@
 script/source = "extends Node3D
 
 # Start position percent: 0 -- 1
-var _startAt: float = 0.5;
-@export var startAt: float = 0.5:
+var __start_at: float = 0.5;
+@export var start_at: float = 0.5:
 	get:
-		return _startAt;
+		return __start_at;
 	set(v):
 		var clamped: float = clampf(v, 0, 1);
-		if _startAt == clamped:
+		if __start_at == clamped:
 			return;
 		
-		_startAt = clamped;
+		__start_at = clamped;
 
 
-@onready var _animation: AnimationPlayer = $mdl_dh6_pad/Animation;
+@onready var __animation: AnimationPlayer = $mdl_dh6_pad/Animation;
 
 
 func _ready() -> void:
-	_animation.current_animation = \"slide\";
-	var anim: Animation = _animation.get_animation(\"slide\");
-	_animation.seek(_startAt * anim.length);
+	__animation.current_animation = \"slide\";
+	var anim: Animation = __animation.get_animation(\"slide\");
+	__animation.seek(__start_at * anim.length);
 "
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sserl"]

@@ -5,20 +5,20 @@ class_name Teleport
 @export var dest: String = ""
 
 
-static var _teleports: Array[Teleport] = []
+static var __teleports: Array[Teleport] = []
 
 
 func _ready() -> void:
-	_teleports.append(self)
+	__teleports.append(self)
 	self.attach()
 
 
 func _exit_tree() -> void:
-	_teleports.erase(self)
+	__teleports.erase(self)
 
 
 static func find_by_tag(dest_tag: String) -> Teleport:
-	for tp: Teleport in _teleports:
+	for tp: Teleport in __teleports:
 		if tp.tag == dest_tag:
 			return tp
 	return null
@@ -44,10 +44,10 @@ func _trigger_enter(pawn: GsomPawn) -> void:
 	
 	pawn.trigger("teleport", { "pos": parent_3d.global_position })
 	
-	_try_play_sound()
+	__try_play_sound()
 
 
-func _try_play_sound() -> void:
+func __try_play_sound() -> void:
 	for child: Node in get_children():
 		if child.has_method("play"):
 			child.call("play")

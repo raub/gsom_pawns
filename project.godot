@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="gsom_pawns"
-config/description="Modular character pawns. Inspired by Unreal Engine pawn class and adjusted for Godot nodes. This project provides also examples of how to use them."
+config/description="Modular character pawns. Inspired by Unreal Engine pawn class and adjusted for Godot nodes. This project also provides examples how to use them."
 run/main_scene="res://preview.tscn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.png"
@@ -29,7 +29,6 @@ gdscript/warnings/unsafe_call_argument=1
 
 window/size/viewport_width=1600
 window/size/viewport_height=900
-window/size/always_on_top=true
 
 [editor_plugins]
 
@@ -37,6 +36,11 @@ enabled=PackedStringArray("res://addons/gsom_pawns/plugin.cfg")
 
 [rendering]
 
+occlusion_culling/jitter_projection=false
+rendering_device/vsync/swapchain_image_count=2
+anti_aliasing/screen_space_roughness_limiter/enabled=false
+environment/screen_space_reflection/roughness_quality=2
 anti_aliasing/quality/screen_space_aa=1
 anti_aliasing/quality/use_debanding=true
 occlusion_culling/use_occlusion_culling=true
+environment/defaults/default_environment="uid://ce0omttht10mf"

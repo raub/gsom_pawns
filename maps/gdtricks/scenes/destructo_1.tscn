@@ -12,11 +12,11 @@
 [sub_resource type="GDScript" id="GDScript_vaqne"]
 script/source = "extends Node3D
 
-@onready var _animation: AnimationPlayer = $mdl_dh1_rotor/Animation
+@onready var __animation: AnimationPlayer = $mdl_dh1_rotor/Animation
 
 
 func _ready() -> void:
-	_animation.current_animation = \"rotation\";
+	__animation.current_animation = \"rotation\";
 "
 
 [sub_resource type="QuadMesh" id="QuadMesh_aykxb"]

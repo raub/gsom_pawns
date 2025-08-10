@@ -1,25 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4yrinewpl4iu"]
+[gd_scene load_steps=2 format=3 uid="uid://c4yrinewpl4iu"]
 
 [ext_resource type="Script" uid="uid://re8qf62gkuh4" path="res://preview.gd" id="1_8h8be"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_id2jt"]
-sky_top_color = Color(0.560784, 0.733333, 0.8, 1)
-
-[sub_resource type="Sky" id="Sky_4v4sr"]
-sky_material = SubResource("ProceduralSkyMaterial_id2jt")
-
-[sub_resource type="Environment" id="Environment_86j2b"]
-background_mode = 2
-sky = SubResource("Sky_4v4sr")
-ambient_light_source = 3
-tonemap_mode = 3
-glow_enabled = true
-
 [node name="Preview" type="Node3D"]
 script = ExtResource("1_8h8be")
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_86j2b")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.630324, -0.709044, 0.316147, 0, 0.407231, 0.913325, -0.776333, -0.57569, 0.256687, 0, 38, 0)

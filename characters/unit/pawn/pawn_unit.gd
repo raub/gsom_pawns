@@ -1,103 +1,103 @@
 extends CharacterBody3D
 
-const _MAX_SLOW_TICKS: int = 60
-const _PATH_OFFSET_K: float = 0.05
+const __MAX_SLOW_TICKS: int = 60
+const __PATH_OFFSET_K: float = 0.05
 
-var _is_debug_mesh := true
+var __is_debug_mesh := true
 ## Show the debug mesh (default to true so you can see the pawn when added)
 @export var is_debug_mesh := true:
 	get:
-		return _is_debug_mesh
+		return __is_debug_mesh
 	set(v):
-		_is_debug_mesh = v
-		_assign_is_debug_mesh()
+		__is_debug_mesh = v
+		__assign_is_debug_mesh()
 
 
-var _max_speed: float = 3.0
+var __max_speed: float = 3.0
 ## Maximum movement speed for this pawn
 @export var max_speed: float = 3.0:
 	get:
-		return _max_speed
+		return __max_speed
 	set(v):
-		_max_speed = v
-		_assign_max_speed()
+		__max_speed = v
+		__assign_max_speed()
 
 
-var _slow_ticks: int = 0
-var _pawn: GsomPawn = null
+var __slow_ticks: int = 0
+var __pawn: GsomPawn = null
 
 
-@onready var _mesh: MeshInstance3D = $Shape/Mesh
-@onready var _navigator: NavigationAgent3D = $NavigationAgent3D
-@onready var _debug_next: MeshInstance3D = $__DebugNext
-@onready var _debug_end: MeshInstance3D = $__DebugEnd
+@onready var __mesh: MeshInstance3D = $Shape/Mesh
+@onready var __navigator: NavigationAgent3D = $NavigationAgent3D
+@onready var __debug_next: MeshInstance3D = $__DebugNext
+@onready var __debug_end: MeshInstance3D = $__DebugEnd
 
 
 func _ready() -> void:
-	_pawn = get_parent() as GsomPawn
-	if !_pawn:
+	__pawn = get_parent() as GsomPawn
+	if !__pawn:
 		push_error("Parent must be a GsomPawn.")
 		return
 	
-	_assign_max_speed()
-	_assign_is_debug_mesh()
+	__assign_max_speed()
+	__assign_is_debug_mesh()
 	
-	_navigator.velocity_computed.connect(_update_velocity)
+	__navigator.velocity_computed.connect(__update_velocity)
 
 
 func _process(dt: float) -> void:
-	_pawn.do_process(dt)
+	__pawn.do_process(dt)
 
 
 func _physics_process(dt: float) -> void:
-	_debug_next.visible = _is_debug_mesh and _pawn.has_action("move")
-	_debug_end.visible = _is_debug_mesh and _pawn.has_action("move")
+	__debug_next.visible = __is_debug_mesh and __pawn.has_action("move")
+	__debug_end.visible = __is_debug_mesh and __pawn.has_action("move")
 	
-	if _pawn.has_action("move"):
-		var move_target: Vector3 = _pawn.get_action("move")
-		_debug_end.position = move_target
-		_navigator.set_target_position(move_target)
+	if __pawn.has_action("move"):
+		var move_target: Vector3 = __pawn.get_action("move")
+		__debug_end.position = move_target
+		__navigator.set_target_position(move_target)
 	
-	if !_navigator.is_navigation_finished():
-		var next_pos: Vector3 = _navigator.get_next_path_position()
-		_debug_next.position = next_pos
+	if !__navigator.is_navigation_finished():
+		var next_pos: Vector3 = __navigator.get_next_path_position()
+		__debug_next.position = next_pos
 		var new_velocity: Vector3 = global_position.direction_to(next_pos) * max_speed
-		_navigator.velocity = new_velocity # avoidance
+		__navigator.velocity = new_velocity # avoidance
 		#velocity = new_velocity # for no avoidance
 	else:
 		velocity = Vector3.ZERO
 	
 	move_and_slide()
 	
-	_pawn.do_physics(dt)
+	__pawn.do_physics(dt)
 
 
-func _update_velocity(safe_velocity: Vector3) -> void:
-	if _navigator.is_navigation_finished():
-		_slow_ticks = 0
+func __update_velocity(safe_velocity: Vector3) -> void:
+	if __navigator.is_navigation_finished():
+		__slow_ticks = 0
 		return
 	
 	velocity = safe_velocity
 	
-	if velocity.length_squared() < _max_speed * _max_speed * 0.5:
-		_slow_ticks += 1
+	if velocity.length_squared() < __max_speed * __max_speed * 0.5:
+		__slow_ticks += 1
 	else:
-		_slow_ticks = maxi(0, _slow_ticks - 2)
+		__slow_ticks = maxi(0, __slow_ticks - 2)
 	
-	if _slow_ticks >= _MAX_SLOW_TICKS:
-		var reduction: float = float(_MAX_SLOW_TICKS - _slow_ticks) * _PATH_OFFSET_K
-		var move_target: Vector3 = _pawn.get_action("move")
-		if _pawn.position.distance_squared_to(move_target) < reduction * reduction:
-			_pawn.set_action("move", _pawn.position)
+	if __slow_ticks >= __MAX_SLOW_TICKS:
+		var reduction: float = float(__MAX_SLOW_TICKS - __slow_ticks) * __PATH_OFFSET_K
+		var move_target: Vector3 = __pawn.get_action("move")
+		if __pawn.position.distance_squared_to(move_target) < reduction * reduction:
+			__pawn.set_action("move", __pawn.position)
 
 
-func _assign_is_debug_mesh() -> void:
-	if _mesh:
-		_mesh.visible = _is_debug_mesh
-		_debug_next.visible = _is_debug_mesh and _pawn.has_action("move")
-		_debug_end.visible = _is_debug_mesh and _pawn.has_action("move")
+func __assign_is_debug_mesh() -> void:
+	if __mesh:
+		__mesh.visible = __is_debug_mesh
+		__debug_next.visible = __is_debug_mesh and __pawn.has_action("move")
+		__debug_end.visible = __is_debug_mesh and __pawn.has_action("move")
 
 
-func _assign_max_speed() -> void:
-	if _navigator:
-		_navigator.max_speed = _max_speed
+func __assign_max_speed() -> void:
+	if __navigator:
+		__navigator.max_speed = __max_speed

@@ -1,29 +1,29 @@
 extends Node3D
 class_name HealthBar
 
-const _MODULATE_FRIENDLY := Color("#1eff1b")
-const _MODULATE_ENEMY := Color("#ff1e1b")
+const __MODULATE_FRIENDLY := Color("#1eff1b")
+const __MODULATE_ENEMY := Color("#ff1e1b")
 
 
-var _is_friendly: bool = false
+var __is_friendly: bool = false
 @export var is_friendly: bool = false:
 	get:
-		return _is_friendly
+		return __is_friendly
 	set(v):
-		if _is_friendly == v:
+		if __is_friendly == v:
 			return
-		_is_friendly = v
-		_assign_is_friendly()
+		__is_friendly = v
+		__assign_is_friendly()
 
-@onready var _bar: Sprite3D = $Bar
+@onready var __bar: Sprite3D = $Bar
 
 
 func _ready() -> void:
-	_assign_is_friendly()
+	__assign_is_friendly()
 
 
-func _assign_is_friendly() -> void:
-	if !_bar:
+func __assign_is_friendly() -> void:
+	if !__bar:
 		return
 	
-	_bar.modulate = _MODULATE_FRIENDLY if _is_friendly else _MODULATE_ENEMY
+	__bar.modulate = __MODULATE_FRIENDLY if __is_friendly else __MODULATE_ENEMY

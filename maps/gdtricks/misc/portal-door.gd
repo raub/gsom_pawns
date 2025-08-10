@@ -1,22 +1,22 @@
 extends Node3D
 class_name PortalDoor
 
-@onready var _teleport: Teleport = $Area/Teleport
+@onready var __teleport: Teleport = $Area/Teleport
 
 
-var _dest: String = ""
+var __dest: String = ""
 @export var dest: String = "":
 	get:
-		return _dest
+		return __dest
 	set(v):
-		_dest = v
-		_assignDest()
+		__dest = v
+		__assign_dest()
 
 
 func _ready() -> void:
-	_assignDest()
+	__assign_dest()
 
 
-func _assignDest() -> void:
-	if _teleport:
-		_teleport.dest = _dest
+func __assign_dest() -> void:
+	if __teleport:
+		__teleport.dest = __dest

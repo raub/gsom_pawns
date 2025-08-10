@@ -12,7 +12,7 @@ border_width_right = 1
 border_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ub8ih"]
-bg_color = Color(0.145098, 0.635294, 0.701961, 1)
+bg_color = Color(0, 0.66, 0.363, 1)
 shadow_size = 2
 
 [node name="ControllerFps" type="Node3D"]
@@ -26,9 +26,9 @@ fov = 100.0
 far = 200.0
 
 [node name="EscOverlay" parent="." instance=ExtResource("2_p4ycf")]
+visible = false
 
 [node name="Hud" type="Control" parent="."]
-visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -48,20 +48,24 @@ mouse_filter = 2
 
 [node name="TextureRect" type="TextureRect" parent="Hud/CenterContainer"]
 self_modulate = Color(0.321569, 1, 0.443137, 1)
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 mouse_filter = 2
 texture = ExtResource("6_6nh86")
+expand_mode = 2
 
 [node name="BarSpeed" type="ProgressBar" parent="Hud/CenterContainer/TextureRect"]
-custom_minimum_size = Vector2(100, 12)
+custom_minimum_size = Vector2(100, 8)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 60.0
-offset_bottom = -18.0
+offset_left = -14.0
+offset_top = -18.0
+offset_right = 86.0
+offset_bottom = -10.0
 grow_horizontal = 0
 grow_vertical = 0
 theme_override_styles/background = SubResource("StyleBoxFlat_nssj4")
