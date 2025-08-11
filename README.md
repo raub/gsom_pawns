@@ -14,6 +14,10 @@ The concept of a Pawn is derived from **Unreal Engine**
 
 Here the idea is the same, although the implementation is very different - somewhat Godot-way.
 
+[![screenshot_1](gdignore/thumbnail_1.jpg)](gdignore/screenshot_1.jpg)
+[![screenshot_2](gdignore/thumbnail_2.jpg)](gdignore/screenshot_2.jpg)
+
+The demo is further explained [below the classes](#demo).
 
 ## GsomPawn
 
@@ -333,3 +337,54 @@ it will apply and/or remove an env field on all entering and/or exiting pawns.
 
 `void attach()`
 	- Call this from _ready() if you extend this class.
+
+## Demo
+
+The addon only consists of the `addons/gsom_pawns/` content - that's what you
+would install from Godot Asset Library. But this repository also contains
+several examples of how the addon can be used.
+
+The main file `preview.gd` initiates async loading of all other scenes.
+There are 2 main controllers: FPS and RTS. You can switch between them in
+ESC menu that is available from both. In FPS controller you can use mouse wheel
+to zoom into a third-person view, but that's just a gimmick.
+
+The FPS controller and demo are focused on running around with WASD and mouse-look.
+- Human Character - a normal humanoid character that can jump and crouch. The controls
+	are extremely similar to Half-Life 1 or even AG (Quake 1 too). To a
+	point where you can traverse the original `agtricks` and `destructo_hops`.
+	Also they are included in the demo, so you can try for yourself!
+- Vtol Character - a small aircraft that can go up/down and forward. It's kind of
+	rudimentary, mostly as a proof of concept. A better aircraft demo would
+	need a larger and different map.
+- Spec Character - spectator mode. Similar to Counter-Strike free camera spectator.
+	You can fly around the rooms with noclip.
+
+The role of RTS controller is to showcase a project structure where you can
+switch between several controllers, and to demonstrate how pawns can be
+partially or fully AI controlled. The RTS pawns use a nav mesh and some
+additional HUD considerations. You can control multiple pawns at once in this mode.
+
+The particular ways how all these pawns behave - are part of the demo and not the addon.
+Still you might want to copy the implementation and tweek it instead of writing
+it from scratch. There are some notable items that could be reused:
+- `res://maps/gdtricks/misc/teleport.tscn` - an example of `extends GsomPawnTrigger`,
+	this is a special trigger that teleports entering pawns (if they have a collision body).
+- `res://controllers/fps/controller_fps.tscn` - how to control and switch between
+	several pawns, based on FPS-style input.
+- `res://characters/spec/char_spec.tscn` - a very simple no-clip character and pawn.
+- `res://characters/human/char_human.tscn` - a complex solution to control a humanoid
+	pawn in a set of different states and environments.
+- `res://maps/test_chamber/test_chamber.tscn` - uses several triggers and envs:
+	water, ladder, zero-g, jump pad.
+
+A few notes on FPS humanoid movement:
+- Under crosshair, you have a speedometer - it only measures the horizontal speed.
+- Holding spacebar will allow you to bhop perfectly.
+- The movement speed is set to the Adrenaline Gamer standard value of 300.
+- See `res://characters/human/pawn/handler_rigid_walk.gd` for more specific values.
+- Air acceleration works the same as in Q1 or HL1,
+	see [in-depth explanation here](https://www.youtube.com/watch?v=v3zT3Z5apaM).
+- Both AT (agtricks) and DH (destructo_hops) can be traversed in this demo and
+	are very similar to [HL1 version](https://www.youtube.com/watch?v=VbA7Dc4i898).
+	Maybe even slightly easier.
