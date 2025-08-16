@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhx7xwfjpgv2e"]
+
+[ext_resource type="Script" uid="uid://dgax1cwdeas6r" path="res://maps/gdtricks/misc/snap-env.gd" id="1_m7vvw"]
+
+[node name="Snap" type="Node"]
+script = ExtResource("1_m7vvw")
+env_name = "snap"

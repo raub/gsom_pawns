@@ -127,7 +127,7 @@ shape = SubResource("BoxShape3D_sserl")
 
 [node name="Animation" type="AnimationPlayer" parent="mdl_dh6_pad" index="1"]
 libraries = {
-"": SubResource("AnimationLibrary_y6sjn")
+&"": SubResource("AnimationLibrary_y6sjn")
 }
 speed_scale = 0.5
 

@@ -17,7 +17,7 @@ class_name GsomPawn
 
 ## The pawn has finished the '_physics_process' logic. This is the right time
 ## to use the position to update cameras or other stuff.
-signal moved(pos: Vector3)
+signal moved(global_pos: Vector3)
 
 ## The body changed its linear speed - only emits if [code]track_accel_linear[/code].
 signal accelerated_linear(dv: Vector3)
@@ -67,7 +67,7 @@ var __scene: PackedScene = __SCENE_DEFAULT
 ## Get position of the body.
 var position: Vector3 = Vector3.ZERO:
 	get:
-		return __body.position
+		return __body.global_position
 
 
 var __cached_vell := Vector3.ZERO
@@ -139,7 +139,7 @@ func __assign_scene() -> void:
 	add_child(__body)
 	
 	__head_y = head_y_target
-	__body.position = __parent.global_position
+	__body.global_position = __parent.global_position
 
 
 ## Set an arbitrary info field in an info group.
@@ -367,8 +367,8 @@ func do_physics(dt: float) -> void:
 		@warning_ignore("unsafe_property_access")
 		__cached_vela = __body.angular_velocity
 	
-	__parent.global_position = __body.position
-	moved.emit(__body.position)
+	__parent.global_position = __body.global_position
+	moved.emit(__body.global_position)
 
 
 func _process(dt: float) -> void:
@@ -388,4 +388,4 @@ func _process(dt: float) -> void:
 
 func _physics_process(_dt: float) -> void:
 	if Engine.is_editor_hint():
-		__body.position = __parent.global_position
+		__body.global_position = __parent.global_position

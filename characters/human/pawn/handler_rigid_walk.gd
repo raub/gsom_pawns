@@ -10,16 +10,6 @@ extends GsomPawnHandler
 ## [br]
 ## The acceleration code is similar to Quake 1 which can be found here:
 ## [url]https://github.com/id-Software/Quake/blob/master/WinQuake/sv_user.c#L190[url].
-## [br]
-## The Pawn node is designed for Actors that can be controlled by players or AI.
-## A Pawn is the physical representation of a player or AI entity within the world.
-## The Pawn determines how it interacts with the world in terms of collisions
-## and other physical interactions.
-## Some types of games may not have a visible player mesh or avatar within the game.
-## Regardless, the Pawn still represents the physical location, rotation, etc. of
-## a player or entity within the game.
-## You will need a Controller to possess a Pawn and generate input signals for it.
-
 
 ## The body will try to reach this speed while running in ONE direction.
 ##

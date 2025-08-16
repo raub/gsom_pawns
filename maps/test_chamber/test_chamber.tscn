@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=3 uid="uid://dt7uoj5n3fl5o"]
+[gd_scene load_steps=55 format=3 uid="uid://dt7uoj5n3fl5o"]
 
 [ext_resource type="Material" uid="uid://bybllcetp3hue" path="res://maps/test_chamber/floor.material" id="1_5mtb7"]
 [ext_resource type="Material" uid="uid://3vj5x50bjerp" path="res://maps/test_chamber/wall.material" id="2_nj5xr"]
@@ -10,6 +10,7 @@
 [ext_resource type="FontFile" uid="uid://cn5tj07kqaeyy" path="res://maps/gdtricks/misc/Kenney Future Narrow.ttf" id="7_owjnv"]
 [ext_resource type="PackedScene" uid="uid://dajmflf40xk65" path="res://maps/gdtricks/misc/teleport.tscn" id="8_p888t"]
 [ext_resource type="Texture2D" uid="uid://mqwhbwb2ebug" path="res://maps/test_chamber/star_04.png" id="10_nynme"]
+[ext_resource type="PackedScene" uid="uid://bhx7xwfjpgv2e" path="res://maps/gdtricks/misc/snap-env.tscn" id="10_tnua8"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_2q3j5"]
 material = ExtResource("1_5mtb7")
@@ -108,6 +109,102 @@ size = Vector3(16, 2, 4)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6xn53"]
 size = Vector3(16, 2, 4)
+
+[sub_resource type="BoxMesh" id="BoxMesh_am5mk"]
+size = Vector3(5, 0.5, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tnua8"]
+size = Vector3(5, 0.5, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wq082"]
+size = Vector3(4.5, 2, 4.5)
+
+[sub_resource type="Animation" id="Animation_wq082"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-130.625, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.25, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-42.043, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_tnua8"]
+resource_name = "slide"
+length = 20.0
+loop_mode = 1
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(-130.625, -1, 0, 1, 0, -210.554, -1, 0, 1, 0, -130.625, -1, 0, 1, 0),
+"times": PackedFloat32Array(0, 10.0696, 20)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0.25, -1, 0, 1, 0, 0.25, -1, 0, 1, 0, 0.25, -1, 0, 1, 0),
+"times": PackedFloat32Array(0, 10.0696, 20)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(-42.043, -1, 0, 1, 0, -42.043, -1, 0, 1, 0, -42.043, -1, 0, 1, 0),
+"times": PackedFloat32Array(0, 10.0696, 20)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_d0awp"]
+_data = {
+&"RESET": SubResource("Animation_wq082"),
+&"slide": SubResource("Animation_tnua8")
+}
+
+[sub_resource type="GDScript" id="GDScript_tnua8"]
+script/source = "extends AnimationPlayer
+
+func _ready() -> void:
+	current_animation = \"slide\";
+"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k22dl"]
 shading_mode = 0
@@ -506,6 +603,32 @@ skeleton = NodePath("../../Walls/TestChamber")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="TestBlocks2/TestBlock6/StaticBody3D"]
 shape = SubResource("BoxShape3D_6xn53")
+
+[node name="Travalator" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.31134e-07, 4.43602e-15, 1, -2.98023e-08, 1, 0, -1, -2.98023e-08, 1.31134e-07, -130.625, 0.25, -42.043)
+mesh = SubResource("BoxMesh_am5mk")
+skeleton = NodePath("../Walls/TestChamber")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Travalator"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Travalator/StaticBody3D"]
+shape = SubResource("BoxShape3D_tnua8")
+
+[node name="Area3D" type="Area3D" parent="Travalator"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.632378, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Travalator/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.573761, 0)
+shape = SubResource("BoxShape3D_wq082")
+debug_color = Color(0.698842, 0.292078, 0.979395, 0.42)
+
+[node name="Snap" parent="Travalator/Area3D" instance=ExtResource("10_tnua8")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Travalator"]
+libraries = {
+&"": SubResource("AnimationLibrary_d0awp")
+}
+script = SubResource("GDScript_tnua8")
 
 [node name="ZeroG" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.1393, 20.7089, 13.7419)

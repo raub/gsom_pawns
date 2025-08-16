@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://fdumqv0of5vw"]
+[gd_scene load_steps=35 format=3 uid="uid://fdumqv0of5vw"]
 
 [ext_resource type="Script" uid="uid://b3d8urtob7paf" path="res://characters/human/char_human.gd" id="1_1xyqf"]
 [ext_resource type="AudioStream" uid="uid://g4ddvstcstn" path="res://characters/human/audio/pl_step1.wav" id="3_eu6m0"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://b5d3oho27hkdd" path="res://characters/human/pawn/handler_rigid_zerog.gd" id="7_8486i"]
 [ext_resource type="AudioStream" uid="uid://byulds4oocvdf" path="res://characters/human/audio/pl_step5.wav" id="7_ifk7s"]
 [ext_resource type="AudioStream" uid="uid://cb5164hn1y1db" path="res://characters/human/audio/pl_step6.wav" id="8_fgghn"]
+[ext_resource type="Script" uid="uid://bvrqy2wb6i5sv" path="res://characters/human/pawn/handler_rigid_snap.gd" id="9_8net7"]
 [ext_resource type="AudioStream" uid="uid://cr708bsutdcmo" path="res://characters/human/audio/pl_step7.wav" id="9_npgma"]
 [ext_resource type="Script" uid="uid://cjjp5057i3sll" path="res://addons/gsom_pawns/nodes/pawn.gd" id="10_2q8o8"]
 [ext_resource type="AudioStream" uid="uid://cdpf5h17w710b" path="res://characters/human/audio/pl_step8.wav" id="10_xqfcn"]
@@ -41,6 +42,9 @@ script = ExtResource("1_1xyqf")
 script = ExtResource("10_2q8o8")
 scene = ExtResource("3_uux33")
 has_velocity_linear = true
+
+[node name="Snap" type="Node" parent="GsomPawn"]
+script = ExtResource("9_8net7")
 
 [node name="Walk" type="Node" parent="GsomPawn"]
 script = ExtResource("11_clgec")

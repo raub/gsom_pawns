@@ -1,33 +1,59 @@
 # gsom_pawns
 
-Modular character pawns that interact with environment and triggers through handler nodes.
+Modular **Godot 4** framework for **character pawns**. Pawns interact
+with environment and triggers through handler nodes.
 
-The aim of this addon is to provide a framework for characters with various
-movement styles. This addon does NOT handle user input, but it provides an easy
-way to relay your (or AI) input to pawns.
+The addon provides a **framework** for creating characters (pawns)
+with different movement styles. It does **not** handle input
+directly - pass your player or AI input into pawns through the provided API.
 
-The concept of a Pawn is derived from **Unreal Engine**
-[where](https://dev.epicgames.com/documentation/en-us/unreal-engine/pawn-in-unreal-engine):
+The concept of a *Pawn* is inspired by Unreal Engine's definition:
+> A Pawn is the physical representation of a player or AI entity within the world.
 
-> A Pawn is the physical representation of a player or AI entity within the world. [...]
-	represents the physical location, rotation, etc. of a player or entity within the game.
-
-Here the idea is the same, although the implementation is very different - somewhat Godot-way.
+This addon adapts that idea to the Godot workflow.
 
 [![screenshot_1](gdignore/thumbnail_1.jpg)](gdignore/screenshot_1.jpg)
 [![screenshot_2](gdignore/thumbnail_2.jpg)](gdignore/screenshot_2.jpg)
 
-The demo is further explained [below the classes](#demo).
+- **Multiplayer-ready?** - Not right now. No multiplayer-specific stuff. Just some nodes.
+- **Performance?** - As good or bad as any GDScript-based controllers.
+- **Debug?** - Nothing addon-specific. In most cases you need to debug the collisions.
+- **Project organization?** - Examples provided by the demo project.
+- **2D Support?** - Not right now. But it should be easy to add.
+
+## Installation
+
+1. Copy the `addons/gsom_pawns/` folder into your project.
+2. Enable the plugin in **Project Settings → Plugins**.
+
+The demo scenes and controllers are **not required** for the addon
+to work - they are provided for reference.
+
+## Integration Notes
+
+- **Input Handling:** The addon does not process inputs.
+	Pass processed actions to pawns via `set_action` or similar API.
+- **Pawn Body:** can be any `Node3D`.
+	Can optionally track linear and angular velocities to
+	obtain acceleration measurements.
+- **Scene Lifecycle:** the pawn body is automatically instantiated when `GsomPawn`
+	node is "ready". It becomes a child node of `GsomPawn` and is automatically
+	removed when the `GsomPawn` node is removed.
+- **Camera/Head Sync:** Use `moved` signal to update the camera and/or UI.
+	Additionaly, use `moved_head` signal or poll `head_y` to
+	adjust your camera position if the body needs to dynamically offset it.
+
+---
 
 ## GsomPawn
 
-This node is the key part of the framework. It expects
-to be a child of `Node3D` - your character, that you are going to script later.
-For such `GsomPawn` node, you have to choose a `scene` that represents its physical body.
-Any descendant of `Node3D` is fine, and can **optionally** have `linear_velocity` and
-`angular_velocity` properties (as physics nodes would).
+**Purpose:** Represents a controllable or AI-driven entity.
+Must be placed as a child of your **character** node.
+Assign `GsomPawn.scene` to define the pawn's physical body.
 
-Example structure:
+A pawn is the physical representation of a player or AI entity within the world. The pawn determines how the entity interacts with the world in terms of collisions and other physical interactions. Some types of games may not have a visible player mesh or avatar within the game. Regardless, the Pawn still represents the physical location, rotation, etc. of a player or entity within the game. You will need a Controller to possess a pawn and generate input signals for it.
+
+**Scene Structure Example:**
 
 ```gdscript
 MainScene
@@ -41,191 +67,154 @@ MainScene
 	|   |   [GsomPawn.scene] # <-- your scene defines the body
 	|   |---PawnHandler1
 	|   |---PawnHandler2
-	|   |---PawnHandler3 # <-- these extend GsomPawnHandler
+	|   |---PawnHandler3 # <-- extends GsomPawnHandler
 	|   
 	|---Mesh # anything else that you need for a character
-	|---AudioStep
+	|---Audio
 ```
 
-Your concerns:
-- What the character looks and sound like.
-- What the character body can physically do (e.g. change shape, use physics, etc.).
-- How you attach controllers and how they interact with the characters.
-- How exactly the character moves in different contexts.
-
-Framework concerns:
+**Framework concerns:**
 - Instantiate the body scene and track it during runtime and in Editor.
 - Interpolate the perceived head/camera position during shape changes.
 - Run the attached pawn handlers according to pawn state and filters.
 - Store pawn info fields and facilitate interactions with triggers and envs.
 
+**Your concerns:**
+- What the character looks and sound like.
+- What the character body can physically do (e.g. change shape, use physics, etc.).
+- How you attach controllers and how they interact with the characters.
+- How exactly the character moves in different contexts.
 
 **Signals**
 
-`signal moved(pos: Vector3)`
-	- The pawn has finished the `_physics_process` logic. This is the right time
+- `signal moved(pos: Vector3)` - The pawn has finished the `_physics_process` logic. This is the right time
 	to use the position to update cameras or other stuff.
 
-`signal accelerated_linear(dv: Vector3)`
-	- The body changed its linear speed - only emits if `track_accel_linear`.
+- `signal accelerated_linear(dv: Vector3)` - The body changed its linear speed - only emits if `track_accel_linear`.
 
-`signal accelerated_angular(dv: Vector3)`
-	- The body changed its angular speed - only emits if `track_accel_angular`.
+- `signal accelerated_angular(dv: Vector3)` - The body changed its angular speed - only emits if `track_accel_angular`.
 
-`signal moved_head(head_y: float)`
-	- The relative position of the head changed.
+- `signal moved_head(head_y: float)` - The relative position of the head changed.
 
-`signal triggered(trigger_name: String, value: Variant)`
-	- The body has produced an event with optional data.
+- `signal triggered(trigger_name: String, value: Variant)` - The body has produced an event with optional data.
 
 
 **Properties**
 
-`readonly Vector3 angular_velocity`
-	- Angular velocity vector, only updated if has_velocity_angular.
+- `readonly Vector3 angular_velocity` - Angular velocity vector, only updated if has_velocity_angular.
 
-`readonly Node3D body`
-	- Get the cached physical body object as instantiated from scene.
+- `readonly Node3D body` - Get the cached physical body object as instantiated from scene.
 
-`bool has_velocity_angular [default: false]`
-	- If the pawn needs to track its angular velocity.
+- `bool has_velocity_angular [default: false]` - If the pawn needs to track its angular velocity.
 
-`bool has_velocity_linear [default: false]`
-	- If the pawn needs to track its linear velocity.
+- `bool has_velocity_linear [default: false]` - If the pawn needs to track its linear velocity.
 
-`bool track_accel_angular [default: false]`
-	- If the pawn needs to track its angular acceleration.
+- `bool track_accel_angular [default: false]` - If the pawn needs to track its angular acceleration.
 
-`bool track_accel_linear [default: false]`
-	- If the pawn needs to track its linear acceleration.
+- `bool track_accel_linear [default: false]` - If the pawn needs to track its linear acceleration.
 
-`readonly Vector3 linear_velocity`
-	- Linear velocity vector, only updated if has_velocity_linear.
+- `readonly Vector3 linear_velocity` - Linear velocity vector, only updated if has_velocity_linear.
 
-`readonly Vector3 position`
-	- Get position of the body.
+- `readonly Vector3 position` - Get position of the body.
 
-`float head_speed [default: 1.0]`
-	- How quickly the "head" moves towards the target position (m/s).
+- `float head_speed [default: 1.0]` - How quickly the "head" moves towards the target position (m/s).
 
-`readonly float head_y`
-	- Get the animated head/eye/camera position Y.
+- `readonly float head_y` - Get the animated head/eye/camera position Y.
 	This value is animated towards head_y_target with the speed of head_speed (meters per second).
 
-`float head_y_target [default: 0.0]`
-	- Set this value to define the intended head height of the body.
+- `float head_y_target [default: 0.0]` - Set this value to define the intended head height of the body.
 	When this value is set from _ready, it will be applied immediately without animation.
 
-`PackedScene scene`
-	- Scene that will be instantiated for this pawn
+- `PackedScene scene` - Scene that will be instantiated for this pawn
 
 **Methods**
 
-`void do_integrate(state: PhysicsDirectBodyState3D)`
-	- Framework method, should be called by scene instance on `_integrate_forces`.
+- `void do_integrate(state: PhysicsDirectBodyState3D)` - Framework method, should be called by scene instance on `_integrate_forces`.
 
-`void do_physics(dt: float)`
-	- Framework method, should be called by scene instance on `_physics_process`.
+- `void do_physics(dt: float)` - Framework method, should be called by scene instance on `_physics_process`.
 
-`void do_process(dt: float)`
-	- Framework method, should be called by scene instance on `_process`.
+- `void do_process(dt: float)` - Framework method, should be called by scene instance on `_process`.
 
-`bool erase_action(field_name: String)`
-	- Shortcut for `erase_info("actions", field_name)`.
+- `bool erase_action(field_name: String)` - Shortcut for `erase_info("actions", field_name)`.
 
-`bool erase_env(field_name: String)`
-	- Shortcut for `erase_info("envs", field_name)`.
+- `bool erase_env(field_name: String)` - Shortcut for `erase_info("envs", field_name)`.
 
-`bool erase_info(group_name: String, field_name: String)`
-	- Erase the input value.
+- `bool erase_info(group_name: String, field_name: String)` - Erase the input value.
 
-`bool erase_state(field_name: String)`
-	- Shortcut for `erase_info("states", field_name)`.
+- `bool erase_state(field_name: String)` - Shortcut for `erase_info("states", field_name)`.
 
-`bool erase_trait(field_name: String)`
-	- Shortcut for `erase_info("traits", field_name)`.
+- `bool erase_trait(field_name: String)` - Shortcut for `erase_info("traits", field_name)`.
 
-`Variant get_action(field_name: String, default_value: Variant = null)`
-	- Shortcut for `get_info("actions", field_name, default_value)`.
+- `Variant get_action(field_name: String, default_value: Variant = null)` - Shortcut for `get_info("actions", field_name, default_value)`.
 
-`Variant get_env(field_name: String, default_value: Variant = null)`
-	- Shortcut for `get_info("envs", field_name, default_value)`.
+- `Variant get_env(field_name: String, default_value: Variant = null)` - Shortcut for `get_info("envs", field_name, default_value)`.
 
-`Variant get_info(group_name: String, field_name: String, default_value: Variant = null)`
-	- Fetch an info field by group name and field name. 
+- `Variant get_info(group_name: String, field_name: String, default_value: Variant = null)` - Fetch an info field by group name and field name. 
 	If the field has never been set or reset_info has just been called,
 	this method returns default_value.
 
-`Variant get_state(field_name: String, default_value: Variant = null)`
-	- Shortcut for `get_info("states", field_name, default_value)`.
+- `Variant get_state(field_name: String, default_value: Variant = null)` - Shortcut for `get_info("states", field_name, default_value)`.
 
-`Variant get_trait(field_name: String, default_value: Variant = null)`
-	- Shortcut for `get_info("traits", field_name, default_value)`.
+- `Variant get_trait(field_name: String, default_value: Variant = null)` - Shortcut for `get_info("traits", field_name, default_value)`.
 
-`bool has_action(field_name: String)`
-	- Shortcut for `has_info("actions", field_name)`.
+- `bool has_action(field_name: String)` - Shortcut for `has_info("actions", field_name)`.
 
-`bool has_env(field_name: String)`
-	- Shortcut for `has_info("envs", field_name)`.
+- `bool has_env(field_name: String)` - Shortcut for `has_info("envs", field_name)`.
 
-`bool has_info(group_name: String, field_name: String)`
-	- Check if the input info exists.
+- `bool has_info(group_name: String, field_name: String)` - Check if the input info exists.
 
-`bool has_state(field_name: String)`
-	- Shortcut for `has_info("states", field_name)`.
+- `bool has_state(field_name: String)` - Shortcut for `has_info("states", field_name)`.
 
-`bool has_trait(field_name: String)`
-	- Shortcut for `has_info("traits", field_name)`.
+- `bool has_trait(field_name: String)` - Shortcut for `has_info("traits", field_name)`.
 
-`void reset_actions()`
-	- Shortcut for `reset_info("actions")`.
+- `void reset_actions()` - Shortcut for `reset_info("actions")`.
 
-`void reset_envs()`
-	- Shortcut for `reset_info("envs")`.
+- `void reset_envs()` - Shortcut for `reset_info("envs")`.
 
-`void reset_info(group_name: String = "")`
-	- Clear an info group by name, or wipe all groups if name is empty.
+- `void reset_info(group_name: String = "")` - Clear an info group by name, or wipe all groups if name is empty.
 
-`void reset_states()`
-	- Shortcut for `reset_info("states")`.
+- `void reset_states()` - Shortcut for `reset_info("states")`.
 
-`void reset_traits()`
-	- Shortcut for `reset_info("traits")`.
+- `void reset_traits()` - Shortcut for `reset_info("traits")`.
 
-`void set_action(field_name: String, value: Variant)`
-	- Shortcut for `set_info("actions", field_name, value)`.
+- `void set_action(field_name: String, value: Variant)` - Shortcut for `set_info("actions", field_name, value)`.
 
-`void set_env(field_name: String, value: Variant)`
-	- Shortcut for `set_info("envs", field_name, value)`.
+- `void set_env(field_name: String, value: Variant)` - Shortcut for `set_info("envs", field_name, value)`.
 
-`void set_info(group_name: String, field_name: String, value: Variant)`
-	- Set an arbitrary info field in an info group.
+- `void set_info(group_name: String, field_name: String, value: Variant)` - Set an arbitrary info field in an info group.
 	Such as `("actions", "jump", true)`, or `("env", "surface", "wood")`.
 	The info can be read and written by any party to determine
 	the state and evolution of the model.
 	Suggested groups:
-- `actions` - processed input from controllers: where to go, how fast, etc.
-- `envs` - pawn surrounding environment: surface, sound filters, wind, gravity.
-- `states` - pawn internal state: crouch, swim, ladder.
-- `traits` - pawn specific abilities, items and levels: hp, boosts, inventory.
+	- `actions` - processed input from controllers: where to go, how fast, etc.
+	- `envs` - pawn surrounding environment: surface, sound filters, wind, gravity.
+	- `states` - pawn internal state: crouch, swim, ladder.
+	- `traits` - pawn specific abilities, items and levels: hp, boosts, inventory.
 
-`void set_state(field_name: String, value: Variant)`
-	- Shortcut for `set_info("states", field_name, value)`.
+- `void set_state(field_name: String, value: Variant)` - Shortcut for `set_info("states", field_name, value)`.
 
-`void set_trait(field_name: String, value: Variant)`
-	- Shortcut for `set_info("traits", field_name, value)`.
+- `void set_trait(field_name: String, value: Variant)` - Shortcut for `set_info("traits", field_name, value)`.
 
-`void trigger(trigger_name: String, value: Variant = null)`
-	- Produce an event from this pawn with optional data.
+- `void trigger(trigger_name: String, value: Variant = null)` - Produce an event from this pawn with optional data.
+
+---
 
 ## GsomPawnHandler
+
+**Purpose:** Defines a piece of pawn behavior (movement, special abilities, interactions).
+You can attach multiple handlers to a pawn.
+
+**Filtering:** Handlers can be conditionally active based on pawn states or environments.
+
+Execution **order** of handlers is determined by how they are ordered as
+children of the `GsomPawn` node.
 
 Handlers define the pawn behavior. You can implement everything into a single handler,
 but it would be more convenient to divide the behavior into small manageable pieces.
 
-For example, a separate handler for movement on ladders or underwater.
-Or a reusable walk handler that can be utilized for both players and enemies.
-A separate handler can define interaction with triggers,
+For example, a separate handler for movement on **ladders** or **underwater**.
+Or a **reusable** walk handler that can be utilized for both players and enemies.
+A separate handler can define **interaction with triggers**,
 so those triggers will only interact with pawns that have such handler.
 
 **Properties**
@@ -256,8 +245,11 @@ so those triggers will only interact with pawns that have such handler.
 `void _do_process(pawn: GsomPawn, dt: float)`
 	- Reimplement this to update the body on _process.
 
+---
 
 ## GsomPawnTrigger
+
+**Purpose:** Emits signals when pawns enter/exit an `Area3D`, optionally passing custom data.
 
 Attach a trigger to Area3D. Depending on behavior,
 it will trigger a signal on all entering and/or exiting pawns.
@@ -297,8 +289,11 @@ The additional trigger data can be assigned separately for enter and exit.
 `void attach()`
 	- Call this from _ready() if you extend this class.
 
+---
 
 ## GsomPawnEnv
+
+**Purpose:** Assigns or removes environment state fields to pawns entering/exiting an `Area3D`.
 
 Attach an env to Area3D. Depending on behavior,
 it will apply and/or remove an env field on all entering and/or exiting pawns.
@@ -338,7 +333,9 @@ it will apply and/or remove an env field on all entering and/or exiting pawns.
 `void attach()`
 	- Call this from _ready() if you extend this class.
 
-## Demo
+---
+
+## Demo Project
 
 The addon only consists of the `addons/gsom_pawns/` content - that's what you
 would install from Godot Asset Library. But this repository also contains
@@ -367,7 +364,9 @@ additional HUD considerations. You can control multiple pawns at once in this mo
 
 The particular ways how all these pawns behave - are part of the demo and not the addon.
 Still you might want to copy the implementation and tweek it instead of writing
-it from scratch. There are some notable items that could be reused:
+it from scratch.
+
+Notable **example files:**
 - `res://maps/gdtricks/misc/teleport.tscn` - an example of `extends GsomPawnTrigger`,
 	this is a special trigger that teleports entering pawns (if they have a collision body).
 - `res://controllers/fps/controller_fps.tscn` - how to control and switch between
@@ -378,10 +377,10 @@ it from scratch. There are some notable items that could be reused:
 - `res://maps/test_chamber/test_chamber.tscn` - uses several triggers and envs:
 	water, ladder, zero-g, jump pad.
 
-A few notes on FPS humanoid movement:
+A few notes on FPS **human movement**:
 - Under crosshair, you have a speedometer - it only measures the horizontal speed.
 - Holding spacebar will allow you to bhop perfectly.
-- The movement speed is set to the Adrenaline Gamer standard value of 300.
+- The movement speed is set to the Adrenaline Gamer standard value of **300**.
 - See `res://characters/human/pawn/handler_rigid_walk.gd` for more specific values.
 - Air acceleration works the same as in Q1 or HL1,
 	see [in-depth explanation here](https://www.youtube.com/watch?v=v3zT3Z5apaM).
