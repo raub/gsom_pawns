@@ -37,9 +37,6 @@ func __perform_action(body: RigidBody3D, action: Dictionary) -> void:
 			body.linear_velocity.x = value.vel.x
 		if abs(body.linear_velocity.z) < abs(value.vel.z):
 			body.linear_velocity.z = value.vel.z
-	elif trigger_name == "raparent":
-		pass
-		#body.parent
 
 
 func _do_physics(pawn: GsomPawn, _dt: float) -> void:

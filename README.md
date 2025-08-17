@@ -287,7 +287,7 @@ The additional trigger data can be assigned separately for enter and exit.
 	- Called when a body exits from trigger.  Override this for custom triggers.
 
 `void attach()`
-	- Call this from _ready() if you extend this class.
+	- Call this from `_ready()` if you override it.
 
 ---
 
@@ -331,7 +331,7 @@ it will apply and/or remove an env field on all entering and/or exiting pawns.
 	- Called to remove the env value.  Override this for custom envs.
 
 `void attach()`
-	- Call this from _ready() if you extend this class.
+	- Call this from `_ready()` if you override it.
 
 ---
 
@@ -369,6 +369,8 @@ it from scratch.
 Notable **example files:**
 - `res://maps/gdtricks/misc/teleport.tscn` - an example of `extends GsomPawnTrigger`,
 	this is a special trigger that teleports entering pawns (if they have a collision body).
+- `res://maps/gdtricks/misc/snap-env.tscn` - an example of `extends GsomPawnEnv`,
+	a special env that snaps facilitates snapping to moving platforms.
 - `res://controllers/fps/controller_fps.tscn` - how to control and switch between
 	several pawns, based on FPS-style input.
 - `res://characters/spec/char_spec.tscn` - a very simple no-clip character and pawn.

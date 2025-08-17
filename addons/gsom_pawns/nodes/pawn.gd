@@ -17,13 +17,18 @@ class_name GsomPawn
 
 ## The pawn has finished the '_physics_process' logic. This is the right time
 ## to use the position to update cameras or other stuff.
+## The argument is pawn's global position.
 signal moved(global_pos: Vector3)
 
 ## The body changed its linear speed - only emits if [code]track_accel_linear[/code].
-signal accelerated_linear(dv: Vector3)
+## Argument [code]dv[/code] is how much the velocity changed during this frame.
+## Argument [code]dvdt[/code] is actual acceleration - divided by the timestep.
+signal accelerated_linear(dv: Vector3, dvdt: Vector3)
 
 ## The body changed its angular speed - only emits if [code]track_accel_angular[/code].
-signal accelerated_angular(dv: Vector3)
+## Argument [code]dv[/code] is how much the velocity changed during this frame.
+## Argument [code]dvdt[/code] is actual acceleration - divided by the timestep.
+signal accelerated_angular(dv: Vector3, dvdt: Vector3)
 
 ## The relative position of the head changed.
 signal moved_head(head_y: float)
@@ -64,7 +69,7 @@ var __scene: PackedScene = __SCENE_DEFAULT
 @export var has_velocity_angular: bool = false
 
 
-## Get position of the body.
+## Get the global position of the body.
 var position: Vector3 = Vector3.ZERO:
 	get:
 		return __body.global_position
@@ -307,6 +312,14 @@ func __check_handler(handler: GsomPawnHandler) -> bool:
 		if has_env(env_name):
 			return false
 	
+	for state_name: String in handler.include_states:
+		if !has_state(state_name):
+			return false
+	
+	for state_name: String in handler.exclude_states:
+		if has_state(state_name):
+			return false
+	
 	return true
 
 func __do_integrate_handler(handler: GsomPawnHandler, state: PhysicsDirectBodyState3D) -> void:
@@ -351,7 +364,7 @@ func do_physics(dt: float) -> void:
 		@warning_ignore("unsafe_property_access")
 		var dvell: Vector3 = (__body.linear_velocity - __cached_vell)
 		if dvell.length_squared() > 0.0001:
-			accelerated_linear.emit(dvell)
+			accelerated_linear.emit(dvell, dvell / dt)
 	
 	if has_velocity_linear:
 		@warning_ignore("unsafe_property_access")
@@ -361,7 +374,7 @@ func do_physics(dt: float) -> void:
 		@warning_ignore("unsafe_property_access")
 		var dvela: Vector3 = (__body.angular_velocity - __cached_vela)
 		if dvela.length_squared() > 0.0001:
-			accelerated_angular.emit(dvela)
+			accelerated_angular.emit(dvela, dvela / dt)
 	
 	if has_velocity_angular:
 		@warning_ignore("unsafe_property_access")
