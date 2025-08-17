@@ -69,101 +69,101 @@ include_envs = ["zero_g"]
 
 [node name="Step1" type="AudioStreamPlayer3D" parent="StepsConcrete"]
 stream = ExtResource("3_eu6m0")
-volume_db = -10.0
+volume_db = -20.667
 
 [node name="Step2" type="AudioStreamPlayer3D" parent="StepsConcrete"]
 stream = ExtResource("4_h3vk3")
-volume_db = -10.0
+volume_db = -20.667
 
 [node name="Step3" type="AudioStreamPlayer3D" parent="StepsConcrete"]
 stream = ExtResource("5_n4x3g")
-volume_db = -10.0
+volume_db = -20.667
 
 [node name="Step4" type="AudioStreamPlayer3D" parent="StepsConcrete"]
 stream = ExtResource("6_tvuxa")
-volume_db = -10.0
+volume_db = -20.667
 
 [node name="Step5" type="AudioStreamPlayer3D" parent="StepsConcrete"]
 stream = ExtResource("7_ifk7s")
-volume_db = -10.0
+volume_db = -20.667
 
 [node name="Step6" type="AudioStreamPlayer3D" parent="StepsConcrete"]
 stream = ExtResource("8_fgghn")
-volume_db = -10.0
+volume_db = -20.667
 
 [node name="Step7" type="AudioStreamPlayer3D" parent="StepsConcrete"]
 stream = ExtResource("9_npgma")
-volume_db = -10.0
+volume_db = -20.667
 
 [node name="Step8" type="AudioStreamPlayer3D" parent="StepsConcrete"]
 stream = ExtResource("10_xqfcn")
-volume_db = -10.0
+volume_db = -20.667
 
 [node name="StepsLadder" type="Node3D" parent="."]
 
 [node name="Step1" type="AudioStreamPlayer3D" parent="StepsLadder"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
 stream = ExtResource("14_ia2hu")
-volume_db = -15.0
+volume_db = -25.667
 
 [node name="Step2" type="AudioStreamPlayer3D" parent="StepsLadder"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
 stream = ExtResource("15_tm0be")
-volume_db = -15.0
+volume_db = -25.667
 
 [node name="Step3" type="AudioStreamPlayer3D" parent="StepsLadder"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
 stream = ExtResource("16_ths4q")
-volume_db = -15.0
+volume_db = -25.667
 
 [node name="Step4" type="AudioStreamPlayer3D" parent="StepsLadder"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
 stream = ExtResource("17_xinnu")
-volume_db = -15.0
+volume_db = -25.667
 
 [node name="StepsMetal" type="Node3D" parent="."]
 
 [node name="Step1" type="AudioStreamPlayer3D" parent="StepsMetal"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
 stream = ExtResource("18_sthks")
-volume_db = -20.0
+volume_db = -29.143
 
 [node name="Step2" type="AudioStreamPlayer3D" parent="StepsMetal"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
 stream = ExtResource("19_tgty2")
-volume_db = -20.0
+volume_db = -29.143
 
 [node name="Step3" type="AudioStreamPlayer3D" parent="StepsMetal"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
 stream = ExtResource("20_a6oq5")
-volume_db = -20.0
+volume_db = -29.143
 
 [node name="Step4" type="AudioStreamPlayer3D" parent="StepsMetal"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
 stream = ExtResource("21_1v5kh")
-volume_db = -20.0
+volume_db = -29.143
 
 [node name="StepsWet" type="Node3D" parent="."]
 
 [node name="Step1" type="AudioStreamPlayer3D" parent="StepsWet"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
 stream = ExtResource("23_3xyda")
-volume_db = -20.0
+volume_db = -23.048
 
 [node name="Step2" type="AudioStreamPlayer3D" parent="StepsWet"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
 stream = ExtResource("24_wyxh0")
-volume_db = -20.0
+volume_db = -23.048
 
 [node name="Step3" type="AudioStreamPlayer3D" parent="StepsWet"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
 stream = ExtResource("25_s7x3p")
-volume_db = -20.0
+volume_db = -23.048
 
 [node name="Step4" type="AudioStreamPlayer3D" parent="StepsWet"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0753168, 0)
 stream = ExtResource("26_tfgwn")
-volume_db = -20.0
+volume_db = -23.048
 
 [node name="StepsSwim" type="Node3D" parent="."]
 
